@@ -1,0 +1,1035 @@
+/* 기본 리셋 및 초기화 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1.6rem;
+  color: #2c2c2c;
+  background-color: #ffffff;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button, input, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+}
+
+/* 전체 앱 컨테이너 */
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+/* 네비게이션 헤더 */
+.appHeader {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #ffffff;
+  border-bottom: 0.1rem solid #f0f0f0;
+  padding: 1.5rem 2.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerLogo {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: "Outfit", sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ff8e72;
+  cursor: pointer;
+}
+
+.headerNav {
+  display: flex;
+  align-items: center;
+  gap: 2.4rem;
+}
+
+.navLink {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #4a4a4a;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.navLink:hover {
+  color: #ff8e72;
+}
+
+.navLinkActive {
+  color: #ff8e72;
+  font-weight: 700;
+}
+
+.headerAuthBtn {
+  background-color: #ff8e72;
+  color: #ffffff;
+  padding: 0.8rem 1.6rem;
+  border-radius: 2rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.headerAuthBtn:hover {
+  background-color: #e57d62;
+}
+
+.headerUserInfo {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.headerUserText {
+  font-size: 1.4rem;
+  color: #4a4a4a;
+}
+
+.headerUserText strong {
+  color: #2c2c2c;
+}
+
+.headerLogoutBtn {
+  font-size: 1.3rem;
+  color: #888888;
+  border: 0.1rem solid #e0e0e0;
+  padding: 0.4rem 1rem;
+  border-radius: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.headerLogoutBtn:hover {
+  background-color: #fcfbf9;
+  border-color: #ff8e72;
+  color: #ff8e72;
+}
+
+/* 메인 본문 레이아웃 */
+.mainContent {
+  flex: 1;
+}
+
+/* 히어로 배너 영역 */
+.heroBanner {
+  background-color: #fff0eb;
+  padding: 6rem 2.4rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.heroTag {
+  background-color: #ffffff;
+  color: #ff8e72;
+  padding: 0.6rem 1.4rem;
+  border-radius: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  box-shadow: 0 0.2rem 0.8rem rgba(255, 142, 114, 0.1);
+}
+
+.heroTitle {
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #2c2c2c;
+  max-width: 60rem;
+}
+
+.heroTitle span {
+  color: #ff8e72;
+}
+
+.heroDesc {
+  font-size: 1.6rem;
+  color: #666666;
+  max-width: 50rem;
+}
+
+.heroSearchBox {
+  margin-top: 1.2rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 48rem;
+}
+
+.heroSearchInput {
+  flex: 1;
+  background-color: #ffffff;
+  border: 0.2rem solid #ff8e72;
+  border-right: none;
+  padding: 1.2rem 2rem;
+  border-radius: 3rem 0 0 3rem;
+  font-size: 1.5rem;
+  outline: none;
+}
+
+.heroSearchBtn {
+  background-color: #ff8e72;
+  color: #ffffff;
+  padding: 1.2rem 2.4rem;
+  border-radius: 0 3rem 3rem 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.heroSearchBtn:hover {
+  background-color: #e57d62;
+}
+
+/* 월령 계산기 섹션 */
+.calculatorSection {
+  padding: 4rem 2.4rem;
+  max-width: 100rem;
+  margin: 0 auto;
+}
+
+.calculatorCard {
+  background-color: #ffffff;
+  border: 0.1rem solid #f5edeb;
+  border-radius: 2rem;
+  padding: 3rem;
+  box-shadow: 0 1rem 3rem rgba(74, 62, 61, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.calcHeader {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.calcIcon {
+  color: #ff8e72;
+}
+
+.calcTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.calcDesc {
+  font-size: 1.4rem;
+  color: #666666;
+  margin-top: -1.6rem;
+}
+
+.calcForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+  align-items: flex-end;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  flex: 1;
+  min-width: 20rem;
+}
+
+.formGroup label {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #4a4a4a;
+}
+
+.dateInput {
+  border: 0.15rem solid #e0e0e0;
+  border-radius: 1rem;
+  padding: 1.2rem;
+  font-size: 1.5rem;
+  background-color: #ffffff;
+  outline: none;
+  transition: border-color 0.2s ease;
+  width: 100%;
+}
+
+.dateInput:focus {
+  border-color: #ff8e72;
+}
+
+.calcSubmitBtn {
+  background-color: #ff8e72;
+  color: #ffffff;
+  padding: 1.3rem 2.4rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  height: 4.8rem;
+}
+
+.calcSubmitBtn:hover {
+  background-color: #e57d62;
+}
+
+.calcResultBox {
+  background-color: #fcfbf9;
+  border-left: 0.4rem solid #ff8e72;
+  padding: 2rem;
+  border-radius: 0 1.2rem 1.2rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+}
+
+.resultText {
+  font-size: 1.6rem;
+  color: #4a4a4a;
+}
+
+.resultText strong {
+  color: #ff8e72;
+  font-size: 1.8rem;
+}
+
+.resultActionBtn {
+  background-color: #ffffff;
+  border: 0.15rem solid #ff8e72;
+  color: #ff8e72;
+  padding: 0.8rem 1.6rem;
+  border-radius: 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.resultActionBtn:hover {
+  background-color: #ff8e72;
+  color: #ffffff;
+}
+
+/* 이유식 단계별 정보 섹션 */
+.stagesSection {
+  background-color: #fcfbf9;
+  padding: 6rem 2.4rem;
+}
+
+.stagesContainer {
+  max-width: 100rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.sectionTitle {
+  font-size: 2.4rem;
+  font-weight: 700;
+  text-align: center;
+  color: #2c2c2c;
+  position: relative;
+}
+
+.sectionTitle::after {
+  content: '';
+  display: block;
+  width: 4rem;
+  height: 0.3rem;
+  background-color: #ff8e72;
+  margin: 1rem auto 0;
+}
+
+.stageTabWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.stageTab {
+  flex: 1;
+  max-width: 16rem;
+  padding: 1.2rem;
+  text-align: center;
+  border-radius: 1.2rem;
+  font-weight: 600;
+  font-size: 1.5rem;
+  cursor: pointer;
+  background-color: #ffffff;
+  border: 0.1rem solid #e8e8e8;
+  color: #666666;
+  transition: all 0.2s ease;
+}
+
+.stageTab:hover {
+  border-color: #ff8e72;
+  color: #ff8e72;
+}
+
+.stageTabActive {
+  background-color: #ff8e72;
+  border-color: #ff8e72;
+  color: #ffffff;
+}
+
+.stageTabActive:hover {
+  color: #ffffff;
+}
+
+.stageDetailCard {
+  background-color: #ffffff;
+  border-radius: 2rem;
+  border: 0.1rem solid #f0f0f0;
+  padding: 4rem;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.02);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.stageInfoLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.stageInfoTitle {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.stageInfoPeriod {
+  display: inline-block;
+  align-self: flex-start;
+  background-color: #fff0eb;
+  color: #ff8e72;
+  padding: 0.4rem 1.2rem;
+  border-radius: 1.2rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.stageInfoDesc {
+  font-size: 1.6rem;
+  color: #555555;
+  line-height: 1.6;
+}
+
+.stageSummaryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
+  margin-top: 1.2rem;
+}
+
+.summaryItem {
+  background-color: #fcfbf9;
+  padding: 1.6rem;
+  border-radius: 1.2rem;
+  border: 0.1rem solid #f5edeb;
+}
+
+.summaryLabel {
+  font-size: 1.3rem;
+  color: #888888;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.summaryVal {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #4a4a4a;
+}
+
+.stageInfoRight {
+  border-left: 0.1rem solid #f0f0f0;
+  padding-left: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.guideTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.guideList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  list-style: none;
+}
+
+.guideItem {
+  position: relative;
+  padding-left: 2rem;
+  font-size: 1.45rem;
+  color: #555555;
+  line-height: 1.5;
+}
+
+.guideItem::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  color: #ff8e72;
+  font-weight: 700;
+}
+
+/* 레시피 목록 섹션 */
+.recipesSection {
+  padding: 6rem 2.4rem;
+  max-width: 100rem;
+  margin: 0 auto;
+}
+
+.recipesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+  gap: 2.4rem;
+  margin-top: 3rem;
+}
+
+.recipeCard {
+  background-color: #ffffff;
+  border: 0.1rem solid #e8e8e8;
+  border-radius: 1.6rem;
+  padding: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.recipeCard:hover {
+  transform: translateY(-0.5rem);
+  box-shadow: 0 1.2rem 2.4rem rgba(74, 62, 61, 0.08);
+  border-color: #ff8e72;
+}
+
+.recipeStageTag {
+  align-self: flex-start;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+}
+
+.tagEarly {
+  background-color: #e3f2fd;
+  color: #1e88e5;
+}
+
+.tagMiddle {
+  background-color: #e8f5e9;
+  color: #43a047;
+}
+
+.tagLate {
+  background-color: #fff3e0;
+  color: #fb8c00;
+}
+
+.recipeCardName {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.recipeCardDesc {
+  font-size: 1.4rem;
+  color: #666666;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.recipeCardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.3rem;
+  color: #ff8e72;
+  font-weight: 600;
+  margin-top: 0.8rem;
+}
+
+.recipeCardFooter span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* 레시피 상세 모달 */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  padding: 2rem;
+}
+
+.modalContent {
+  background-color: #ffffff;
+  border-radius: 2rem;
+  width: 100%;
+  max-width: 65rem;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modalCloseBtn {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background-color: #f5f5f5;
+  border-radius: 50%;
+  width: 3.6rem;
+  height: 3.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modalCloseBtn:hover {
+  background-color: #e8e8e8;
+}
+
+.modalBody {
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.modalHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-right: 4rem;
+}
+
+.modalTitle {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.modalDesc {
+  font-size: 1.5rem;
+  color: #666666;
+}
+
+.ingredientsBox {
+  background-color: #fff0eb;
+  padding: 2rem;
+  border-radius: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.ingredientsTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ff8e72;
+}
+
+.ingredientsList {
+  font-size: 1.45rem;
+  color: #4a4a4a;
+}
+
+.instructionsBox {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.instructionsTitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #2c2c2c;
+  border-left: 0.3rem solid #ff8e72;
+  padding-left: 1rem;
+}
+
+.instructionStep {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+}
+
+.stepNum {
+  background-color: #ff8e72;
+  color: #ffffff;
+  font-family: "Outfit", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.stepText {
+  font-size: 1.45rem;
+  color: #4a4a4a;
+  line-height: 1.6;
+}
+
+.tipBox {
+  background-color: #f4fdf4;
+  border: 0.1rem dashed #a5d6a7;
+  padding: 2rem;
+  border-radius: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.tipTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2e7d32;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.tipText {
+  font-size: 1.4rem;
+  color: #424242;
+  line-height: 1.5;
+}
+
+/* 인증(로그인/회원가입) 모달 */
+.authModalContent {
+  background-color: #ffffff;
+  border-radius: 2rem;
+  width: 100%;
+  max-width: 44rem;
+  position: relative;
+  animation: modalFadeIn 0.3s ease;
+}
+
+.authModalBody {
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.authModalHeader {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.authModalTitle {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.authModalDesc {
+  font-size: 1.4rem;
+  color: #666666;
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.authFormGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.authFormGroup label {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #4a4a4a;
+}
+
+.authInput {
+  border: 0.15rem solid #e0e0e0;
+  border-radius: 1rem;
+  padding: 1.2rem;
+  font-size: 1.45rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.authInput:focus {
+  border-color: #ff8e72;
+}
+
+.authSubmitBtn {
+  background-color: #ff8e72;
+  color: #ffffff;
+  padding: 1.4rem;
+  border-radius: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.authSubmitBtn:hover {
+  background-color: #e57d62;
+}
+
+.authSwitchText {
+  text-align: center;
+  font-size: 1.35rem;
+  color: #666666;
+}
+
+.authSwitchLink {
+  color: #ff8e72;
+  font-weight: 700;
+  cursor: pointer;
+  margin-left: 0.6rem;
+  text-decoration: underline;
+}
+
+/* 마이페이지 정보 관리 */
+.myPageSection {
+  padding: 6rem 2.4rem;
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.myPageCard {
+  background-color: #ffffff;
+  border: 0.1rem solid #f5edeb;
+  border-radius: 2rem;
+  padding: 4rem;
+  box-shadow: 0 1rem 3rem rgba(74, 62, 61, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.myPageHeader {
+  border-bottom: 0.1rem solid #f0f0f0;
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.myPageTitle {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.myPageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 2rem;
+}
+
+.myPageInfoItem {
+  background-color: #fcfbf9;
+  padding: 2rem;
+  border-radius: 1.2rem;
+  border: 0.1rem solid #f5edeb;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.myPageInfoLabel {
+  font-size: 1.3rem;
+  color: #888888;
+}
+
+.myPageInfoValue {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.myPageInfoValue span {
+  color: #ff8e72;
+}
+
+/* 푸터 영역 */
+.appFooter {
+  background-color: #fcfbf9;
+  border-top: 0.1rem solid #f0f0f0;
+  padding: 4rem 2.4rem;
+  text-align: center;
+}
+
+.footerContainer {
+  max-width: 100rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.footerLogo {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ff8e72;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 2rem;
+}
+
+.footerLink {
+  font-size: 1.3rem;
+  color: #666666;
+}
+
+.footerCopy {
+  font-size: 1.2rem;
+  color: #999999;
+}
+
+/* 반응형 미디어 쿼리 */
+@media (max-width: 768px) {
+  html {
+    font-size: 56.25%;
+  }
+
+  .stageDetailCard {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding: 3rem;
+  }
+
+  .stageInfoRight {
+    border-left: none;
+    border-top: 0.1rem solid #f0f0f0;
+    padding-left: 0;
+    padding-top: 3rem;
+  }
+
+  .calcForm {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .formGroup {
+    width: 100%;
+  }
+
+  .calcSubmitBtn {
+    width: 100%;
+  }
+
+  .heroTitle {
+    font-size: 2.6rem;
+  }
+
+  .modalBody {
+    padding: 2.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .appHeader {
+    padding: 1.2rem 1.6rem;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .headerNav {
+    width: 100%;
+    justify-content: center;
+    gap: 1.6rem;
+  }
+
+  .heroBanner {
+    padding: 4rem 1.6rem;
+  }
+
+  .stageTabWrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .stageTab {
+    max-width: 100%;
+  }
+}
