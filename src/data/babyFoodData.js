@@ -661,7 +661,7 @@ export const recipeMedia = {
   },
   recipeEarly07: {
     imageUrl: "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=13PKLsKhnxU",
+    youtubeUrl: "https://www.youtube.com/watch?v=N-cvgu9DwGM",
     stepImages: [
       "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=600&h=220&fit=crop&q=80",
