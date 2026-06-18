@@ -330,17 +330,17 @@ export const babyFoodRecipes = [
   {
     id: "recipeMiddle09",
     stage: "middle",
-    name: "연두부 시금치죽",
-    description: "시중 연두부를 활용한 간편하고 영양이 가득한 중기 이유식입니다. 일반 두부보다 훨씬 부드러워 중기 초반 아기에게 잘 맞습니다.",
-    ingredients: "불린 쌀 30g, 연두부 30g, 시금치 잎 10g, 야채 육수 240ml",
+    name: "두부 시금치죽",
+    description: "고소한 두부의 식물성 단백질과 철분이 풍부한 시금치가 만나 아기의 성장과 빈혈 예방을 동시에 돕는 중기 이유식입니다.",
+    ingredients: "불린 쌀 30g, 두부 30g, 시금치 잎 15g, 야채 육수 240ml",
     instructions: [
-      "시금치는 잎 부분만 골라 끓는 물에 살짝 데친 후 찬물에 헹궈 물기를 짜고 잘게 다집니다.",
-      "연두부는 체에 올려 가볍게 눌러 불필요한 수분을 제거한 뒤 포크로 부드럽게 으깹니다.",
-      "냄비에 불린 쌀과 야채 육수 240ml를 넣고 끓이기 시작합니다.",
-      "죽이 끓으면 약불로 낮추고 으깬 연두부와 다진 시금치를 넣어 10분간 더 끓입니다.",
-      "쌀알이 완전히 퍼지고 시금치와 두부가 죽에 고루 섞이면 완성합니다."
+      "시금치는 잎 부분만 골라 끓는 물에 30초간 데친 뒤 찬물에 헹궈 물기를 꼭 짜고 2mm 크기로 잘게 다집니다.",
+      "두부는 끓는 물에 1~2분 데쳐 잡내와 간수를 제거한 뒤 면포나 키친타월로 수분을 눌러 빼고 곱게 으깹니다.",
+      "냄비에 불린 쌀과 야채 육수 240ml를 넣고 센 불에 올려 끓어오르면 약불로 줄입니다.",
+      "쌀이 반쯤 퍼지면 으깬 두부와 다진 시금치를 넣고 주걱으로 골고루 섞어줍니다.",
+      "약불에서 10~12분간 바닥이 눌어붙지 않게 저어가며 쌀알이 완전히 퍼지면 완성합니다."
     ],
-    tips: "연두부는 일반 두부보다 수분이 많아 죽의 농도가 묽어질 수 있습니다. 쌀의 양을 약간 늘리거나 육수를 조금 줄여서 농도를 조절하면 됩니다. 연두부는 개봉 후 바로 사용하는 것이 위생적입니다."
+    tips: "시금치는 과하게 데치면 철분과 엽산이 손실되므로 30초 이내로 짧게 데치는 것이 좋습니다. 두부는 데친 후 수분을 충분히 제거해야 죽 농도가 묽어지지 않습니다."
   },
   {
     id: "recipeMiddle10",
@@ -739,7 +739,7 @@ export const recipeMedia = {
   },
   recipeMiddle09: {
     imageUrl: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=wmITP1MgIHU",
+    youtubeUrl: "https://www.youtube.com/watch?v=crODavEfup0",
     stepImages: [
       "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80",
