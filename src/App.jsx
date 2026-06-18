@@ -636,7 +636,7 @@ export default function App() {
 
             {/* 인기 레시피 6개 미리보기 */}
             <section className="recipesSection">
-              <h2 className="sectionTitle">추천 인기 이유식 메뉴 & 레시피</h2>
+              <h2 className="sectionTitle">이유식 메뉴 & 레시피</h2>
               <p style={{ textAlign: "center", fontSize: "1.4rem", color: "#666666", marginTop: "1rem" }}>
                 아기들이 가장 선호하고 부모님들이 자주 끓이는 필수 레시피 모음입니다.
               </p>
@@ -978,27 +978,17 @@ export default function App() {
                 <p className="tipText">{selectedRecipe.tips}</p>
               </div>
 
-              {/* 유튜브 임베드 — watch?v=ID 를 embed/ID?autoplay=1 형식으로 변환하여 모달 내 자동재생 */}
-              {recipeMedia[selectedRecipe.id]?.youtubeUrl && (() => {
-                const url = recipeMedia[selectedRecipe.id].youtubeUrl;
-                const videoIdMatch = url.match(/[?&]v=([^&]+)/);
-                if (!videoIdMatch) return null;
-                const videoId = videoIdMatch[1];
-                // &t=5s 형식의 시작 시간을 embed start 파라미터로 변환
-                const startMatch = url.match(/[?&]t=(\d+)s?/);
-                const startParam = startMatch ? `&start=${startMatch[1]}` : "";
-                const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0${startParam}`;
-                return (
-                  <div className="youtubeEmbed">
-                    <iframe
-                      src={embedUrl}
-                      title="이유식 만들기 영상"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
-                );
-              })()}
+              {/* 유튜브 버튼 — 새 탭에서 자동재생(&autoplay=1) */}
+              {recipeMedia[selectedRecipe.id]?.youtubeUrl && (
+                <a
+                  href={`${recipeMedia[selectedRecipe.id].youtubeUrl}&autoplay=1`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="youtubeBtn"
+                >
+                  ▶&nbsp; 유튜브에서 영상 보기
+                </a>
+              )}
             </div>
           </div>
         </div>
