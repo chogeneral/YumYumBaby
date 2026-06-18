@@ -103,7 +103,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeEarly04",
     stage: "early",
-    name: "고소한 고구마 미음",
+    name: "고구마 미음",
     description: "불린 쌀과 고구마를 갈아 만드는 초기 이유식입니다. 50ml 기준 3끼 분량으로 만들어 냉장·냉동 보관하며 먹일 수 있습니다.",
     ingredients: "쌀 12g, 고구마 10g, 물 220ml (50ml 기준 3끼 분량)",
     instructions: [
@@ -118,7 +118,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeEarly05",
     stage: "early",
-    name: "달콤 단호박 미음",
+    name: "단호박 미음",
     description: "쌀가루·찹쌀가루 혼합물과 단호박을 함께 갈아 만드는 초기 이유식입니다. 단호박 삶은 물을 사용하면 영양이 더욱 풍부합니다.",
     ingredients: "단호박 10g, 쌀가루 12g, 찹쌀가루 3g, 물 200ml (쌀가루:찹쌀가루 = 8:2 비율)",
     instructions: [
@@ -133,7 +133,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeEarly06",
     stage: "early",
-    name: "부드러운 감자 미음",
+    name: "감자 미음",
     description: "쌀가루 20배죽 기준으로 만드는 초기 이유식입니다. 3일분 기준으로 만들어 냉장 보관하며 먹일 수 있습니다.",
     ingredients: "쌀가루 15g, 감자 15g, 찬물 300ml (쌀가루 20배죽 기준, 3일분)",
     instructions: [
@@ -163,7 +163,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeEarly08",
     stage: "early",
-    name: "사과 배 혼합 미음",
+    name: "소고기 사과(배) 미음",
     description: "불린 쌀과 사과·배를 각각 갈아 만드는 초기 이유식입니다. 사과 미음과 배 미음 각각 5회분씩 만들어 냉장·냉동 보관하며 먹일 수 있습니다.",
     ingredients: "불린 쌀 30g, 사과(또는 배) 20g, 물 400ml (각각 5회분 기준, 쌀가루로 대체 가능)",
     instructions: [
