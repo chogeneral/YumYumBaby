@@ -602,151 +602,331 @@ export const babyFoodRecipes = [
   }
 ];
 
-// 각 레시피의 대표 이미지(Unsplash CDN)와 유튜브 영상 URL을 별도 맵으로 관리합니다.
-// youtubeUrl은 유튜브 검색이 아닌 실제 영상 직접 링크입니다.
+// 각 레시피의 대표 이미지, 유튜브 직접 링크, 조리 단계 사진(3장)을 관리합니다.
+// stepImages: 재료+조리과정+완성 사진 3장 — 5단계에서 순환(idx % 3)으로 표시합니다.
 export const recipeMedia = {
   recipeEarly01: {
     imageUrl: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=RB2qtJLzWUA"
+    youtubeUrl: "https://www.youtube.com/watch?v=RB2qtJLzWUA",
+    stepImages: [
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-fouEwdmKPIg?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeEarly02: {
     imageUrl: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=xH1iX5RuPaE"
+    youtubeUrl: "https://www.youtube.com/watch?v=xH1iX5RuPaE",
+    stepImages: [
+      "https://images.unsplash.com/photo-QlnsfRyEdng?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-fouEwdmKPIg?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeEarly03: {
     imageUrl: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=HjzjIdaRjzY"
+    youtubeUrl: "https://www.youtube.com/watch?v=HjzjIdaRjzY",
+    stepImages: [
+      "https://images.unsplash.com/photo-FZJO5-NFVzI?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-fouEwdmKPIg?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeEarly04: {
     imageUrl: "https://images.unsplash.com/photo-1508002366005-75a695ee5b47?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=57oBo1ELNvw"
+    youtubeUrl: "https://www.youtube.com/watch?v=57oBo1ELNvw",
+    stepImages: [
+      "https://images.unsplash.com/photo-1508002366005-75a695ee5b47?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-fouEwdmKPIg?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeEarly05: {
     imageUrl: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=vV9xtJL7d10"
+    youtubeUrl: "https://www.youtube.com/watch?v=vV9xtJL7d10",
+    stepImages: [
+      "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-fouEwdmKPIg?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeEarly06: {
     imageUrl: "https://images.unsplash.com/photo-1518977676901-baab3a2c79de?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=Du8Cwxq4c0Q"
+    youtubeUrl: "https://www.youtube.com/watch?v=Du8Cwxq4c0Q",
+    stepImages: [
+      "https://images.unsplash.com/photo-1518977676901-baab3a2c79de?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-GtfBbMx3seA?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeEarly07: {
     imageUrl: "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=13PKLsKhnxU"
+    youtubeUrl: "https://www.youtube.com/watch?v=13PKLsKhnxU",
+    stepImages: [
+      "https://images.unsplash.com/photo-eFFnKMiDMGc?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeEarly08: {
     imageUrl: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=HjCcCjEPXi0"
+    youtubeUrl: "https://www.youtube.com/watch?v=HjCcCjEPXi0",
+    stepImages: [
+      "https://images.unsplash.com/photo-E_Xt-TmOra4?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeEarly09: {
     imageUrl: "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=6K23svfS2C0"
+    youtubeUrl: "https://www.youtube.com/watch?v=6K23svfS2C0",
+    stepImages: [
+      "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-bRdRUUtbxO0?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeEarly10: {
     imageUrl: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=RegmogU3HHU"
+    youtubeUrl: "https://www.youtube.com/watch?v=RegmogU3HHU",
+    stepImages: [
+      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-fouEwdmKPIg?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeEarly11: {
     imageUrl: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=ZJymh4wGrE0"
+    youtubeUrl: "https://www.youtube.com/watch?v=ZJymh4wGrE0",
+    stepImages: [
+      "https://images.unsplash.com/photo-0WW38q7lGZA?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeEarly12: {
     imageUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=pAJ2VPt9iro"
+    youtubeUrl: "https://www.youtube.com/watch?v=pAJ2VPt9iro",
+    stepImages: [
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeMiddle01: {
     imageUrl: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=Q3L6sD67_BE"
+    youtubeUrl: "https://www.youtube.com/watch?v=Q3L6sD67_BE",
+    stepImages: [
+      "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-FZJO5-NFVzI?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeMiddle02: {
     imageUrl: "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=8kBMtl8BOmA"
+    youtubeUrl: "https://www.youtube.com/watch?v=8kBMtl8BOmA",
+    stepImages: [
+      "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeMiddle03: {
     imageUrl: "https://images.unsplash.com/photo-1534482421-64566f976cfa?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=mNDStMckfps"
+    youtubeUrl: "https://www.youtube.com/watch?v=mNDStMckfps",
+    stepImages: [
+      "https://images.unsplash.com/photo-1534482421-64566f976cfa?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-eFFnKMiDMGc?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeMiddle04: {
     imageUrl: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=n3nV2UvGQvQ"
+    youtubeUrl: "https://www.youtube.com/watch?v=n3nV2UvGQvQ",
+    stepImages: [
+      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeMiddle05: {
     imageUrl: "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=J1W7r0WBp2Y"
+    youtubeUrl: "https://www.youtube.com/watch?v=J1W7r0WBp2Y",
+    stepImages: [
+      "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-GtfBbMx3seA?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeMiddle06: {
     imageUrl: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=5b40wI3-KI8"
+    youtubeUrl: "https://www.youtube.com/watch?v=5b40wI3-KI8",
+    stepImages: [
+      "https://images.unsplash.com/photo-NDX6Hr95dtQ?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-eFFnKMiDMGc?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeMiddle07: {
     imageUrl: "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=e-TL27l91JE"
+    youtubeUrl: "https://www.youtube.com/watch?v=e-TL27l91JE",
+    stepImages: [
+      "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeMiddle08: {
     imageUrl: "https://images.unsplash.com/photo-1508002366005-75a695ee5b47?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=YMK0c0UZaks"
+    youtubeUrl: "https://www.youtube.com/watch?v=YMK0c0UZaks",
+    stepImages: [
+      "https://images.unsplash.com/photo-1508002366005-75a695ee5b47?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeMiddle09: {
     imageUrl: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=wmITP1MgIHU"
+    youtubeUrl: "https://www.youtube.com/watch?v=wmITP1MgIHU",
+    stepImages: [
+      "https://images.unsplash.com/photo-NDX6Hr95dtQ?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeMiddle10: {
     imageUrl: "https://images.unsplash.com/photo-1559963110-71b394e7494d?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=bh8hi5HTdXw"
+    youtubeUrl: "https://www.youtube.com/watch?v=bh8hi5HTdXw",
+    stepImages: [
+      "https://images.unsplash.com/photo-1559963110-71b394e7494d?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-FZJO5-NFVzI?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeMiddle11: {
     imageUrl: "https://images.unsplash.com/photo-1551215042-a51e2b0f00ef?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=rxzZWDmbfS8"
+    youtubeUrl: "https://www.youtube.com/watch?v=rxzZWDmbfS8",
+    stepImages: [
+      "https://images.unsplash.com/photo-1551215042-a51e2b0f00ef?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeMiddle12: {
     imageUrl: "https://images.unsplash.com/photo-1601579112934-17ac2aa02b6a?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=DMoiiFKuZEU"
+    youtubeUrl: "https://www.youtube.com/watch?v=DMoiiFKuZEU",
+    stepImages: [
+      "https://images.unsplash.com/photo-1601579112934-17ac2aa02b6a?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeLate01: {
     imageUrl: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=L6dsZKBE4x0"
+    youtubeUrl: "https://www.youtube.com/watch?v=L6dsZKBE4x0",
+    stepImages: [
+      "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeLate02: {
     imageUrl: "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=RX4ISHeKfzw"
+    youtubeUrl: "https://www.youtube.com/watch?v=RX4ISHeKfzw",
+    stepImages: [
+      "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-DOwt9UKiMrs?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeLate03: {
     imageUrl: "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=A8L-zOE_NYc"
+    youtubeUrl: "https://www.youtube.com/watch?v=A8L-zOE_NYc",
+    stepImages: [
+      "https://images.unsplash.com/photo-NDX6Hr95dtQ?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-htMa9KPui1I?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeLate04: {
     imageUrl: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=RmwznXIss_U"
+    youtubeUrl: "https://www.youtube.com/watch?v=RmwznXIss_U",
+    stepImages: [
+      "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeLate05: {
     imageUrl: "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=AST1es1A41A"
+    youtubeUrl: "https://www.youtube.com/watch?v=AST1es1A41A",
+    stepImages: [
+      "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-oT7_v-I0hHg?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeLate06: {
     imageUrl: "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=MEHL0ZiRmtc"
+    youtubeUrl: "https://www.youtube.com/watch?v=MEHL0ZiRmtc",
+    stepImages: [
+      "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-htMa9KPui1I?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeLate07: {
     imageUrl: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=deSjUaUoIrI"
+    youtubeUrl: "https://www.youtube.com/watch?v=deSjUaUoIrI",
+    stepImages: [
+      "https://images.unsplash.com/photo-6zg1jUoTMyY?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-NDX6Hr95dtQ?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeLate08: {
     imageUrl: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=DFCSkuDm4Gw"
+    youtubeUrl: "https://www.youtube.com/watch?v=DFCSkuDm4Gw",
+    stepImages: [
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeLate09: {
     imageUrl: "https://images.unsplash.com/photo-1559963110-71b394e7494d?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=obs08KPAbfA"
+    youtubeUrl: "https://www.youtube.com/watch?v=obs08KPAbfA",
+    stepImages: [
+      "https://images.unsplash.com/photo-1559963110-71b394e7494d?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeLate10: {
     imageUrl: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=8WPQW05LNWA"
+    youtubeUrl: "https://www.youtube.com/watch?v=8WPQW05LNWA",
+    stepImages: [
+      "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-oT7_v-I0hHg?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeLate11: {
     imageUrl: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=fncsqai92ik"
+    youtubeUrl: "https://www.youtube.com/watch?v=fncsqai92ik",
+    stepImages: [
+      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
   },
   recipeLate12: {
     imageUrl: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=CYAvQvLSeDI"
+    youtubeUrl: "https://www.youtube.com/watch?v=CYAvQvLSeDI",
+    stepImages: [
+      "https://images.unsplash.com/photo-NDX6Hr95dtQ?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-E_Xt-TmOra4?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-htMa9KPui1I?w=600&h=220&fit=crop&q=80"
+    ]
   }
 };

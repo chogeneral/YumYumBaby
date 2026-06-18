@@ -12,15 +12,6 @@ import {
 import { babyFoodStages, babyFoodRecipes, recipeMedia } from "./data/babyFoodData";
 import { supabase } from "./lib/supabase";
 
-// 조리 단계(1~5단계)마다 보여줄 공통 요리 과정 이미지입니다.
-// 모든 레시피는 준비→끓이기→약불 조리→농도 확인→완성 순서를 따릅니다.
-const cookingStepImages = [
-  "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&crop=center&q=80",
-  "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&crop=center&q=80",
-  "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&crop=center&q=80",
-  "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=220&fit=crop&crop=center&q=80",
-  "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&h=220&fit=crop&crop=center&q=80"
-];
 
 // 애플리케이션의 전체 기능과 라우팅, 회원 관리를 수행하는 메인 App 컴포넌트입니다.
 export default function App() {
@@ -968,20 +959,25 @@ export default function App() {
               <div className="instructionsBox">
                 <h3 className="instructionsTitle">맛있게 끓이는 법</h3>
                 <div style={{ display: "flex", flexDirection: "column", gap: "2.4rem" }}>
-                  {selectedRecipe.instructions.map((step, idx) => (
+                  {selectedRecipe.instructions.map((step, idx) => {
+                    // 레시피별 재료 맞춤 사진 — stepImages 배열 순환(idx % 3)으로 5단계에 배분
+                    const stepImgs = recipeMedia[selectedRecipe.id]?.stepImages || [];
+                    return (
                     <div key={idx} className="instructionStep">
-                      {/* 단계별 사진 — cookingStepImages 인덱스로 해당 조리 과정 이미지 표시 */}
-                      <img
-                        src={cookingStepImages[idx]}
-                        alt={`${idx + 1}단계 조리 과정`}
-                        className="stepPhoto"
-                      />
+                      {stepImgs.length > 0 && (
+                        <img
+                          src={stepImgs[idx % stepImgs.length]}
+                          alt={`${idx + 1}단계 조리 과정`}
+                          className="stepPhoto"
+                        />
+                      )}
                       <div className="stepContent">
                         <span className="stepNum">{idx + 1}</span>
                         <p className="stepText">{step}</p>
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
