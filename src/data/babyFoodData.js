@@ -298,21 +298,6 @@ export const babyFoodRecipes = [
     tips: "감자에 전분이 많아 일반 죽보다 빠르게 바닥이 눌어붙을 수 있습니다. 물의 양을 약간 넉넉하게 잡고, 죽 끓이는 동안 바닥을 자주 저어주는 것이 중요합니다."
   },
   {
-    id: "recipeMiddle06",
-    stage: "middle",
-    name: "두부 당근죽",
-    description: "부드러운 두부로 식물성 단백질을 보충하고 당근으로 비타민을 채우는 건강한 중기 이유식입니다. 담백하고 부드러운 맛이 특징입니다.",
-    ingredients: "불린 쌀 30g, 두부 30g, 당근 15g, 야채 육수 240ml",
-    instructions: [
-      "두부는 면포나 키친타월에 감싸 가볍게 눌러 수분을 빼낸 뒤 잘게 으깨거나 다집니다.",
-      "당근은 껍질을 벗기고 2mm 크기로 곱게 다집니다. 당근이 단단하므로 충분히 작게 썰어야 합니다.",
-      "냄비에 물을 약간 두르고 다진 당근을 넣어 숨이 죽을 때까지 2~3분간 먼저 볶아줍니다.",
-      "당근이 어느 정도 익으면 불린 쌀과 야채 육수 240ml를 붓고 센 불에 올려 끓입니다.",
-      "죽이 끓어오르면 두부를 넣고 약불로 줄여 10~12분 더 끓이면서 쌀알이 완전히 퍼지면 완성합니다."
-    ],
-    tips: "두부는 조리 전 반드시 끓는 물에 한 번 데쳐 사용하면 잡내가 제거되고 위생적으로도 안전합니다. 두부의 간수 성분을 없애기 위해 찬물에 미리 담가 두었다가 사용하는 것도 좋습니다."
-  },
-  {
     id: "recipeMiddle07",
     stage: "middle",
     name: "계란 노른자 채소죽",
@@ -731,15 +716,6 @@ export const recipeMedia = {
     stepImages: [
       "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1518977676901-baab3a2c79de?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
-    ]
-  },
-  recipeMiddle06: {
-    imageUrl: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=5b40wI3-KI8",
-    stepImages: [
-      "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
