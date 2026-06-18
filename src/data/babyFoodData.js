@@ -253,21 +253,6 @@ export const babyFoodRecipes = [
     tips: "소고기 핏물을 너무 오래 빼면 철분 성분이 다소 손실될 수 있으므로 15분 이내가 적당합니다. 남은 고기 삶은 물은 영양이 풍부한 훌륭한 베이스 육수가 됩니다."
   },
   {
-    id: "recipeMiddle02",
-    stage: "middle",
-    name: "달콤 단호박 닭고기죽",
-    description: "달콤한 단호박과 담백하고 소화가 잘 되는 닭고기 가슴살이 부드럽게 조화된 중기 영양식입니다.",
-    ingredients: "불린 쌀 30g, 닭가슴살 20g, 단호박 20g, 채수 또는 닭고기 육수 240ml",
-    instructions: [
-      "닭가슴살은 찬물에 씻어 분유나 우유에 10분 정도 담가 잡내를 없앤 뒤 물로 헹구고 끓는 물에 삶습니다.",
-      "삶은 닭고기는 잘 식혀 결을 따라 가늘게 찢은 다음 칼로 2~3mm 두께로 쫑쫑 다져 준비합니다.",
-      "단호박은 씨와 껍질을 도려내고 찜기에 삶은 후 숟가락으로 부드럽게 으깨어 단호박 매시를 만듭니다.",
-      "냄비에 가볍게 갈아진 불린 쌀, 다진 닭가슴살, 으깬 단호박과 육수를 모두 붓고 주걱으로 잘 저어줍니다.",
-      "보글보글 끓어오르면 가장 약한 불로 낮추고 쌀알이 불어 통통해질 때까지 푹 저어가며 조리합니다."
-    ],
-    tips: "단호박 자체에 전분이 있어 일반 죽보다 빠르게 냄비 바닥이 탈 수 있으므로 중기죽을 끓일 때보다 더 정성껏 바닥을 저어주어야 합니다."
-  },
-  {
     id: "recipeMiddle03",
     stage: "middle",
     name: "대구살 당근 애호박죽",
@@ -719,15 +704,6 @@ export const recipeMedia = {
     stepImages: [
       "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
-    ]
-  },
-  recipeMiddle02: {
-    imageUrl: "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=oTBvLxot2qI",
-    stepImages: [
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
