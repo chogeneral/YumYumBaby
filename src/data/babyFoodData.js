@@ -1,4 +1,4 @@
-// 아기의 월령에 따른 이유식 단계 정보와 인터넷상의 인기 레시피를 구조화하여 정의한 데이터 모듈입니다.
+﻿// 아기의 월령에 따른 이유식 단계 정보와 인터넷상의 인기 레시피를 구조화하여 정의한 데이터 모듈입니다.
 // 이 데이터를 활용하여 UI에서 아기 생일에 따른 맞춤 정보를 렌더링하고, 상세 레시피 조회가 가능하게 합니다.
 
 // 이유식 단계별 설명 및 가이드라인 데이터 정의
@@ -610,26 +610,26 @@ export const recipeMedia = {
     youtubeUrl: "https://www.youtube.com/watch?v=RB2qtJLzWUA",
     stepImages: [
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-fouEwdmKPIg?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeEarly02: {
     imageUrl: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=280&fit=crop&crop=center&q=80",
     youtubeUrl: "https://www.youtube.com/watch?v=xH1iX5RuPaE",
     stepImages: [
-      "https://images.unsplash.com/photo-QlnsfRyEdng?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-fouEwdmKPIg?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeEarly03: {
     imageUrl: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=600&h=280&fit=crop&crop=center&q=80",
     youtubeUrl: "https://www.youtube.com/watch?v=HjzjIdaRjzY",
     stepImages: [
-      "https://images.unsplash.com/photo-FZJO5-NFVzI?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-fouEwdmKPIg?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeEarly04: {
@@ -637,8 +637,8 @@ export const recipeMedia = {
     youtubeUrl: "https://www.youtube.com/watch?v=57oBo1ELNvw",
     stepImages: [
       "https://images.unsplash.com/photo-1508002366005-75a695ee5b47?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-fouEwdmKPIg?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeEarly05: {
@@ -646,8 +646,8 @@ export const recipeMedia = {
     youtubeUrl: "https://www.youtube.com/watch?v=vV9xtJL7d10",
     stepImages: [
       "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-fouEwdmKPIg?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeEarly06: {
@@ -655,26 +655,26 @@ export const recipeMedia = {
     youtubeUrl: "https://www.youtube.com/watch?v=Du8Cwxq4c0Q",
     stepImages: [
       "https://images.unsplash.com/photo-1518977676901-baab3a2c79de?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-GtfBbMx3seA?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1518977676901-baab3a2c79de?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeEarly07: {
     imageUrl: "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=600&h=280&fit=crop&crop=center&q=80",
     youtubeUrl: "https://www.youtube.com/watch?v=13PKLsKhnxU",
     stepImages: [
-      "https://images.unsplash.com/photo-eFFnKMiDMGc?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeEarly08: {
     imageUrl: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=280&fit=crop&crop=center&q=80",
     youtubeUrl: "https://www.youtube.com/watch?v=HjCcCjEPXi0",
     stepImages: [
-      "https://images.unsplash.com/photo-E_Xt-TmOra4?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeEarly09: {
@@ -682,8 +682,8 @@ export const recipeMedia = {
     youtubeUrl: "https://www.youtube.com/watch?v=6K23svfS2C0",
     stepImages: [
       "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-bRdRUUtbxO0?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeEarly10: {
@@ -691,17 +691,17 @@ export const recipeMedia = {
     youtubeUrl: "https://www.youtube.com/watch?v=RegmogU3HHU",
     stepImages: [
       "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-fouEwdmKPIg?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeEarly11: {
     imageUrl: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=280&fit=crop&crop=center&q=80",
     youtubeUrl: "https://www.youtube.com/watch?v=ZJymh4wGrE0",
     stepImages: [
-      "https://images.unsplash.com/photo-0WW38q7lGZA?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeEarly12: {
@@ -710,7 +710,7 @@ export const recipeMedia = {
     stepImages: [
       "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeMiddle01: {
@@ -718,7 +718,7 @@ export const recipeMedia = {
     youtubeUrl: "https://www.youtube.com/watch?v=Q3L6sD67_BE",
     stepImages: [
       "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-FZJO5-NFVzI?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
@@ -736,7 +736,7 @@ export const recipeMedia = {
     youtubeUrl: "https://www.youtube.com/watch?v=mNDStMckfps",
     stepImages: [
       "https://images.unsplash.com/photo-1534482421-64566f976cfa?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-eFFnKMiDMGc?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
@@ -754,7 +754,7 @@ export const recipeMedia = {
     youtubeUrl: "https://www.youtube.com/watch?v=J1W7r0WBp2Y",
     stepImages: [
       "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-GtfBbMx3seA?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1518977676901-baab3a2c79de?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
@@ -762,8 +762,8 @@ export const recipeMedia = {
     imageUrl: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=280&fit=crop&crop=center&q=80",
     youtubeUrl: "https://www.youtube.com/watch?v=5b40wI3-KI8",
     stepImages: [
-      "https://images.unsplash.com/photo-NDX6Hr95dtQ?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-eFFnKMiDMGc?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
@@ -789,7 +789,7 @@ export const recipeMedia = {
     imageUrl: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=280&fit=crop&crop=center&q=80",
     youtubeUrl: "https://www.youtube.com/watch?v=wmITP1MgIHU",
     stepImages: [
-      "https://images.unsplash.com/photo-NDX6Hr95dtQ?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
@@ -799,7 +799,7 @@ export const recipeMedia = {
     youtubeUrl: "https://www.youtube.com/watch?v=bh8hi5HTdXw",
     stepImages: [
       "https://images.unsplash.com/photo-1559963110-71b394e7494d?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-FZJO5-NFVzI?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
@@ -836,16 +836,16 @@ export const recipeMedia = {
     stepImages: [
       "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-DOwt9UKiMrs?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeLate03: {
     imageUrl: "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=280&fit=crop&crop=center&q=80",
     youtubeUrl: "https://www.youtube.com/watch?v=A8L-zOE_NYc",
     stepImages: [
-      "https://images.unsplash.com/photo-NDX6Hr95dtQ?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-htMa9KPui1I?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeLate04: {
@@ -863,7 +863,7 @@ export const recipeMedia = {
     stepImages: [
       "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-oT7_v-I0hHg?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeLate06: {
@@ -871,7 +871,7 @@ export const recipeMedia = {
     youtubeUrl: "https://www.youtube.com/watch?v=MEHL0ZiRmtc",
     stepImages: [
       "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-htMa9KPui1I?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
     ]
   },
@@ -879,8 +879,8 @@ export const recipeMedia = {
     imageUrl: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=280&fit=crop&crop=center&q=80",
     youtubeUrl: "https://www.youtube.com/watch?v=deSjUaUoIrI",
     stepImages: [
-      "https://images.unsplash.com/photo-6zg1jUoTMyY?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-NDX6Hr95dtQ?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
@@ -890,7 +890,7 @@ export const recipeMedia = {
     stepImages: [
       "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-kdXXgdRulnI?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeLate09: {
@@ -908,7 +908,7 @@ export const recipeMedia = {
     stepImages: [
       "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-oT7_v-I0hHg?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeLate11: {
@@ -924,9 +924,9 @@ export const recipeMedia = {
     imageUrl: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=280&fit=crop&crop=center&q=80",
     youtubeUrl: "https://www.youtube.com/watch?v=CYAvQvLSeDI",
     stepImages: [
-      "https://images.unsplash.com/photo-NDX6Hr95dtQ?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-E_Xt-TmOra4?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-htMa9KPui1I?w=600&h=220&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=220&fit=crop&q=80"
     ]
   }
 };
