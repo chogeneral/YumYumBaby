@@ -959,25 +959,14 @@ export default function App() {
               <div className="instructionsBox">
                 <h3 className="instructionsTitle">맛있게 끓이는 법</h3>
                 <div style={{ display: "flex", flexDirection: "column", gap: "2.4rem" }}>
-                  {selectedRecipe.instructions.map((step, idx) => {
-                    // 레시피별 재료 맞춤 사진 — stepImages 배열 순환(idx % 3)으로 5단계에 배분
-                    const stepImgs = recipeMedia[selectedRecipe.id]?.stepImages || [];
-                    return (
+                  {selectedRecipe.instructions.map((step, idx) => (
                     <div key={idx} className="instructionStep">
-                      {stepImgs.length > 0 && (
-                        <img
-                          src={stepImgs[idx % stepImgs.length]}
-                          alt={`${idx + 1}단계 조리 과정`}
-                          className="stepPhoto"
-                        />
-                      )}
                       <div className="stepContent">
                         <span className="stepNum">{idx + 1}</span>
                         <p className="stepText">{step}</p>
                       </div>
                     </div>
-                    );
-                  })}
+                  ))}
                 </div>
               </div>
 
