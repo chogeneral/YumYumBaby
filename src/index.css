@@ -585,34 +585,28 @@ button, input, select {
 
 .recipeCardFooter {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
   font-size: 1.3rem;
   color: #ff8e72;
   font-weight: 600;
   margin-top: 0.8rem;
 }
 
-.recipeCardFooter span {
+.recipeCardFooter span:first-child {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #888888;
+  font-weight: 400;
+}
+
+.recipeCardFooter span:last-child {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-}
-
-/* 레시피 모달 대표 사진 */
-.recipeModalImageWrap {
-  width: calc(100% + 8rem);
-  height: 22rem;
-  margin: -4rem -4rem 0;
-  overflow: hidden;
-  border-radius: 2rem 2rem 0 0;
-}
-
-.recipeModalImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
 }
 
 /* 유튜브 보기 버튼 */
@@ -752,6 +746,20 @@ button, input, select {
 }
 
 .instructionStep {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.stepPhoto {
+  width: 100%;
+  height: 18rem;
+  object-fit: cover;
+  border-radius: 1rem;
+  display: block;
+}
+
+.stepContent {
   display: flex;
   gap: 1.2rem;
   align-items: flex-start;
@@ -1154,11 +1162,6 @@ button, input, select {
     padding: 2.4rem;
   }
 
-  .recipeModalImageWrap {
-    width: calc(100% + 4.8rem);
-    height: 18rem;
-    margin: -2.4rem -2.4rem 0;
-  }
 }
 
 @media (max-width: 480px) {

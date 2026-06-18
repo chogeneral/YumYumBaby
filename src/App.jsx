@@ -12,6 +12,16 @@ import {
 import { babyFoodStages, babyFoodRecipes, recipeMedia } from "./data/babyFoodData";
 import { supabase } from "./lib/supabase";
 
+// 조리 단계(1~5단계)마다 보여줄 공통 요리 과정 이미지입니다.
+// 모든 레시피는 준비→끓이기→약불 조리→농도 확인→완성 순서를 따릅니다.
+const cookingStepImages = [
+  "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&crop=center&q=80",
+  "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&crop=center&q=80",
+  "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&crop=center&q=80",
+  "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=220&fit=crop&crop=center&q=80",
+  "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&h=220&fit=crop&crop=center&q=80"
+];
+
 // 애플리케이션의 전체 기능과 라우팅, 회원 관리를 수행하는 메인 App 컴포넌트입니다.
 export default function App() {
   // --- 상태 관리 정의 ---
@@ -939,17 +949,6 @@ export default function App() {
             </button>
 
             <div className="modalBody">
-              {/* 레시피 대표 사진 — recipeMedia 맵에서 해당 ID의 이미지 URL을 조회 */}
-              {recipeMedia[selectedRecipe.id]?.imageUrl && (
-                <div className="recipeModalImageWrap">
-                  <img
-                    src={recipeMedia[selectedRecipe.id].imageUrl}
-                    alt={selectedRecipe.name}
-                    className="recipeModalImage"
-                  />
-                </div>
-              )}
-
               <div className="modalHeader">
                 <span className={`recipeStageTag ${selectedRecipe.stage === "early" ? "tagEarly" :
                   selectedRecipe.stage === "middle" ? "tagMiddle" : "tagLate"
@@ -968,11 +967,19 @@ export default function App() {
 
               <div className="instructionsBox">
                 <h3 className="instructionsTitle">맛있게 끓이는 법</h3>
-                <div style={{ display: "flex", flexDirection: "column", gap: "1.6rem" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "2.4rem" }}>
                   {selectedRecipe.instructions.map((step, idx) => (
                     <div key={idx} className="instructionStep">
-                      <span className="stepNum">{idx + 1}</span>
-                      <p className="stepText">{step}</p>
+                      {/* 단계별 사진 — cookingStepImages 인덱스로 해당 조리 과정 이미지 표시 */}
+                      <img
+                        src={cookingStepImages[idx]}
+                        alt={`${idx + 1}단계 조리 과정`}
+                        className="stepPhoto"
+                      />
+                      <div className="stepContent">
+                        <span className="stepNum">{idx + 1}</span>
+                        <p className="stepText">{step}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -986,10 +993,10 @@ export default function App() {
                 <p className="tipText">{selectedRecipe.tips}</p>
               </div>
 
-              {/* 유튜브 검색 버튼 — 새 탭에서 해당 레시피 유튜브 검색 결과 오픈 */}
-              {recipeMedia[selectedRecipe.id]?.youtubeQuery && (
+              {/* 유튜브 버튼 — 레시피별 만드는 영상 직접 링크로 새 탭 오픈 */}
+              {recipeMedia[selectedRecipe.id]?.youtubeUrl && (
                 <a
-                  href={`https://www.youtube.com/results?search_query=${encodeURIComponent(recipeMedia[selectedRecipe.id].youtubeQuery)}`}
+                  href={recipeMedia[selectedRecipe.id].youtubeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="youtubeBtn"
