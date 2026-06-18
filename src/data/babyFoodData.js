@@ -285,7 +285,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeMiddle05",
     stage: "middle",
-    name: "닭고기 감자죽",
+    name: "닭고기 감자비트죽",
     description: "닭고기 육수로 끓이는 중기 이유식입니다. 비트를 더해 색감과 영양을 높였으며 완성량 180~210ml 기준입니다.",
     ingredients: "불린 중기 쌀 30g, 닭고기(안심살 또는 가슴살) 25g, 감자 15g, 비트 15g, 닭고기 육수 200ml",
     instructions: [
