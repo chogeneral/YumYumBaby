@@ -9,7 +9,7 @@ import {
   LogOut,
   ChevronLeft
 } from "lucide-react";
-import { babyFoodStages, babyFoodRecipes } from "./data/babyFoodData";
+import { babyFoodStages, babyFoodRecipes, recipeMedia } from "./data/babyFoodData";
 import { supabase } from "./lib/supabase";
 
 // 애플리케이션의 전체 기능과 라우팅, 회원 관리를 수행하는 메인 App 컴포넌트입니다.
@@ -939,6 +939,17 @@ export default function App() {
             </button>
 
             <div className="modalBody">
+              {/* 레시피 대표 사진 — recipeMedia 맵에서 해당 ID의 이미지 URL을 조회 */}
+              {recipeMedia[selectedRecipe.id]?.imageUrl && (
+                <div className="recipeModalImageWrap">
+                  <img
+                    src={recipeMedia[selectedRecipe.id].imageUrl}
+                    alt={selectedRecipe.name}
+                    className="recipeModalImage"
+                  />
+                </div>
+              )}
+
               <div className="modalHeader">
                 <span className={`recipeStageTag ${selectedRecipe.stage === "early" ? "tagEarly" :
                   selectedRecipe.stage === "middle" ? "tagMiddle" : "tagLate"
@@ -974,6 +985,18 @@ export default function App() {
                 </span>
                 <p className="tipText">{selectedRecipe.tips}</p>
               </div>
+
+              {/* 유튜브 검색 버튼 — 새 탭에서 해당 레시피 유튜브 검색 결과 오픈 */}
+              {recipeMedia[selectedRecipe.id]?.youtubeQuery && (
+                <a
+                  href={`https://www.youtube.com/results?search_query=${encodeURIComponent(recipeMedia[selectedRecipe.id].youtubeQuery)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="youtubeBtn"
+                >
+                  ▶&nbsp; 유튜브에서 영상 보기
+                </a>
+              )}
             </div>
           </div>
         </div>

@@ -601,3 +601,152 @@ export const babyFoodRecipes = [
     tips: "사과 과육에 수분이 많아 연두부와 섞으면 흐물흐물해질 수 있습니다. 사과를 다진 후 키친타월로 수분을 살짝 제거하면 모양이 잘 유지됩니다. 만든 즉시 제공해야 하며 사과 갈변 방지를 위해 바로 조리합니다."
   }
 ];
+
+// 각 레시피의 대표 이미지(Unsplash CDN)와 유튜브 검색어를 별도 맵으로 관리합니다.
+// 레시피 데이터 본문을 오염시키지 않기 위해 분리 선언합니다.
+export const recipeMedia = {
+  recipeEarly01: {
+    imageUrl: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "아기 쌀미음 이유식 만들기"
+  },
+  recipeEarly02: {
+    imageUrl: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "애호박 미음 이유식 만들기"
+  },
+  recipeEarly03: {
+    imageUrl: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "브로콜리 미음 이유식 만들기"
+  },
+  recipeEarly04: {
+    imageUrl: "https://images.unsplash.com/photo-1508002366005-75a695ee5b47?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "고구마 미음 이유식 만들기"
+  },
+  recipeEarly05: {
+    imageUrl: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "단호박 미음 이유식 만들기"
+  },
+  recipeEarly06: {
+    imageUrl: "https://images.unsplash.com/photo-1518977676901-baab3a2c79de?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "감자 미음 이유식 만들기"
+  },
+  recipeEarly07: {
+    imageUrl: "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "당근 미음 이유식 만들기"
+  },
+  recipeEarly08: {
+    imageUrl: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "사과 배 미음 이유식 만들기"
+  },
+  recipeEarly09: {
+    imageUrl: "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "완두콩 미음 이유식 만들기"
+  },
+  recipeEarly10: {
+    imageUrl: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "시금치 미음 이유식 만들기"
+  },
+  recipeEarly11: {
+    imageUrl: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "바나나 미음 이유식 만들기"
+  },
+  recipeEarly12: {
+    imageUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "청경채 미음 이유식 만들기"
+  },
+  recipeMiddle01: {
+    imageUrl: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "소고기 브로콜리죽 이유식 만들기"
+  },
+  recipeMiddle02: {
+    imageUrl: "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "단호박 닭고기죽 이유식 만들기"
+  },
+  recipeMiddle03: {
+    imageUrl: "https://images.unsplash.com/photo-1534482421-64566f976cfa?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "대구살 이유식 죽 만들기"
+  },
+  recipeMiddle04: {
+    imageUrl: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "시금치 소고기죽 이유식 만들기"
+  },
+  recipeMiddle05: {
+    imageUrl: "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "닭고기 감자죽 이유식 만들기"
+  },
+  recipeMiddle06: {
+    imageUrl: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "두부 당근죽 이유식 만들기"
+  },
+  recipeMiddle07: {
+    imageUrl: "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "계란 노른자 이유식 죽 만들기"
+  },
+  recipeMiddle08: {
+    imageUrl: "https://images.unsplash.com/photo-1508002366005-75a695ee5b47?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "고구마 닭고기죽 이유식 만들기"
+  },
+  recipeMiddle09: {
+    imageUrl: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "연두부 시금치죽 이유식 만들기"
+  },
+  recipeMiddle10: {
+    imageUrl: "https://images.unsplash.com/photo-1559963110-71b394e7494d?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "새우 브로콜리죽 이유식 만들기"
+  },
+  recipeMiddle11: {
+    imageUrl: "https://images.unsplash.com/photo-1551215042-a51e2b0f00ef?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "양배추 소고기죽 이유식 만들기"
+  },
+  recipeMiddle12: {
+    imageUrl: "https://images.unsplash.com/photo-1601579112934-17ac2aa02b6a?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "옥수수 닭고기죽 이유식 만들기"
+  },
+  recipeLate01: {
+    imageUrl: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "소고기 버섯 진밥 이유식 만들기"
+  },
+  recipeLate02: {
+    imageUrl: "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "소고기 야채 주먹밥 이유식 만들기"
+  },
+  recipeLate03: {
+    imageUrl: "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "아기 두부 달걀찜 이유식 만들기"
+  },
+  recipeLate04: {
+    imageUrl: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "연어 야채 진밥 이유식 만들기"
+  },
+  recipeLate05: {
+    imageUrl: "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "닭고기 채소 볶음밥 이유식 만들기"
+  },
+  recipeLate06: {
+    imageUrl: "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "아기 계란 오믈렛 이유식 만들기"
+  },
+  recipeLate07: {
+    imageUrl: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "돼지고기 두부 야채죽 이유식 만들기"
+  },
+  recipeLate08: {
+    imageUrl: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "아기 미역국 이유식 만들기"
+  },
+  recipeLate09: {
+    imageUrl: "https://images.unsplash.com/photo-1559963110-71b394e7494d?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "새우 완두콩 진밥 이유식 만들기"
+  },
+  recipeLate10: {
+    imageUrl: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "닭고기 표고버섯 이유식 진밥 만들기"
+  },
+  recipeLate11: {
+    imageUrl: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "시금치 달걀죽 이유식 만들기"
+  },
+  recipeLate12: {
+    imageUrl: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeQuery: "연두부 사과 스크램블 이유식 만들기"
+  }
+};
