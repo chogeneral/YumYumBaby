@@ -345,7 +345,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeMiddle10",
     stage: "middle",
-    name: "새우살 브로콜리죽",
+    name: "새우브로콜리죽",
     description: "풍부한 단백질과 아연이 함유된 새우살로 아기의 성장과 면역력을 동시에 챙기는 중기 이유식입니다.",
     ingredients: "불린 쌀 30g, 새우살 (냉동 무첨가) 20g, 브로콜리 꽃송이 15g, 야채 육수 240ml",
     instructions: [
@@ -357,22 +357,6 @@ export const babyFoodRecipes = [
     ],
     tips: "새우는 알레르기를 유발할 수 있는 식품 중 하나입니다. 반드시 처음에는 소량(1/4 분량)으로 시작하여 2~3일간 피부 발진, 설사, 구토 등의 반응을 면밀히 관찰합니다. 가족 중 갑각류 알레르기가 있다면 의사와 상의 후 제공합니다."
   },
-  {
-    id: "recipeMiddle11",
-    stage: "middle",
-    name: "양배추 소고기죽",
-    description: "위장을 보호하는 비타민 U가 풍부한 양배추와 철분이 가득한 소고기를 함께 사용한 소화에 좋은 중기 영양죽입니다.",
-    ingredients: "불린 쌀 30g, 소고기 다짐육 20g, 양배추 15g, 소고기 육수 240ml",
-    instructions: [
-      "양배추는 겉잎을 제거하고 안쪽의 부드러운 잎 부분을 골라 2~3mm 크기로 잘게 다집니다.",
-      "소고기 다짐육은 핏물을 제거한 뒤 냄비에 물 약간을 두르고 먼저 볶아 익힙니다.",
-      "소고기가 익으면 다진 양배추를 넣어 함께 2분간 더 볶아 양배추 특유의 냄새를 날립니다.",
-      "불린 쌀과 소고기 육수 240ml를 붓고 센 불로 가열합니다.",
-      "끓어오르면 약불로 줄여 쌀알이 완전히 퍼질 때까지 10~12분간 저어가며 끓여 완성합니다."
-    ],
-    tips: "양배추를 먼저 살짝 볶으면 아기가 싫어하는 특유의 유황 냄새가 줄어듭니다. 양배추 심 부분은 섬유질이 많아 소화에 부담을 줄 수 있으므로, 부드러운 잎 부분만 사용합니다."
-  },
-
   {
     id: "recipeMiddle12",
     stage: "middle",
@@ -752,15 +736,6 @@ export const recipeMedia = {
     stepImages: [
       "https://images.unsplash.com/photo-1559963110-71b394e7494d?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
-    ]
-  },
-  recipeMiddle11: {
-    imageUrl: "https://images.unsplash.com/photo-1551215042-a51e2b0f00ef?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=rxzZWDmbfS8",
-    stepImages: [
-      "https://images.unsplash.com/photo-1551215042-a51e2b0f00ef?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
