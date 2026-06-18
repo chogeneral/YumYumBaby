@@ -61,6 +61,9 @@ export default function App() {
   const [findPasswordForm, setFindPasswordForm] = useState({ email: "" });
   const [findPasswordSent, setFindPasswordSent] = useState(false);
 
+  // 회원정보 수정 폼 — 수정 페이지 진입 시 현재 userProfile 값으로 초기화
+  const [editProfileForm, setEditProfileForm] = useState({ username: "", babyName: "", babyBirth: "" });
+
   const [calcDate, setCalcDate] = useState("");
   const [calcResult, setCalcResult] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -171,6 +174,13 @@ export default function App() {
     setCalcResult({ months, ...stageInfo });
   };
 
+  // 회원가입 폼의 각 입력 필드 값이 바뀔 때 상태를 업데이트하고, 브라우저의 커스텀 에러 상태(invalid)를 초기화하는 공용 이벤트 핸들러입니다.
+  const handleRegisterChange = (e, field) => {
+    // 사용자가 텍스트를 수정하기 시작하면 에러 메시지를 지워 브라우저 경고 상태를 해제합니다.
+    e.target.setCustomValidity("");
+    setRegisterForm((prev) => ({ ...prev, [field]: e.target.value }));
+  };
+
   // Supabase Auth 회원가입 — 트리거 없이 앱에서 직접 profiles 행을 생성합니다.
   // signUp으로 계정 생성 후, 반환된 user.id를 사용하여 profiles 테이블에 직접 INSERT합니다.
   const handleRegisterSubmit = async (e) => {
@@ -182,18 +192,49 @@ export default function App() {
       return;
     }
 
-    // 부모 이름과 아기 이름이 자음/모음이 결합된 올바른 한글로만 구성되어 있는지 검사하기 위한 정규식입니다.
-    const koreanRegex = /^[가-힣]+$/;
+    // 이메일이 표준적인 형식(예: user@example.com)에 부합하는지 검사하기 위한 정규식입니다.
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    // 가입한 부모 이름이 한글로만 구성되어 있는지 유효성을 검사합니다.
-    if (!koreanRegex.test(parentName)) {
-      alert("부모 이름은 한글로만 입력해 주세요.");
+    // 이메일 입력 필드의 DOM 요소를 가져와 브라우저 기본 툴팁(말풍선)을 띄우기 위해 준비합니다.
+    const emailInput = document.getElementById("regEmail");
+
+    // 입력된 이메일이 올바른 형식인지 검사하고, 아닐 경우 브라우저 툴팁으로 에러를 안내합니다.
+    if (!emailRegex.test(email)) {
+      emailInput.setCustomValidity("올바른 이메일 형식이 아닙니다.");
+      emailInput.reportValidity(); // 화면에 에러 말풍선 툴팁을 유지시킵니다. (onChange 시 해제됨)
       return;
     }
 
-    // 등록할 아기 이름이 한글로만 구성되어 있는지 유효성을 검사합니다.
+    // 부모 이름과 아기 이름이 자음/모음이 결합된 올바른 한글로만 구성되어 있는지 검사하기 위한 정규식입니다.
+    const koreanRegex = /^[가-힣]+$/;
+
+    // 부모 이름 입력 필드의 DOM 요소를 가져옵니다.
+    const parentNameInput = document.getElementById("regParentName");
+
+    // 부모 이름에 한글만 입력되었는지 유효성을 검사합니다.
+    if (!koreanRegex.test(parentName)) {
+      parentNameInput.setCustomValidity("부모 이름은 한글로만 입력해 주세요.");
+      parentNameInput.reportValidity(); // 화면에 에러 말풍선 툴팁을 유지시킵니다.
+      return;
+    }
+
+    // 우리 아기 이름 입력 필드의 DOM 요소를 가져옵니다.
+    const babyNameInput = document.getElementById("regBabyName");
+
+    // 아기 이름에 한글만 입력되었는지 유효성을 검사합니다.
     if (!koreanRegex.test(babyName)) {
-      alert("우리아기 이름은 한글로만 입력해 주세요.");
+      babyNameInput.setCustomValidity("우리아기 이름은 한글로만 입력해 주세요.");
+      babyNameInput.reportValidity(); // 화면에 에러 말풍선 툴팁을 유지시킵니다.
+      return;
+    }
+
+    // 비밀번호 입력 필드의 DOM 요소를 가져옵니다.
+    const passwordInput = document.getElementById("regPassword");
+
+    // 비밀번호가 최소 6자 이상으로 올바르게 설정되었는지 사전 검사합니다.
+    if (password.length < 6) {
+      passwordInput.setCustomValidity("비밀번호는 최소 6자 이상이어야 합니다.");
+      passwordInput.reportValidity(); // 화면에 에러 말풍선 툴팁을 유지시킵니다.
       return;
     }
 
@@ -308,6 +349,38 @@ export default function App() {
     }
     setPasswordResetSuccess(true);
     setPasswordResetForm({ newPassword: "", confirmPassword: "" });
+  };
+
+  // 회원정보 수정 — babyFoodProfiles 테이블의 username, babyName, babyBirth를 갱신합니다.
+  const handleEditProfileSubmit = async (e) => {
+    e.preventDefault();
+    const { username, babyName, babyBirth } = editProfileForm;
+
+    // 회원가입과 동일한 한글 유효성 검사 패턴 재사용
+    const koreanRegex = /^[가-힣]+$/;
+    if (!koreanRegex.test(username)) {
+      alert("부모 이름은 한글로만 입력해 주세요.");
+      return;
+    }
+    if (!koreanRegex.test(babyName)) {
+      alert("아기 이름은 한글로만 입력해 주세요.");
+      return;
+    }
+
+    const { error } = await supabase
+      .from("babyFoodProfiles")
+      .update({ username, babyName, babyBirth })
+      .eq("id", supabaseSession.user.id);
+
+    if (error) {
+      alert(`수정 오류: ${error.message}`);
+      return;
+    }
+
+    // 수정 후 userProfile 상태를 DB에서 즉시 재조회하여 마이페이지에 반영
+    await fetchUserProfile(supabaseSession.user.id);
+    setCurrentTab("myPage");
+    alert("회원정보가 수정되었습니다.");
   };
 
   // babyFoodProfiles에서 부모 이름 + 아기 이름으로 가입 이메일을 조회합니다.
@@ -705,13 +778,29 @@ export default function App() {
             <div className="myPageCard">
               <div className="myPageHeader">
                 <h2 className="myPageTitle">마이페이지 (회원 정보 관리)</h2>
-                <button
-                  className="headerLogoutBtn"
-                  onClick={handleLogout}
-                  style={{ color: "#d32f2f", borderColor: "#ffcdd2" }}
-                >
-                  로그아웃
-                </button>
+                <div className="myPageHeaderActions">
+                  <button
+                    className="editProfileBtn"
+                    onClick={() => {
+                      // 현재 userProfile 값으로 수정 폼을 초기화한 뒤 수정 페이지로 이동
+                      setEditProfileForm({
+                        username: userProfile.username,
+                        babyName: userProfile.babyName,
+                        babyBirth: userProfile.babyBirth
+                      });
+                      setCurrentTab("editProfile");
+                    }}
+                  >
+                    회원정보 수정
+                  </button>
+                  <button
+                    className="headerLogoutBtn"
+                    onClick={handleLogout}
+                    style={{ color: "#d32f2f", borderColor: "#ffcdd2" }}
+                  >
+                    로그아웃
+                  </button>
+                </div>
               </div>
 
               <div className="myPageGrid">
@@ -744,18 +833,7 @@ export default function App() {
                 )}
               </div>
 
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "2rem", borderTop: "0.1rem solid #f0f0f0", paddingTop: "2.4rem" }}>
-                <span
-                  onClick={() => {
-                    setCurrentTab("home");
-                    window.scrollTo(0, 0);
-                  }}
-                  style={{ display: "flex", alignItems: "center", gap: "0.4rem", cursor: "pointer", fontSize: "1.4rem", color: "#ff8e72", fontWeight: 600 }}
-                >
-                  <ChevronLeft size={16} />
-                  추천 메인으로 돌아가기
-                </span>
-
+              <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "2rem", borderTop: "0.1rem solid #f0f0f0", paddingTop: "2.4rem" }}>
                 <button
                   onClick={handleWithdrawal}
                   style={{ fontSize: "1.3rem", color: "#d32f2f", textDecoration: "underline", cursor: "pointer" }}
@@ -763,6 +841,80 @@ export default function App() {
                   회원 탈퇴하기
                 </button>
               </div>
+            </div>
+          </section>
+        )}
+        {/* 회원정보 수정 탭 (editProfile) */}
+        {currentTab === "editProfile" && supabaseSession && userProfile && (
+          <section className="myPageSection">
+            <div className="myPageCard">
+              <div className="myPageHeader">
+                <h2 className="myPageTitle">회원정보 수정</h2>
+                <button className="headerLogoutBtn" onClick={() => setCurrentTab("myPage")}>
+                  ← 마이페이지로
+                </button>
+              </div>
+
+              <form onSubmit={handleEditProfileSubmit} className="authForm">
+                <div className="authFormGroup">
+                  <label>이메일 (변경 불가)</label>
+                  <input
+                    className="authInput"
+                    value={supabaseSession.user.email}
+                    disabled
+                    style={{ backgroundColor: "#f5f5f5", color: "#888888", cursor: "not-allowed" }}
+                  />
+                </div>
+
+                <div className="authFormGroup">
+                  <label htmlFor="editUsername">부모 이름</label>
+                  <input
+                    type="text"
+                    id="editUsername"
+                    className="authInput"
+                    value={editProfileForm.username}
+                    onChange={(e) => setEditProfileForm({ ...editProfileForm, username: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="authFormGroup">
+                  <label htmlFor="editBabyName">아기 이름</label>
+                  <input
+                    type="text"
+                    id="editBabyName"
+                    className="authInput"
+                    value={editProfileForm.babyName}
+                    onChange={(e) => setEditProfileForm({ ...editProfileForm, babyName: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="authFormGroup">
+                  <label htmlFor="editBabyBirth">아기 태어난 날</label>
+                  <input
+                    type="date"
+                    id="editBabyBirth"
+                    className="authInput"
+                    value={editProfileForm.babyBirth}
+                    onChange={(e) => setEditProfileForm({ ...editProfileForm, babyBirth: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="editProfileActions">
+                  <button
+                    type="button"
+                    className="editCancelBtn"
+                    onClick={() => setCurrentTab("myPage")}
+                  >
+                    취소
+                  </button>
+                  <button type="submit" className="authSubmitBtn" style={{ flex: 1 }}>
+                    수정 완료
+                  </button>
+                </div>
+              </form>
             </div>
           </section>
         )}
@@ -1005,7 +1157,7 @@ export default function App() {
                       className="authInput"
                       placeholder="로그인에 사용할 이메일을 입력하세요"
                       value={registerForm.email}
-                      onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
+                      onChange={(e) => handleRegisterChange(e, "email")}
                       required
                     />
                   </div>
@@ -1017,7 +1169,7 @@ export default function App() {
                       className="authInput"
                       placeholder="가입자 성함을 입력하세요"
                       value={registerForm.parentName}
-                      onChange={(e) => setRegisterForm({ ...registerForm, parentName: e.target.value })}
+                      onChange={(e) => handleRegisterChange(e, "parentName")}
                       required
                     />
                   </div>
@@ -1029,7 +1181,7 @@ export default function App() {
                       className="authInput"
                       placeholder="예) 아롱이"
                       value={registerForm.babyName}
-                      onChange={(e) => setRegisterForm({ ...registerForm, babyName: e.target.value })}
+                      onChange={(e) => handleRegisterChange(e, "babyName")}
                       required
                     />
                   </div>
@@ -1040,7 +1192,7 @@ export default function App() {
                       id="regBabyBirth"
                       className="authInput"
                       value={registerForm.babyBirth}
-                      onChange={(e) => setRegisterForm({ ...registerForm, babyBirth: e.target.value })}
+                      onChange={(e) => handleRegisterChange(e, "babyBirth")}
                       required
                     />
                   </div>
@@ -1052,7 +1204,7 @@ export default function App() {
                       className="authInput"
                       placeholder="비밀번호 설정 (6자 이상)"
                       value={registerForm.password}
-                      onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
+                      onChange={(e) => handleRegisterChange(e, "password")}
                       required
                     />
                   </div>

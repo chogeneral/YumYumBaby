@@ -958,7 +958,7 @@ button, input, select {
 
 .myPageGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
 }
 
@@ -985,6 +985,57 @@ button, input, select {
 
 .myPageInfoValue span {
   color: #ff8e72;
+}
+
+/* 마이페이지 헤더 버튼 그룹 */
+.myPageHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+/* 회원정보 수정 버튼 */
+.editProfileBtn {
+  background-color: #fff0eb;
+  color: #ff8e72;
+  border: 0.1rem solid #ffd4c8;
+  padding: 0.6rem 1.4rem;
+  border-radius: 2rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.editProfileBtn:hover {
+  background-color: #ff8e72;
+  color: #ffffff;
+  border-color: #ff8e72;
+}
+
+/* 수정 폼 하단 버튼 행 */
+.editProfileActions {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 0.8rem;
+}
+
+/* 취소 버튼 */
+.editCancelBtn {
+  flex: 0 0 auto;
+  background-color: #f5f5f5;
+  color: #666666;
+  border: 0.1rem solid #e0e0e0;
+  padding: 1.4rem 2rem;
+  border-radius: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.editCancelBtn:hover {
+  background-color: #e8e8e8;
 }
 
 /* 푸터 영역 */
