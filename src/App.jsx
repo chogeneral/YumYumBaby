@@ -130,6 +130,8 @@ export default function App() {
   };
 
   // 개월 수에 맞는 이유식 단계를 결정합니다.
+  // 메인 페이지의 맞춤 추천 카드 및 마이페이지 등에서 출력되는 단계 명칭을 
+  // '이유식 레시피 라이브러리'의 탭 버튼 텍스트('초기', '중기', '후기/완료기')와 일치시켜 UI 전반의 일관성을 제공하기 위해 stageName 값을 변경합니다.
   const determineStage = (months) => {
     if (months < 4) {
       return {
@@ -140,19 +142,19 @@ export default function App() {
     } else if (months >= 4 && months <= 6) {
       return {
         stageId: "early",
-        stageName: "초기 이유식",
+        stageName: "초기",
         description: "부드럽고 묽은 미음으로 알레르기 반응을 확인하며 이유식을 시작하는 시기입니다."
       };
     } else if (months >= 7 && months <= 9) {
       return {
         stageId: "middle",
-        stageName: "중기 이유식",
+        stageName: "중기",
         description: "잇몸으로 음식 알갱이를 으깨 먹는 훈련을 하고, 철분 흡수를 위해 소고기 등 육류를 섭취하는 시기입니다."
       };
     } else if (months >= 10 && months <= 23) {
       return {
         stageId: "late",
-        stageName: "후기 & 완료기 이유식",
+        stageName: "후기/완료기",
         description: "진밥이나 무른 밥 형태로 아침/점심/저녁 하루 세 번 규칙적으로 다양한 음식을 먹는 시기입니다."
       };
     } else {
@@ -642,7 +644,8 @@ export default function App() {
               </p>
 
               <div className="recipesGrid">
-                {recipes.slice(0, 6).map(recipe => (
+                {/* 메인 페이지 가이드의 선택된 탭 단계(stageTab)에 부합하는 이유식 레시피들만 필터링하여 전체 추천 목록을 한 화면에 전부 노출시킵니다. */}
+                {recipes && Array.isArray(recipes) && recipes.filter(recipe => recipe?.stage === stageTab).map(recipe => (
                   <div
                     key={recipe.id}
                     className="recipeCard"
@@ -662,20 +665,6 @@ export default function App() {
                     </div>
                   </div>
                 ))}
-              </div>
-
-              <div style={{ textAlign: "center", marginTop: "3.6rem" }}>
-                <button
-                  className="resultActionBtn"
-                  style={{ padding: "1.2rem 2.8rem", borderRadius: "2.5rem" }}
-                  onClick={() => {
-                    setCurrentTab("recipes");
-                    setRecipeFilter("all");
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  더 많은 레시피 보러가기
-                </button>
               </div>
             </section>
           </div>
