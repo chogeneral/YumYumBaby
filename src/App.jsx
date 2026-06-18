@@ -47,6 +47,20 @@ export default function App() {
     password: ""
   });
 
+  // 비밀번호 재설정 모달 — Supabase PASSWORD_RECOVERY 이벤트 수신 시 노출
+  const [showPasswordResetModal, setShowPasswordResetModal] = useState(false);
+  const [passwordResetForm, setPasswordResetForm] = useState({ newPassword: "", confirmPassword: "" });
+  const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
+
+  // 아이디 찾기 폼 — 부모 이름 + 아기 이름으로 이메일 조회
+  const [findEmailForm, setFindEmailForm] = useState({ parentName: "", babyName: "" });
+  // null: 초기 상태, "notFound": 미조회, string: 찾은 이메일
+  const [findEmailResult, setFindEmailResult] = useState(null);
+
+  // 비밀번호 찾기 폼 — 이메일로 재설정 메일 발송
+  const [findPasswordForm, setFindPasswordForm] = useState({ email: "" });
+  const [findPasswordSent, setFindPasswordSent] = useState(false);
+
   const [calcDate, setCalcDate] = useState("");
   const [calcResult, setCalcResult] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -56,28 +70,17 @@ export default function App() {
 
   // --- Supabase 데이터 fetch 함수 ---
 
-  // 로그인한 유저의 profiles 테이블 행을 조회합니다.
+  // 로그인한 유저의 babyFoodProfiles 테이블 행을 조회합니다.
   // onAuthStateChange 내부에서도 호출되므로 별도 함수로 분리합니다.
   const fetchUserProfile = async (userId) => {
+    // 프로필이 없을 경우 406 에러 방지를 위해 maybeSingle 사용
     const { data, error } = await supabase
-      .from("profiles")
+      .from("babyFoodProfiles")
       .select("*")
       .eq("id", userId)
-      .single();
+      .maybeSingle();
     if (!error && data) {
       setUserProfile(data);
-    }
-  };
-
-  // recipes 테이블 전체를 조회합니다.
-  // 실패(미설정 환경 포함) 시 정적 데이터를 그대로 유지하여 앱이 깨지지 않게 합니다.
-  const fetchRecipes = async () => {
-    const { data, error } = await supabase
-      .from("recipes")
-      .select("*")
-      .order("id");
-    if (!error && data && data.length > 0) {
-      setRecipes(data);
     }
   };
 
@@ -91,16 +94,18 @@ export default function App() {
     });
 
     // 로그인/로그아웃 이벤트를 실시간으로 감지합니다.
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    // PASSWORD_RECOVERY 이벤트는 재설정 메일의 링크 클릭 시 Supabase가 발생시킵니다.
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSupabaseSession(session);
-      if (session) {
+      if (event === "PASSWORD_RECOVERY") {
+        setShowPasswordResetModal(true);
+        setPasswordResetSuccess(false);
+      } else if (session) {
         fetchUserProfile(session.user.id);
       } else {
         setUserProfile(null);
       }
     });
-
-    fetchRecipes();
 
     // 컴포넌트 언마운트 시 구독 해제 — 메모리 누수 방지
     return () => subscription.unsubscribe();
@@ -166,8 +171,8 @@ export default function App() {
     setCalcResult({ months, ...stageInfo });
   };
 
-  // Supabase Auth 회원가입 — 이메일+비밀번호 + 아기 정보를 메타데이터로 함께 전달합니다.
-  // 메타데이터는 on_auth_user_created 트리거에서 profiles 테이블에 자동 삽입됩니다.
+  // Supabase Auth 회원가입 — 트리거 없이 앱에서 직접 profiles 행을 생성합니다.
+  // signUp으로 계정 생성 후, 반환된 user.id를 사용하여 profiles 테이블에 직접 INSERT합니다.
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     const { email, parentName, babyName, babyBirth, password } = registerForm;
@@ -177,21 +182,57 @@ export default function App() {
       return;
     }
 
-    const { error } = await supabase.auth.signUp({
+    // 부모 이름과 아기 이름이 자음/모음이 결합된 올바른 한글로만 구성되어 있는지 검사하기 위한 정규식입니다.
+    const koreanRegex = /^[가-힣]+$/;
+
+    // 가입한 부모 이름이 한글로만 구성되어 있는지 유효성을 검사합니다.
+    if (!koreanRegex.test(parentName)) {
+      alert("부모 이름은 한글로만 입력해 주세요.");
+      return;
+    }
+
+    // 등록할 아기 이름이 한글로만 구성되어 있는지 유효성을 검사합니다.
+    if (!koreanRegex.test(babyName)) {
+      alert("우리아기 이름은 한글로만 입력해 주세요.");
+      return;
+    }
+
+    // 1단계: Supabase Auth에 계정만 생성 (메타데이터 없이 순수 인증만 처리)
+    const { data, error } = await supabase.auth.signUp({
       email,
-      password,
-      options: {
-        data: {
-          parent_name: parentName,
-          baby_name: babyName,
-          baby_birth: babyBirth
-        }
-      }
+      password
     });
 
     if (error) {
-      alert(`회원가입 오류: ${error.message}`);
+      console.error("회원가입 상세 오류:", error);
+      const msg = error.message || error.code || String(error.status) || "Supabase 연결 오류 — 콘솔을 확인하세요.";
+      alert(`회원가입 오류: ${msg}`);
       return;
+    }
+
+    // 이미 가입된 이메일이면 identities 배열이 비어 있음
+    if (data?.user?.identities?.length === 0) {
+      alert("이미 가입된 이메일입니다. 로그인을 이용해 주세요.");
+      setAuthMode("login");
+      return;
+    }
+
+    // 2단계: 생성된 user의 id로 babyFoodProfiles 테이블에 직접 행을 삽입합니다.
+    // DB 트리거 대신 앱에서 직접 처리하여 500 에러를 방지합니다.
+    if (data?.user?.id) {
+      const { error: profileError } = await supabase
+        .from("babyFoodProfiles")
+        .insert({
+          id: data.user.id,
+          username: parentName,
+          babyName: babyName,
+          babyBirth: babyBirth,
+          email: email
+        });
+
+      if (profileError) {
+        console.error("프로필 생성 오류:", profileError);
+      }
     }
 
     alert("회원가입이 완료되었습니다! 이메일 인증 후 로그인해 주세요.");
@@ -227,14 +268,14 @@ export default function App() {
     setCurrentTab("home");
   };
 
-  // 회원 탈퇴 — profiles 행 삭제 후 로그아웃합니다.
+  // 회원 탈퇴 — babyFoodProfiles 행 삭제 후 로그아웃합니다.
   // auth.users 행의 완전한 삭제는 Supabase Admin API 권한이 필요하므로 프로필만 제거합니다.
   const handleWithdrawal = async () => {
     if (!supabaseSession) return;
     if (!confirm("정말로 탈퇴하시겠습니까? 등록된 모든 아기 정보와 계정이 영구 삭제됩니다.")) return;
 
     const { error } = await supabase
-      .from("profiles")
+      .from("babyFoodProfiles")
       .delete()
       .eq("id", supabaseSession.user.id);
 
@@ -246,6 +287,56 @@ export default function App() {
     await supabase.auth.signOut();
     setCurrentTab("home");
     alert("탈퇴 처리가 완료되었습니다. 그동안 이용해 주셔서 감사합니다.");
+  };
+
+  // 새 비밀번호와 확인 비밀번호를 검증한 뒤 Supabase Auth를 통해 비밀번호를 갱신합니다.
+  const handlePasswordReset = async (e) => {
+    e.preventDefault();
+    const { newPassword, confirmPassword } = passwordResetForm;
+    if (newPassword !== confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다. 다시 확인해 주세요.");
+      return;
+    }
+    if (newPassword.length < 6) {
+      alert("비밀번호는 6자 이상이어야 합니다.");
+      return;
+    }
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    if (error) {
+      alert(`비밀번호 변경 오류: ${error.message}`);
+      return;
+    }
+    setPasswordResetSuccess(true);
+    setPasswordResetForm({ newPassword: "", confirmPassword: "" });
+  };
+
+  // babyFoodProfiles에서 부모 이름 + 아기 이름으로 가입 이메일을 조회합니다.
+  const handleFindEmail = async (e) => {
+    e.preventDefault();
+    const { parentName, babyName } = findEmailForm;
+    const { data, error } = await supabase
+      .from("babyFoodProfiles")
+      .select("email")
+      .eq("username", parentName)
+      .eq("babyName", babyName)
+      .maybeSingle();
+    if (error) {
+      alert("조회 중 오류가 발생했습니다.");
+      return;
+    }
+    setFindEmailResult(data?.email || "notFound");
+  };
+
+  // Supabase Auth 비밀번호 재설정 메일을 발송합니다.
+  const handleFindPassword = async (e) => {
+    e.preventDefault();
+    const { email } = findPasswordForm;
+    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    if (error) {
+      alert(`오류가 발생했습니다: ${error.message}`);
+      return;
+    }
+    setFindPasswordSent(true);
   };
 
   // 검색어 + 단계 필터로 레시피 목록을 걸러냅니다.
@@ -263,7 +354,7 @@ export default function App() {
   // 로그인 상태에서 아기 생일을 기준으로 현재 이유식 단계를 계산합니다.
   const getBabyCurrentStage = () => {
     if (!userProfile) return null;
-    const months = calculateMonths(userProfile.baby_birth);
+    const months = calculateMonths(userProfile.babyBirth);
     const stageDetails = determineStage(months);
     return { months, ...stageDetails };
   };
@@ -324,7 +415,7 @@ export default function App() {
           {supabaseSession && userProfile ? (
             <div className="headerUserInfo">
               <span className="headerUserText">
-                <strong>{userProfile.baby_name}</strong> 아기 방
+                <strong>{userProfile.babyName}</strong> 아기 방
               </span>
               <button className="headerLogoutBtn" onClick={handleLogout}>
                 <LogOut size={16} style={{ marginRight: "0.4rem", verticalAlign: "middle" }} />
@@ -391,10 +482,10 @@ export default function App() {
                 <div className="calculatorCard" style={{ borderColor: "#ffe5dd", backgroundColor: "#fffbfb" }}>
                   <div className="calcHeader">
                     <Baby className="calcIcon" size={24} style={{ color: "#ff8e72" }} />
-                    <h2 className="calcTitle">{userProfile.baby_name} 아기를 위한 맞춤 추천</h2>
+                    <h2 className="calcTitle">{userProfile.babyName} 아기를 위한 맞춤 추천</h2>
                   </div>
                   <div className="calcDesc">
-                    아기의 생년월일(<strong>{userProfile.baby_birth}</strong>) 기준 현재 생후 <strong>{babyInfo.months}개월</strong> 입니다.
+                    아기의 생년월일(<strong>{userProfile.babyBirth}</strong>) 기준 현재 생후 <strong>{babyInfo.months}개월</strong> 입니다.
                   </div>
 
                   <div className="calcResultBox" style={{ backgroundColor: "#ffffff", borderLeftColor: "#ff8e72" }}>
@@ -484,7 +575,7 @@ export default function App() {
                     onClick={() => setSelectedRecipe(recipe)}
                   >
                     <span className={`recipeStageTag ${recipe.stage === "early" ? "tagEarly" :
-                        recipe.stage === "middle" ? "tagMiddle" : "tagLate"
+                      recipe.stage === "middle" ? "tagMiddle" : "tagLate"
                       }`}>
                       {recipe.stage === "early" ? "초기" :
                         recipe.stage === "middle" ? "중기" : "후기/완료기"}
@@ -583,7 +674,7 @@ export default function App() {
                     onClick={() => setSelectedRecipe(recipe)}
                   >
                     <span className={`recipeStageTag ${recipe.stage === "early" ? "tagEarly" :
-                        recipe.stage === "middle" ? "tagMiddle" : "tagLate"
+                      recipe.stage === "middle" ? "tagMiddle" : "tagLate"
                       }`}>
                       {recipe.stage === "early" ? "초기" :
                         recipe.stage === "middle" ? "중기" : "후기/완료기"}
@@ -626,7 +717,7 @@ export default function App() {
               <div className="myPageGrid">
                 <div className="myPageInfoItem">
                   <span className="myPageInfoLabel">부모 이름</span>
-                  <span className="myPageInfoValue">{userProfile.parent_name}</span>
+                  <span className="myPageInfoValue">{userProfile.username}</span>
                 </div>
                 <div className="myPageInfoItem">
                   <span className="myPageInfoLabel">이메일</span>
@@ -634,11 +725,11 @@ export default function App() {
                 </div>
                 <div className="myPageInfoItem">
                   <span className="myPageInfoLabel">우리 아기 이름</span>
-                  <span className="myPageInfoValue">{userProfile.baby_name}</span>
+                  <span className="myPageInfoValue">{userProfile.babyName}</span>
                 </div>
                 <div className="myPageInfoItem">
                   <span className="myPageInfoLabel">아기 태어난 날</span>
-                  <span className="myPageInfoValue">{userProfile.baby_birth}</span>
+                  <span className="myPageInfoValue">{userProfile.babyBirth}</span>
                 </div>
                 {babyInfo && (
                   <div className="myPageInfoItem" style={{ gridColumn: "1 / -1", backgroundColor: "#fffbfb", borderColor: "#ffe5dd" }}>
@@ -689,8 +780,8 @@ export default function App() {
 
       {/* 4. 레시피 상세 정보 보기 팝업 모달 */}
       {selectedRecipe && (
-        <div className="modalOverlay" onClick={() => setSelectedRecipe(null)}>
-          <div className="modalContent" onClick={(e) => e.stopPropagation()}>
+        <div className="modalOverlay" onMouseDown={() => setSelectedRecipe(null)}>
+          <div className="modalContent" onMouseDown={(e) => e.stopPropagation()}>
             <button className="modalCloseBtn" onClick={() => setSelectedRecipe(null)}>
               <X size={20} />
             </button>
@@ -698,7 +789,7 @@ export default function App() {
             <div className="modalBody">
               <div className="modalHeader">
                 <span className={`recipeStageTag ${selectedRecipe.stage === "early" ? "tagEarly" :
-                    selectedRecipe.stage === "middle" ? "tagMiddle" : "tagLate"
+                  selectedRecipe.stage === "middle" ? "tagMiddle" : "tagLate"
                   }`} style={{ alignSelf: "flex-start" }}>
                   {selectedRecipe.stage === "early" ? "초기 이유식" :
                     selectedRecipe.stage === "middle" ? "중기 이유식" : "후기 & 완료기 이유식"}
@@ -738,8 +829,8 @@ export default function App() {
 
       {/* 5. 로그인 & 회원가입 팝업 모달 */}
       {showAuthModal && (
-        <div className="modalOverlay" onClick={() => setShowAuthModal(false)}>
-          <div className="authModalContent" onClick={(e) => e.stopPropagation()}>
+        <div className="modalOverlay" onMouseDown={() => setShowAuthModal(false)}>
+          <div className="authModalContent" onMouseDown={(e) => e.stopPropagation()}>
             <button className="modalCloseBtn" onClick={() => setShowAuthModal(false)}>
               <X size={20} />
             </button>
@@ -780,10 +871,118 @@ export default function App() {
                   <button type="submit" className="authSubmitBtn">로그인 완료</button>
                 </form>
 
+                <div className="authFindLinks">
+                  <span className="authFindLink" onClick={() => { setAuthMode("findEmail"); setFindEmailResult(null); setFindEmailForm({ parentName: "", babyName: "" }); }}>
+                    아이디 찾기
+                  </span>
+                  <span className="authFindDivider">|</span>
+                  <span className="authFindLink" onClick={() => { setAuthMode("findPassword"); setFindPasswordSent(false); setFindPasswordForm({ email: "" }); }}>
+                    비밀번호 찾기
+                  </span>
+                </div>
+
                 <p className="authSwitchText">
                   아직 회원이 아니신가요?
                   <span className="authSwitchLink" onClick={() => setAuthMode("register")}>
                     회원가입 하기
+                  </span>
+                </p>
+              </div>
+            )}
+
+            {/* 아이디 찾기 화면 모드 */}
+            {authMode === "findEmail" && (
+              <div className="authModalBody">
+                <div className="authModalHeader">
+                  <h2 className="authModalTitle">아이디 찾기</h2>
+                  <p className="authModalDesc">가입 시 등록한 부모 이름과 아기 이름을 입력하세요.</p>
+                </div>
+
+                {!findEmailResult ? (
+                  <form onSubmit={handleFindEmail} className="authForm">
+                    <div className="authFormGroup">
+                      <label htmlFor="findParentName">부모 이름</label>
+                      <input
+                        type="text"
+                        id="findParentName"
+                        className="authInput"
+                        placeholder="가입 시 등록한 부모 이름"
+                        value={findEmailForm.parentName}
+                        onChange={(e) => setFindEmailForm({ ...findEmailForm, parentName: e.target.value })}
+                        required
+                      />
+                    </div>
+                    <div className="authFormGroup">
+                      <label htmlFor="findBabyName">아기 이름</label>
+                      <input
+                        type="text"
+                        id="findBabyName"
+                        className="authInput"
+                        placeholder="가입 시 등록한 아기 이름"
+                        value={findEmailForm.babyName}
+                        onChange={(e) => setFindEmailForm({ ...findEmailForm, babyName: e.target.value })}
+                        required
+                      />
+                    </div>
+                    <button type="submit" className="authSubmitBtn">아이디(이메일) 찾기</button>
+                  </form>
+                ) : (
+                  <div className="authResultBox">
+                    {findEmailResult === "notFound" ? (
+                      <p className="authResultText">일치하는 계정 정보를 찾을 수 없습니다.<br />입력한 정보를 다시 확인해 주세요.</p>
+                    ) : (
+                      <>
+                        <p className="authResultLabel">가입하신 이메일(아이디)은</p>
+                        <p className="authResultEmail">{findEmailResult}</p>
+                        <p className="authResultHint">위 이메일로 로그인해 주세요.</p>
+                      </>
+                    )}
+                  </div>
+                )}
+
+                <p className="authSwitchText">
+                  <span className="authSwitchLink" onClick={() => { setAuthMode("login"); setFindEmailForm({ parentName: "", babyName: "" }); setFindEmailResult(null); }}>
+                    ← 로그인으로 돌아가기
+                  </span>
+                </p>
+              </div>
+            )}
+
+            {/* 비밀번호 찾기 화면 모드 */}
+            {authMode === "findPassword" && (
+              <div className="authModalBody">
+                <div className="authModalHeader">
+                  <h2 className="authModalTitle">비밀번호 찾기</h2>
+                  <p className="authModalDesc">가입한 이메일 주소를 입력하시면 비밀번호 재설정 링크를 발송해 드립니다.</p>
+                </div>
+
+                {!findPasswordSent ? (
+                  <form onSubmit={handleFindPassword} className="authForm">
+                    <div className="authFormGroup">
+                      <label htmlFor="findPwEmail">이메일</label>
+                      <input
+                        type="email"
+                        id="findPwEmail"
+                        className="authInput"
+                        placeholder="가입한 이메일을 입력하세요"
+                        value={findPasswordForm.email}
+                        onChange={(e) => setFindPasswordForm({ ...findPasswordForm, email: e.target.value })}
+                        required
+                      />
+                    </div>
+                    <button type="submit" className="authSubmitBtn">재설정 메일 발송</button>
+                  </form>
+                ) : (
+                  <div className="authResultBox">
+                    <p className="authResultLabel">비밀번호 재설정 이메일을 발송했습니다.</p>
+                    <p className="authResultEmail">{findPasswordForm.email}</p>
+                    <p className="authResultHint">메일함을 확인하여 비밀번호를 재설정해 주세요.<br />스팸함도 함께 확인해 주세요.</p>
+                  </div>
+                )}
+
+                <p className="authSwitchText">
+                  <span className="authSwitchLink" onClick={() => { setAuthMode("login"); setFindPasswordForm({ email: "" }); setFindPasswordSent(false); }}>
+                    ← 로그인으로 돌아가기
                   </span>
                 </p>
               </div>
@@ -857,7 +1056,7 @@ export default function App() {
                       required
                     />
                   </div>
-                  <button type="submit" className="authSubmitBtn">가입하고 추천 받기</button>
+                  <button type="submit" className="authSubmitBtn">가입하기</button>
                 </form>
 
                 <p className="authSwitchText">
@@ -868,6 +1067,67 @@ export default function App() {
                 </p>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* 6. 비밀번호 재설정 모달 — PASSWORD_RECOVERY 이벤트 수신 시 자동 노출 */}
+      {showPasswordResetModal && (
+        <div className="modalOverlay">
+          <div className="authModalContent" onMouseDown={(e) => e.stopPropagation()}>
+            <div className="authModalBody">
+              <div className="authModalHeader">
+                <h2 className="authModalTitle">비밀번호 재설정</h2>
+                <p className="authModalDesc">새로운 비밀번호를 입력해 주세요.</p>
+              </div>
+
+              {!passwordResetSuccess ? (
+                <form onSubmit={handlePasswordReset} className="authForm">
+                  <div className="authFormGroup">
+                    <label htmlFor="newPassword">새 비밀번호</label>
+                    <input
+                      type="password"
+                      id="newPassword"
+                      className="authInput"
+                      placeholder="새 비밀번호 (6자 이상)"
+                      value={passwordResetForm.newPassword}
+                      onChange={(e) => setPasswordResetForm({ ...passwordResetForm, newPassword: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="authFormGroup">
+                    <label htmlFor="confirmPassword">비밀번호 확인</label>
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      className="authInput"
+                      placeholder="새 비밀번호를 다시 입력하세요"
+                      value={passwordResetForm.confirmPassword}
+                      onChange={(e) => setPasswordResetForm({ ...passwordResetForm, confirmPassword: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <button type="submit" className="authSubmitBtn">비밀번호 변경 완료</button>
+                </form>
+              ) : (
+                <div className="authResultBox">
+                  <p className="authResultLabel">비밀번호가 성공적으로 변경되었습니다.</p>
+                  <p className="authResultHint">새 비밀번호로 로그인해 주세요.</p>
+                  <button
+                    className="authSubmitBtn"
+                    style={{ marginTop: "0.8rem" }}
+                    onClick={() => {
+                      setShowPasswordResetModal(false);
+                      setPasswordResetSuccess(false);
+                      setAuthMode("login");
+                      setShowAuthModal(true);
+                    }}
+                  >
+                    로그인 하러 가기
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

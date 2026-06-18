@@ -864,6 +864,66 @@ button, input, select {
   text-decoration: underline;
 }
 
+/* 아이디/비밀번호 찾기 링크 */
+.authFindLinks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: -0.8rem;
+}
+
+.authFindLink {
+  font-size: 1.3rem;
+  color: #888888;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.authFindLink:hover {
+  color: #ff8e72;
+}
+
+.authFindDivider {
+  font-size: 1.3rem;
+  color: #cccccc;
+}
+
+/* 아이디/비밀번호 찾기 결과 박스 */
+.authResultBox {
+  background-color: #fff8f6;
+  border: 0.15rem solid #ffe5dd;
+  border-radius: 1.2rem;
+  padding: 2.4rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.authResultLabel {
+  font-size: 1.4rem;
+  color: #666666;
+}
+
+.authResultEmail {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ff8e72;
+}
+
+.authResultHint {
+  font-size: 1.3rem;
+  color: #888888;
+  line-height: 1.5;
+}
+
+.authResultText {
+  font-size: 1.45rem;
+  color: #555555;
+  line-height: 1.6;
+}
+
 /* 마이페이지 정보 관리 */
 .myPageSection {
   padding: 6rem 2.4rem;
