@@ -72,6 +72,9 @@ export default function App() {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [stageTab, setStageTab] = useState("early");
 
+  // 비로그인 상태에서 보호된 탭 진입 시도 시 로그인 후 이동할 탭을 임시 저장합니다.
+  const [pendingTab, setPendingTab] = useState(null);
+
   // --- Supabase 데이터 fetch 함수 ---
 
   // 로그인한 유저의 babyFoodProfiles 테이블 행을 조회합니다.
@@ -303,7 +306,16 @@ export default function App() {
 
     setShowAuthModal(false);
     setLoginForm({ email: "", password: "" });
-    setCurrentTab("home");
+    if (pendingTab) {
+      setCurrentTab(pendingTab);
+      setPendingTab(null);
+      if (pendingTab === "recipes") {
+        setRecipeFilter("all");
+        setSearchQuery("");
+      }
+    } else {
+      setCurrentTab("home");
+    }
   };
 
   // Supabase Auth 로그아웃 — 서버 세션 무효화 + 로컬 세션 제거를 한 번에 처리합니다.
@@ -470,12 +482,18 @@ export default function App() {
           <span
             className={`navLink ${currentTab === "recipes" ? "navLinkActive" : ""}`}
             onClick={() => {
-              setCurrentTab("recipes");
-              setRecipeFilter("all");
-              setSearchQuery("");
+              if (!supabaseSession) {
+                setPendingTab("recipes");
+                setAuthMode("login");
+                setShowAuthModal(true);
+              } else {
+                setCurrentTab("recipes");
+                setRecipeFilter("all");
+                setSearchQuery("");
+              }
             }}
           >
-            이유식 레시피
+            우리아기 이유식
           </span>
           {supabaseSession && userProfile && (
             <span
@@ -552,40 +570,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* 맞춤형 대시보드 배너 (로그인 상태 시 노출) */}
-            {supabaseSession && userProfile && babyInfo && (
-              <div className="calculatorSection">
-                <div className="calculatorCard" style={{ borderColor: "#ffe5dd", backgroundColor: "#fffbfb" }}>
-                  <div className="calcHeader">
-                    <Baby className="calcIcon" size={24} style={{ color: "#ff8e72" }} />
-                    <h2 className="calcTitle">{userProfile.babyName} 아기를 위한 맞춤 추천</h2>
-                  </div>
-                  <div className="calcDesc">
-                    아기의 생년월일(<strong>{userProfile.babyBirth}</strong>) 기준 현재 생후 <strong>{babyInfo.months}개월</strong> 입니다.
-                  </div>
-
-                  <div className="calcResultBox" style={{ backgroundColor: "#ffffff", borderLeftColor: "#ff8e72" }}>
-                    <div className="resultText">
-                      현재 권장 단계는 <strong>[{babyInfo.stageName}]</strong> 입니다. <br />
-                      <span style={{ fontSize: "1.4rem", color: "#666666", marginTop: "0.4rem", display: "block" }}>
-                        {babyInfo.description}
-                      </span>
-                    </div>
-                    {babyInfo.stageId !== "none" && babyInfo.stageId !== "graduation" && (
-                      <button
-                        className="resultActionBtn"
-                        onClick={() => {
-                          setCurrentTab("recipes");
-                          setRecipeFilter(babyInfo.stageId);
-                        }}
-                      >
-                        {babyInfo.stageName} 레시피 전체보기
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
 
             {/* 초기 중기 말기 이유식 기초 가이드 정보 */}
             <section className="stagesSection">
@@ -627,7 +611,7 @@ export default function App() {
                       <h4 className="guideTitle">단계별 중요 영양 & 조리 수칙</h4>
                       <ul className="guideList">
                         {stage.guidelines.map((line, idx) => (
-                          <li key={idx} className="guideItem">{line}</li>
+                          <li key={idx} className={`guideItem${line.startsWith("[알레르기 체크]") ? " guideItemAlert" : ""}`}>{line}</li>
                         ))}
                       </ul>
                     </div>
@@ -672,93 +656,49 @@ export default function App() {
 
         {/* 이유식 레시피 목록 및 검색 탭 (recipes) */}
         {currentTab === "recipes" && (
-          <div className="recipesSection">
-            <h2 className="sectionTitle" style={{ marginBottom: "1rem" }}>이유식 레시피 라이브러리</h2>
-            <p style={{ textAlign: "center", fontSize: "1.4rem", color: "#666666", marginBottom: "3rem" }}>
-              다양한 재료를 조합하여 아기의 미각을 건강하게 일깨워 줄 수 있는 레시피들입니다.
-            </p>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "2rem", marginBottom: "3rem" }}>
-              <div className="stageTabWrapper">
-                <button
-                  className={`stageTab ${recipeFilter === "all" ? "stageTabActive" : ""}`}
-                  onClick={() => setRecipeFilter("all")}
-                  style={{ maxWidth: "12rem" }}
-                >
-                  전체보기
-                </button>
-                <button
-                  className={`stageTab ${recipeFilter === "early" ? "stageTabActive" : ""}`}
-                  onClick={() => setRecipeFilter("early")}
-                  style={{ maxWidth: "12rem" }}
-                >
-                  초기
-                </button>
-                <button
-                  className={`stageTab ${recipeFilter === "middle" ? "stageTabActive" : ""}`}
-                  onClick={() => setRecipeFilter("middle")}
-                  style={{ maxWidth: "12rem" }}
-                >
-                  중기
-                </button>
-                <button
-                  className={`stageTab ${recipeFilter === "late" ? "stageTabActive" : ""}`}
-                  onClick={() => setRecipeFilter("late")}
-                  style={{ maxWidth: "12rem" }}
-                >
-                  후기/완료기
-                </button>
-              </div>
-
-              <div className="heroSearchBox" style={{ margin: "0 auto", width: "100%", maxWidth: "60rem" }}>
-                <input
-                  type="text"
-                  placeholder="메뉴명, 재료명으로 직접 검색해 보세요..."
-                  className="heroSearchInput"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  style={{ borderRadius: "1rem 0 0 1rem", border: "0.15rem solid #e0e0e0", borderRight: "none" }}
-                />
-                <button
-                  className="heroSearchBtn"
-                  style={{ borderRadius: "0 1rem 1rem 0", backgroundColor: "#ff8e72" }}
-                >
-                  <Search size={20} />
-                </button>
-              </div>
+          <div>
+            {/* 타이틀 영역을 포함하는 상단 섹션입니다. 맞춤 추천 카드를 100% 폭으로 분리하기 위해 상단/하단 recipesSection을 나누었습니다. */}
+            <div className="recipesSection" style={{ paddingBottom: "0rem" }}>
+              <h2 className="sectionTitle" style={{ marginBottom: "1rem" }}>이유식 레시피 라이브러리</h2>
+              <p style={{ textAlign: "center", fontSize: "1.4rem", color: "#666666", marginBottom: "3rem" }}>
+                다양한 재료를 조합하여 아기의 미각을 건강하게 일깨워 줄 수 있는 레시피들입니다.
+              </p>
             </div>
 
-            <div className="recipesGrid">
-              {getFilteredRecipes().length > 0 ? (
-                getFilteredRecipes().map(recipe => (
-                  <div
-                    key={recipe.id}
-                    className="recipeCard"
-                    onClick={() => setSelectedRecipe(recipe)}
-                  >
-                    <span className={`recipeStageTag ${recipe.stage === "early" ? "tagEarly" :
-                      recipe.stage === "middle" ? "tagMiddle" : "tagLate"
-                      }`}>
-                      {recipe.stage === "early" ? "초기" :
-                        recipe.stage === "middle" ? "중기" : "후기/완료기"}
-                    </span>
-                    <h3 className="recipeCardName">{recipe.name}</h3>
-                    <p className="recipeCardDesc">{recipe.description}</p>
-                    <div className="recipeCardFooter">
-                      <span style={{ fontSize: "1.25rem", color: "#666666" }}>
-                        재료: {recipe.ingredients.length > 20 ? recipe.ingredients.slice(0, 20) + "..." : recipe.ingredients}
-                      </span>
-                      <span>조리법 보기 <ChevronRight size={14} /></span>
+            {/* 로그인 상태일 때만 노출되는 맞춤 추천 카드 */}
+            {/* 화면 좌우를 가득 채우는 100% 너비의 배경을 가진 섹션 영역을 제공하여 다른 콘텐츠 영역과 확실하게 시각적으로 구분되도록 customRecommendSection 및 customRecommendContainer 클래스를 입힌 구조로 변경하였습니다. */}
+            {supabaseSession && userProfile && babyInfo && (
+              <div className="customRecommendSection">
+                <div className="customRecommendContainer">
+                  <div className="customRecommendCard">
+                    <div className="calcHeader">
+                      <Baby className="calcIcon" size={24} style={{ color: "#ff8e72" }} />
+                      <h2 className="calcTitle">{userProfile.babyName} 아기를 위한 맞춤 추천</h2>
+                    </div>
+                    <div className="calcDesc">
+                      아기의 생년월일(<strong>{userProfile.babyBirth}</strong>) 기준 현재 생후 <strong>{babyInfo.months}개월</strong> 입니다.
+                    </div>
+                    <div className="calcResultBox" style={{ backgroundColor: "#ffffff", borderLeftColor: "#ff8e72" }}>
+                      <div className="resultText">
+                        현재 권장 단계는 <strong>[{babyInfo.stageName}]</strong> 입니다. <br />
+                        <span style={{ fontSize: "1.4rem", color: "#666666", marginTop: "0.4rem", display: "block" }}>
+                          {babyInfo.description}
+                        </span>
+                      </div>
+                      {babyInfo.stageId !== "none" && babyInfo.stageId !== "graduation" && (
+                        <button
+                          className="resultActionBtn"
+                          onClick={() => setRecipeFilter(babyInfo.stageId)}
+                        >
+                          {babyInfo.stageName} 레시피만 보기
+                        </button>
+                      )}
                     </div>
                   </div>
-                ))
-              ) : (
-                <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "6rem 2rem", color: "#888888" }}>
-                  <Info size={36} style={{ marginBottom: "1.2rem", color: "#ff8e72" }} />
-                  <p>일치하는 레시피 정보가 없습니다. 다른 검색어를 입력해 보세요!</p>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
+
           </div>
         )}
 
