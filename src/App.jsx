@@ -9,9 +9,42 @@ import {
   LogOut,
   ChevronLeft
 } from "lucide-react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import { babyFoodStages, babyFoodRecipes, recipeMedia } from "./data/babyFoodData";
 import { supabase } from "./lib/supabase";
 
+// 한국 공휴일 (2024~2027). 달력에서 일요일과 함께 빨간색으로 표시됩니다.
+const KOREAN_HOLIDAYS = new Set([
+  // 신정
+  "2024-01-01", "2025-01-01", "2026-01-01", "2027-01-01",
+  // 설날 연휴
+  "2024-02-09", "2024-02-10", "2024-02-11",
+  "2025-01-28", "2025-01-29", "2025-01-30",
+  "2026-01-28", "2026-01-29", "2026-01-30",
+  "2027-02-16", "2027-02-17", "2027-02-18",
+  // 삼일절
+  "2024-03-01", "2025-03-01", "2026-03-01", "2027-03-01",
+  // 어린이날
+  "2024-05-05", "2025-05-05", "2026-05-05", "2027-05-05",
+  // 부처님오신날
+  "2024-05-15", "2026-05-24", "2027-05-13",
+  // 현충일
+  "2024-06-06", "2025-06-06", "2026-06-06", "2027-06-06",
+  // 광복절
+  "2024-08-15", "2025-08-15", "2026-08-15", "2027-08-15",
+  // 추석 연휴
+  "2024-09-16", "2024-09-17", "2024-09-18",
+  "2025-10-05", "2025-10-06", "2025-10-07", "2025-10-08",
+  "2026-09-24", "2026-09-25", "2026-09-26",
+  "2027-10-14", "2027-10-15", "2027-10-16",
+  // 개천절
+  "2024-10-03", "2025-10-03", "2026-10-03", "2027-10-03",
+  // 한글날
+  "2024-10-09", "2025-10-09", "2026-10-09", "2027-10-09",
+  // 크리스마스
+  "2024-12-25", "2025-12-25", "2026-12-25", "2027-12-25",
+]);
 
 // 애플리케이션의 전체 기능과 라우팅, 회원 관리를 수행하는 메인 App 컴포넌트입니다.
 export default function App() {
@@ -74,6 +107,13 @@ export default function App() {
 
   // 비로그인 상태에서 보호된 탭 진입 시도 시 로그인 후 이동할 탭을 임시 저장합니다.
   const [pendingTab, setPendingTab] = useState(null);
+
+  // 메뉴 추천 날짜 — 오늘 날짜를 기본값으로 하며, 날짜 변경 시 일별 다른 메뉴를 추천합니다.
+  const [menuPickerDate, setMenuPickerDate] = useState(new Date().toISOString().split("T")[0]);
+
+  // 달력에서 현재 보고 있는 월의 시작일 — 월 이동 시 단계·메뉴가 해당 월 기준으로 재계산됩니다.
+  const [calendarViewDate, setCalendarViewDate] = useState(new Date());
+
 
   // --- Supabase 데이터 fetch 함수 ---
 
@@ -449,6 +489,75 @@ export default function App() {
 
   const babyInfo = getBabyCurrentStage();
 
+  // 특정 기준일(targetDate) 기준으로 생후 개월 수를 계산합니다. (달력 월 이동 시 해당 월 기준 단계 계산에 사용)
+  const calculateMonthsAtDate = (birthDateString, targetDate) => {
+    if (!birthDateString) return 0;
+    const birthDate = new Date(birthDateString);
+    let months = (targetDate.getFullYear() - birthDate.getFullYear()) * 12 +
+                 (targetDate.getMonth() - birthDate.getMonth());
+    if (targetDate.getDate() < birthDate.getDate()) months--;
+    return months < 0 ? 0 : months;
+  };
+
+  // Date 객체로부터 "YYYY-MM-DD" 문자열을 로컬 타임존 기준으로 생성합니다.
+  const toLocalDateStr = (date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  };
+
+  // 특정 Date 객체에 해당하는 단계별 메뉴 배열을 반환합니다. (달력 타일 렌더링에 사용)
+  const getDayMenus = (date) => {
+    if (!userProfile?.babyBirth) return [];
+    // 타일 날짜 기준 생후 개월 수로 단계 결정 — 월 이동 시 해당 월의 단계 메뉴가 표시됨
+    const months = calculateMonthsAtDate(userProfile.babyBirth, date);
+    const stageInfo = determineStage(months);
+    if (stageInfo.stageId === "none" || stageInfo.stageId === "graduation") return [];
+
+    const stageRecipes = recipes.filter(r => r.stage === stageInfo.stageId);
+    if (!stageRecipes.length) return [];
+
+    const daySeed = Math.floor(date.getTime() / (1000 * 60 * 60 * 24));
+    const mealCount = stageInfo.stageId === "early" ? 1 : stageInfo.stageId === "middle" ? 2 : 3;
+    return Array.from({ length: mealCount }, (_, i) =>
+      stageRecipes[(daySeed + i) % stageRecipes.length]
+    );
+  };
+
+  // 선택한 날짜의 전체 추천 메뉴(라벨 포함)를 반환합니다.
+  const getMenuRecommendation = () => {
+    if (!userProfile?.babyBirth || !menuPickerDate) return null;
+    const months = calculateMonths(userProfile.babyBirth);
+    const stageInfo = determineStage(months);
+
+    if (stageInfo.stageId === "none" || stageInfo.stageId === "graduation") {
+      return { months, ...stageInfo, meals: [] };
+    }
+
+    const stageRecipes = recipes.filter(r => r.stage === stageInfo.stageId);
+    if (!stageRecipes.length) return null;
+
+    const dateObj = new Date(menuPickerDate + "T12:00:00");
+    const daySeed = Math.floor(dateObj.getTime() / (1000 * 60 * 60 * 24));
+
+    const mealLabels = {
+      early: ["오전 (하루 1회)"],
+      middle: ["오전 (1회)", "오후 (2회)"],
+      late: ["아침 (1회)", "점심 (2회)", "저녁 (3회)"]
+    };
+
+    const labels = mealLabels[stageInfo.stageId];
+    const meals = labels.map((label, i) => ({
+      label,
+      recipe: stageRecipes[(daySeed + i) % stageRecipes.length]
+    }));
+
+    return { months, ...stageInfo, meals };
+  };
+
+  const menuRecommendation = getMenuRecommendation();
+
   // 세션 복구 중에는 빈 화면 대신 로딩 표시 — 복구 전 렌더링으로 인한 로그인 버튼 깜빡임 방지
   if (authLoading) {
     return (
@@ -553,16 +662,14 @@ export default function App() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      setCurrentTab("recipes");
-                      setRecipeFilter("all");
+                      // 홈에서 바로 검색 결과 표시 — 탭 전환 없음
                     }
                   }}
                 />
                 <button
                   className="heroSearchBtn"
                   onClick={() => {
-                    setCurrentTab("recipes");
-                    setRecipeFilter("all");
+                    // 홈에서 바로 검색 결과 표시 — 탭 전환 없음
                   }}
                 >
                   <Search size={20} />
@@ -570,6 +677,60 @@ export default function App() {
               </div>
             </div>
 
+
+            {/* 검색어가 있을 때만 검색 결과 섹션 표시 */}
+            {searchQuery && (() => {
+              const results = recipes.filter(recipe => {
+                const q = searchQuery.toLowerCase();
+                return (
+                  recipe.name.toLowerCase().includes(q) ||
+                  recipe.description.toLowerCase().includes(q) ||
+                  recipe.ingredients.toLowerCase().includes(q)
+                );
+              });
+              return (
+                <section className="recipesSection">
+                  <h2 className="sectionTitle">
+                    &ldquo;{searchQuery}&rdquo; 검색 결과
+                    <span style={{ fontSize: "1.4rem", fontWeight: 400, color: "#888888", marginLeft: "1rem" }}>
+                      {results.length}건
+                    </span>
+                  </h2>
+                  {results.length > 0 ? (
+                    <div className="recipesGrid">
+                      {results.map(recipe => (
+                        <div
+                          key={recipe.id}
+                          className="recipeCard"
+                          onClick={() => setSelectedRecipe(recipe)}
+                        >
+                          <span className={`recipeStageTag ${recipe.stage === "early" ? "tagEarly" :
+                            recipe.stage === "middle" ? "tagMiddle" : "tagLate"
+                          }`}>
+                            {recipe.stage === "early" ? "초기" :
+                              recipe.stage === "middle" ? "중기" : "후기/완료기"}
+                          </span>
+                          <h3 className="recipeCardName">{recipe.name}</h3>
+                          <p className="recipeCardDesc">{recipe.description}</p>
+                          <div className="recipeCardFooter">
+                            <span>재료: {recipe.ingredients.split(",")[0]}...</span>
+                            <span>레시피 보기 <ChevronRight size={14} /></span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p style={{ textAlign: "center", fontSize: "1.5rem", color: "#aaaaaa", padding: "4rem 0" }}>
+                      &ldquo;{searchQuery}&rdquo;에 해당하는 레시피를 찾을 수 없습니다.
+                    </p>
+                  )}
+                </section>
+              );
+            })()}
+
+            {/* 검색어가 없을 때만 기존 가이드 + 레시피 미리보기 표시 */}
+            {!searchQuery && (
+            <>
 
             {/* 초기 중기 말기 이유식 기초 가이드 정보 */}
             <section className="stagesSection">
@@ -651,6 +812,10 @@ export default function App() {
                 ))}
               </div>
             </section>
+
+            </>
+            )}
+
           </div>
         )}
 
@@ -698,6 +863,112 @@ export default function App() {
                 </div>
               </div>
             )}
+
+            {/* 데이트피커 기반 오늘의 이유식 메뉴 추천 */}
+            <div className="menuPickerSection">
+              <div className="menuPickerContainer">
+                <div className="menuPickerHeader">
+                  <Utensils size={22} color="#ff8e72" />
+                  <h3 className="menuPickerTitle">오늘의 이유식 메뉴 추천</h3>
+                </div>
+                {/* 현재 보는 월 기준 생후 개월 수를 계산하여 설명 문구에 반영 */}
+                {(() => {
+                  const viewMonths = userProfile?.babyBirth
+                    ? calculateMonthsAtDate(userProfile.babyBirth, calendarViewDate)
+                    : null;
+                  const viewYear = calendarViewDate.getFullYear();
+                  const viewMonth = calendarViewDate.getMonth() + 1;
+                  return (
+                    <p className="menuPickerDesc">
+                      아기 생년월일(<strong>{userProfile?.babyBirth}</strong>) 기준
+                      {" "}<strong>{viewYear}년 {viewMonth}월</strong> 기준 생후 <strong>{viewMonths}개월</strong>입니다.
+                      날짜를 선택하면 해당 날의 추천 메뉴를 확인할 수 있습니다.
+                    </p>
+                  );
+                })()}
+
+                {/* 현재 보는 월 기준 이유식 단계 요약 카드 */}
+                {(() => {
+                  if (!userProfile?.babyBirth) return null;
+                  const months = calculateMonthsAtDate(userProfile.babyBirth, calendarViewDate);
+                  const stageInfo = determineStage(months);
+                  const stageData = babyFoodStages.find(s => s.id === stageInfo.stageId);
+                  if (!stageData) return null;
+                  return (
+                    <div className="stageInfoCard">
+                      <div className="stageInfoBadge">{stageData.title} 이유식</div>
+                      <ul className="stageInfoList">
+                        <li className="stageInfoItem">
+                          <span className="stageInfoLabel">시기</span>
+                          <span className="stageInfoValue">{stageData.period}</span>
+                        </li>
+                        <li className="stageInfoItem">
+                          <span className="stageInfoLabel">횟수</span>
+                          <span className="stageInfoValue">{stageData.dailyCount}</span>
+                        </li>
+                        <li className="stageInfoItem">
+                          <span className="stageInfoLabel">형태</span>
+                          <span className="stageInfoValue">{stageData.texture}</span>
+                        </li>
+                        <li className="stageInfoItem">
+                          <span className="stageInfoLabel">주재료</span>
+                          <span className="stageInfoValue">{stageData.keyIngredients}</span>
+                        </li>
+                      </ul>
+                    </div>
+                  );
+                })()}
+
+                <div className="menuCalendarWrapper">
+                  <Calendar
+                    value={new Date(menuPickerDate + "T12:00:00")}
+                    onChange={(date) => setMenuPickerDate(toLocalDateStr(date))}
+                    onActiveStartDateChange={({ activeStartDate }) => {
+                      // 월 이동 버튼 클릭 시 현재 보는 월을 갱신 — 단계·메뉴·정보 카드가 해당 월 기준으로 재계산됨
+                      if (activeStartDate) setCalendarViewDate(activeStartDate);
+                    }}
+                    locale="ko-KR"
+                    calendarType="gregory"
+                    formatDay={(locale, date) => date.getDate()}
+                    tileClassName={({ date, view }) => {
+                      if (view !== "month") return null;
+                      const dateStr = toLocalDateStr(date);
+                      const isToday = dateStr === toLocalDateStr(new Date());
+                      const isSelected = dateStr === menuPickerDate;
+                      // 토요일(6) · 일요일(0) · 한국 공휴일이면 휴일로 표시
+                      const isHoliday = date.getDay() === 0 || date.getDay() === 6 || KOREAN_HOLIDAYS.has(dateStr);
+
+                      if (isToday) return isHoliday ? "calTodayTile calHolidayTile" : "calTodayTile";
+                      if (isSelected) return isHoliday ? "calSelectedTile calHolidayTile" : "calSelectedTile";
+                      return isHoliday ? "calHolidayTile" : null;
+                    }}
+                    tileContent={({ date, view }) => {
+                      if (view !== "month") return null;
+                      const dayMenus = getDayMenus(date);
+                      if (!dayMenus.length) return null;
+                      return (
+                        <div className="calTileMenus">
+                          {dayMenus.map((recipe, i) => (
+                            <span
+                              key={i}
+                              className="calTileMenuName calTileMenuNameClickable"
+                              onClick={(e) => {
+                                // 달력 타일 자체의 날짜 선택 이벤트와 충돌 방지
+                                e.stopPropagation();
+                                setSelectedRecipe(recipe);
+                              }}
+                            >
+                              {recipe.name.length > 7 ? recipe.name.slice(0, 7) + "…" : recipe.name}
+                            </span>
+                          ))}
+                        </div>
+                      );
+                    }}
+                  />
+                </div>
+
+              </div>
+            </div>
 
           </div>
         )}
