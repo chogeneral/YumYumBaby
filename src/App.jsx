@@ -106,7 +106,6 @@ export default function App() {
   const [stageTab, setStageTab] = useState("early");
 
   // 레시피 후기 상태
-  const [reviews, setReviews] = useState([]);
   const [reviewForm, setReviewForm] = useState({ recipeId: "", rating: 5, content: "" });
   const [reviewSubmitting, setReviewSubmitting] = useState(false);
 
@@ -121,17 +120,6 @@ export default function App() {
 
 
   // --- Supabase 데이터 fetch 함수 ---
-
-  // recipeReviews 테이블에서 전체 후기를 최신순으로 조회합니다.
-  const fetchReviews = async () => {
-    const { data, error } = await supabase
-      .from("recipeReviews")
-      .select("*")
-      .order("createdAt", { ascending: false });
-    if (!error && data) {
-      setReviews(data);
-    }
-  };
 
   // 로그인한 유저의 babyFoodProfiles 테이블 행을 조회합니다.
   // onAuthStateChange 내부에서도 호출되므로 별도 함수로 분리합니다.
@@ -155,9 +143,6 @@ export default function App() {
       if (session) fetchUserProfile(session.user.id);
       setAuthLoading(false);
     });
-
-    // 앱 마운트 시 후기 목록 초기 로딩
-    fetchReviews();
 
     // 로그인/로그아웃 이벤트를 실시간으로 감지합니다.
     // PASSWORD_RECOVERY 이벤트는 재설정 메일의 링크 클릭 시 Supabase가 발생시킵니다.
@@ -523,7 +508,6 @@ export default function App() {
     }
 
     setReviewForm({ recipeId: "", rating: 5, content: "" });
-    await fetchReviews();
     alert("후기가 등록되었습니다!");
   };
 
@@ -1133,43 +1117,6 @@ export default function App() {
               </div>
             )}
 
-            {/* 후기 목록 */}
-            <section className="reviewsListSection">
-              <div className="reviewsListContainer">
-                <h3 className="reviewsListTitle">
-                  전체 후기
-                  <span className="reviewsListCount">{reviews.length}개</span>
-                </h3>
-
-                {reviews.length === 0 ? (
-                  <div className="reviewsEmpty">
-                    <p className="reviewsEmptyTitle">아직 등록된 후기가 없습니다.</p>
-                    <p className="reviewsEmptyDesc">첫 번째 이유식 후기를 남겨보세요!</p>
-                  </div>
-                ) : (
-                  <div className="reviewsList">
-                    {reviews.map(review => (
-                      <article key={review.id} className="reviewCard">
-                        <div className="reviewCardHeader">
-                          <span className="reviewRecipeName">{review.recipeName}</span>
-                          <div className="reviewStars">
-                            <span className="reviewStarsActive">{"★".repeat(review.rating)}</span>
-                            <span className="reviewStarsEmpty">{"★".repeat(5 - review.rating)}</span>
-                          </div>
-                        </div>
-                        <p className="reviewContent">{review.content}</p>
-                        <div className="reviewCardFooter">
-                          <span className="reviewAuthor">{review.babyName} 아기 맘&대디</span>
-                          <span className="reviewDate">
-                            {new Date(review.createdAt).toLocaleDateString("ko-KR")}
-                          </span>
-                        </div>
-                      </article>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </section>
           </div>
         )}
 
