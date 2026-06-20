@@ -105,6 +105,11 @@ export default function App() {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [stageTab, setStageTab] = useState("early");
 
+  // 레시피 후기 상태
+  const [reviews, setReviews] = useState([]);
+  const [reviewForm, setReviewForm] = useState({ recipeId: "", rating: 5, content: "" });
+  const [reviewSubmitting, setReviewSubmitting] = useState(false);
+
   // 비로그인 상태에서 보호된 탭 진입 시도 시 로그인 후 이동할 탭을 임시 저장합니다.
   const [pendingTab, setPendingTab] = useState(null);
 
@@ -116,6 +121,17 @@ export default function App() {
 
 
   // --- Supabase 데이터 fetch 함수 ---
+
+  // recipeReviews 테이블에서 전체 후기를 최신순으로 조회합니다.
+  const fetchReviews = async () => {
+    const { data, error } = await supabase
+      .from("recipeReviews")
+      .select("*")
+      .order("createdAt", { ascending: false });
+    if (!error && data) {
+      setReviews(data);
+    }
+  };
 
   // 로그인한 유저의 babyFoodProfiles 테이블 행을 조회합니다.
   // onAuthStateChange 내부에서도 호출되므로 별도 함수로 분리합니다.
@@ -139,6 +155,9 @@ export default function App() {
       if (session) fetchUserProfile(session.user.id);
       setAuthLoading(false);
     });
+
+    // 앱 마운트 시 후기 목록 초기 로딩
+    fetchReviews();
 
     // 로그인/로그아웃 이벤트를 실시간으로 감지합니다.
     // PASSWORD_RECOVERY 이벤트는 재설정 메일의 링크 클릭 시 Supabase가 발생시킵니다.
@@ -467,6 +486,47 @@ export default function App() {
     setFindPasswordSent(true);
   };
 
+  // 후기를 recipeReviews 테이블에 등록하고 목록을 갱신합니다.
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    if (!supabaseSession || !userProfile) return;
+
+    const { recipeId, rating, content } = reviewForm;
+    if (!recipeId) {
+      alert("레시피를 선택해주세요.");
+      return;
+    }
+    if (!content.trim()) {
+      alert("후기 내용을 입력해주세요.");
+      return;
+    }
+
+    const selectedRecipeItem = recipes.find(r => r.id === recipeId);
+    setReviewSubmitting(true);
+
+    const { error } = await supabase
+      .from("recipeReviews")
+      .insert({
+        userId: supabaseSession.user.id,
+        recipeId,
+        recipeName: selectedRecipeItem?.name || "",
+        rating,
+        content: content.trim(),
+        babyName: userProfile.babyName
+      });
+
+    setReviewSubmitting(false);
+
+    if (error) {
+      alert(`후기 등록 오류: ${error.message}`);
+      return;
+    }
+
+    setReviewForm({ recipeId: "", rating: 5, content: "" });
+    await fetchReviews();
+    alert("후기가 등록되었습니다!");
+  };
+
   // 검색어 + 단계 필터로 레시피 목록을 걸러냅니다.
   const getFilteredRecipes = () => {
     return recipes.filter(recipe => {
@@ -582,12 +642,7 @@ export default function App() {
         </h1>
 
         <nav className="headerNav">
-          <span
-            className={`navLink ${currentTab === "home" ? "navLinkActive" : ""}`}
-            onClick={() => setCurrentTab("home")}
-          >
-            홈
-          </span>
+          {/* 사용자의 요청에 따라 GNB 네비게이션에서 홈 메뉴 이동 버튼을 삭제하였습니다. */}
           <span
             className={`navLink ${currentTab === "recipes" ? "navLinkActive" : ""}`}
             onClick={() => {
@@ -603,6 +658,12 @@ export default function App() {
             }}
           >
             우리아기 이유식
+          </span>
+          <span
+            className={`navLink ${currentTab === "reviews" ? "navLinkActive" : ""}`}
+            onClick={() => setCurrentTab("reviews")}
+          >
+            레시피 후기
           </span>
           {supabaseSession && userProfile && (
             <span
@@ -970,6 +1031,145 @@ export default function App() {
               </div>
             </div>
 
+          </div>
+        )}
+
+        {/* 레시피 후기 탭 (reviews) */}
+        {currentTab === "reviews" && (
+          <div>
+            {/* 후기 페이지 배너 */}
+            <div className="reviewsBanner">
+              <span className="heroTag">이유식 레시피 리뷰</span>
+              <h2 className="reviewsBannerTitle">레시피 후기</h2>
+              <p className="reviewsBannerDesc">
+                직접 만들어 본 이유식 후기를 공유해요. 엄마·아빠들의 솔직한 경험이 큰 도움이 됩니다.
+              </p>
+            </div>
+
+            {/* 후기 작성 폼 — 로그인한 사용자에게만 표시 */}
+            {supabaseSession && userProfile ? (
+              <section className="reviewFormSection">
+                <div className="reviewFormContainer">
+                  <h3 className="reviewFormTitle">
+                    <Baby size={20} style={{ color: "#ff8e72" }} />
+                    {userProfile.babyName} 아기 후기 작성하기
+                  </h3>
+                  <form onSubmit={handleReviewSubmit} className="reviewForm">
+                    <div className="reviewFormRow">
+                      <div className="reviewFormGroup">
+                        <label htmlFor="reviewRecipeSelect">레시피 선택</label>
+                        <select
+                          id="reviewRecipeSelect"
+                          className="reviewSelect"
+                          value={reviewForm.recipeId}
+                          onChange={(e) => setReviewForm({ ...reviewForm, recipeId: e.target.value })}
+                          required
+                        >
+                          <option value="">레시피를 선택하세요</option>
+                          <optgroup label="초기 이유식">
+                            {recipes.filter(r => r.stage === "early").map(r => (
+                              <option key={r.id} value={r.id}>{r.name}</option>
+                            ))}
+                          </optgroup>
+                          <optgroup label="중기 이유식">
+                            {recipes.filter(r => r.stage === "middle").map(r => (
+                              <option key={r.id} value={r.id}>{r.name}</option>
+                            ))}
+                          </optgroup>
+                          <optgroup label="후기/완료기 이유식">
+                            {recipes.filter(r => r.stage === "late").map(r => (
+                              <option key={r.id} value={r.id}>{r.name}</option>
+                            ))}
+                          </optgroup>
+                        </select>
+                      </div>
+
+                      <div className="reviewFormGroup">
+                        <label>별점</label>
+                        <div className="starRating">
+                          {[1, 2, 3, 4, 5].map(star => (
+                            <span
+                              key={star}
+                              className={`starBtn ${reviewForm.rating >= star ? "starActive" : ""}`}
+                              onClick={() => setReviewForm({ ...reviewForm, rating: star })}
+                            >
+                              ★
+                            </span>
+                          ))}
+                          <span className="starRatingLabel">{reviewForm.rating}점</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="reviewFormGroup">
+                      <label htmlFor="reviewContent">후기 내용</label>
+                      <textarea
+                        id="reviewContent"
+                        className="reviewTextarea"
+                        placeholder="아기가 잘 먹었나요? 만들면서 느낀 점, 아기 반응 등 솔직한 후기를 남겨주세요!"
+                        value={reviewForm.content}
+                        onChange={(e) => setReviewForm({ ...reviewForm, content: e.target.value })}
+                        rows={4}
+                        required
+                      />
+                    </div>
+
+                    <button type="submit" className="authSubmitBtn" disabled={reviewSubmitting}>
+                      {reviewSubmitting ? "등록 중..." : "후기 등록하기"}
+                    </button>
+                  </form>
+                </div>
+              </section>
+            ) : (
+              /* 비로그인 사용자 안내 */
+              <div className="reviewLoginGuide">
+                <p className="reviewLoginGuideText">로그인하시면 직접 후기를 작성할 수 있습니다.</p>
+                <button
+                  className="headerAuthBtn"
+                  onClick={() => { setAuthMode("login"); setShowAuthModal(true); }}
+                >
+                  로그인 하기
+                </button>
+              </div>
+            )}
+
+            {/* 후기 목록 */}
+            <section className="reviewsListSection">
+              <div className="reviewsListContainer">
+                <h3 className="reviewsListTitle">
+                  전체 후기
+                  <span className="reviewsListCount">{reviews.length}개</span>
+                </h3>
+
+                {reviews.length === 0 ? (
+                  <div className="reviewsEmpty">
+                    <p className="reviewsEmptyTitle">아직 등록된 후기가 없습니다.</p>
+                    <p className="reviewsEmptyDesc">첫 번째 이유식 후기를 남겨보세요!</p>
+                  </div>
+                ) : (
+                  <div className="reviewsList">
+                    {reviews.map(review => (
+                      <article key={review.id} className="reviewCard">
+                        <div className="reviewCardHeader">
+                          <span className="reviewRecipeName">{review.recipeName}</span>
+                          <div className="reviewStars">
+                            <span className="reviewStarsActive">{"★".repeat(review.rating)}</span>
+                            <span className="reviewStarsEmpty">{"★".repeat(5 - review.rating)}</span>
+                          </div>
+                        </div>
+                        <p className="reviewContent">{review.content}</p>
+                        <div className="reviewCardFooter">
+                          <span className="reviewAuthor">{review.babyName} 아기 맘&대디</span>
+                          <span className="reviewDate">
+                            {new Date(review.createdAt).toLocaleDateString("ko-KR")}
+                          </span>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </section>
           </div>
         )}
 
