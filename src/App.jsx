@@ -173,8 +173,7 @@ export default function App() {
   };
 
   // 개월 수에 맞는 이유식 단계를 결정합니다.
-  // 메인 페이지의 맞춤 추천 카드 및 마이페이지 등에서 출력되는 단계 명칭을 
-  // '이유식 레시피 라이브러리'의 탭 버튼 텍스트('초기', '중기', '후기/완료기')와 일치시켜 UI 전반의 일관성을 제공하기 위해 stageName 값을 변경합니다.
+  // 후기(10~11개월)와 완료기(12~23개월)를 별도 stageId로 분리하여 레시피 필터와 UI 태그가 각 단계에 맞게 표시되도록 합니다.
   const determineStage = (months) => {
     if (months < 4) {
       return {
@@ -194,11 +193,17 @@ export default function App() {
         stageName: "중기",
         description: "잇몸으로 음식 알갱이를 으깨 먹는 훈련을 하고, 철분 흡수를 위해 소고기 등 육류를 섭취하는 시기입니다."
       };
-    } else if (months >= 10 && months <= 23) {
+    } else if (months >= 10 && months <= 11) {
       return {
         stageId: "late",
-        stageName: "후기/완료기",
-        description: "진밥이나 무른 밥 형태로 아침/점심/저녁 하루 세 번 규칙적으로 다양한 음식을 먹는 시기입니다."
+        stageName: "후기",
+        description: "무른밥·진밥 형태로 아침/점심/저녁 하루 세 번 규칙적으로 다양한 음식을 먹기 시작하는 시기입니다."
+      };
+    } else if (months >= 12 && months <= 23) {
+      return {
+        stageId: "complete",
+        stageName: "완료기",
+        description: "이유식을 마무리하고 가족 식사(유아식)로 넘어가는 전환 단계입니다. 진밥·잡곡밥 위주로 다양한 반찬을 함께 제공하며 스스로 먹는 습관을 길러줍니다."
       };
     } else {
       return {
@@ -544,7 +549,8 @@ export default function App() {
     const mealLabels = {
       early: ["오전 (하루 1회)"],
       middle: ["오전 (1회)", "오후 (2회)"],
-      late: ["아침 (1회)", "점심 (2회)", "저녁 (3회)"]
+      late: ["아침 (1회)", "점심 (2회)", "저녁 (3회)"],
+      complete: ["아침 (1회)", "점심 (2회)", "저녁 (3회)"]
     };
 
     const labels = mealLabels[stageInfo.stageId];
@@ -706,10 +712,12 @@ export default function App() {
                           onClick={() => setSelectedRecipe(recipe)}
                         >
                           <span className={`recipeStageTag ${recipe.stage === "early" ? "tagEarly" :
-                            recipe.stage === "middle" ? "tagMiddle" : "tagLate"
+                            recipe.stage === "middle" ? "tagMiddle" :
+                            recipe.stage === "late" ? "tagLate" : "tagComplete"
                           }`}>
                             {recipe.stage === "early" ? "초기" :
-                              recipe.stage === "middle" ? "중기" : "후기/완료기"}
+                              recipe.stage === "middle" ? "중기" :
+                              recipe.stage === "late" ? "후기" : "완료기"}
                           </span>
                           <h3 className="recipeCardName">{recipe.name}</h3>
                           <p className="recipeCardDesc">{recipe.description}</p>
@@ -798,10 +806,12 @@ export default function App() {
                     onClick={() => setSelectedRecipe(recipe)}
                   >
                     <span className={`recipeStageTag ${recipe.stage === "early" ? "tagEarly" :
-                      recipe.stage === "middle" ? "tagMiddle" : "tagLate"
+                      recipe.stage === "middle" ? "tagMiddle" :
+                      recipe.stage === "late" ? "tagLate" : "tagComplete"
                       }`}>
                       {recipe.stage === "early" ? "초기" :
-                        recipe.stage === "middle" ? "중기" : "후기/완료기"}
+                        recipe.stage === "middle" ? "중기" :
+                        recipe.stage === "late" ? "후기" : "완료기"}
                     </span>
                     <h3 className="recipeCardName">{recipe.name}</h3>
                     <p className="recipeCardDesc">{recipe.description}</p>
@@ -1160,10 +1170,12 @@ export default function App() {
             <div className="modalBody">
               <div className="modalHeader">
                 <span className={`recipeStageTag ${selectedRecipe.stage === "early" ? "tagEarly" :
-                  selectedRecipe.stage === "middle" ? "tagMiddle" : "tagLate"
+                  selectedRecipe.stage === "middle" ? "tagMiddle" :
+                  selectedRecipe.stage === "late" ? "tagLate" : "tagComplete"
                   }`} style={{ alignSelf: "flex-start" }}>
                   {selectedRecipe.stage === "early" ? "초기 이유식" :
-                    selectedRecipe.stage === "middle" ? "중기 이유식" : "후기 & 완료기 이유식"}
+                    selectedRecipe.stage === "middle" ? "중기 이유식" :
+                    selectedRecipe.stage === "late" ? "후기 이유식" : "완료기 이유식"}
                 </span>
                 <h2 className="modalTitle">{selectedRecipe.name}</h2>
                 <p className="modalDesc">{selectedRecipe.description}</p>

@@ -585,6 +585,11 @@ select {
   color: #fb8c00;
 }
 
+.tagComplete {
+  background-color: #f3e5f5;
+  color: #8e24aa;
+}
+
 .recipeCardName {
   font-size: 1.8rem;
   font-weight: 700;
