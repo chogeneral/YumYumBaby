@@ -411,6 +411,41 @@ select {
   color: #ffffff;
 }
 
+/* 초기 이유식 서브탭 (1단계/2단계) */
+.earlySubTabWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.earlySubTab {
+  padding: 0.8rem 2rem;
+  border-radius: 10rem;
+  font-weight: 600;
+  font-size: 1.35rem;
+  cursor: pointer;
+  background-color: #fff7f5;
+  border: 0.15rem solid #ffd6cc;
+  color: #cc6b55;
+  transition: all 0.2s ease;
+}
+
+.earlySubTab:hover {
+  background-color: #ffe8e2;
+  border-color: #ff8e72;
+}
+
+.earlySubTabActive {
+  background-color: #ff8e72;
+  border-color: #ff8e72;
+  color: #ffffff;
+}
+
+.earlySubTabActive:hover {
+  color: #ffffff;
+}
+
 .stageDetailCard {
   background-color: #ffffff;
   border-radius: 2rem;
@@ -570,9 +605,16 @@ select {
   border-radius: 1rem;
 }
 
-.tagEarly {
+/* 초기 1단계 */
+.tagEarly1 {
   background-color: #e3f2fd;
   color: #1e88e5;
+}
+
+/* 초기 2단계 */
+.tagEarly2 {
+  background-color: #e8eaf6;
+  color: #3949ab;
 }
 
 .tagMiddle {
@@ -1209,6 +1251,15 @@ select {
 
   .stageTab {
     max-width: 100%;
+  }
+
+  .earlySubTabWrapper {
+    gap: 0.6rem;
+  }
+
+  .earlySubTab {
+    font-size: 1.2rem;
+    padding: 0.6rem 1.4rem;
   }
 }
 

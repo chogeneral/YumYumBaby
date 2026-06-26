@@ -104,6 +104,109 @@ export default function App() {
   const [recipeFilter, setRecipeFilter] = useState("all");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [stageTab, setStageTab] = useState("early");
+  // 초기 탭 내부에서 1단계/2단계를 전환하기 위한 서브탭 상태입니다.
+  const [earlySubTab, setEarlySubTab] = useState("early1");
+
+  // 레시피의 stage와 subStage를 기반으로 태그에 적용할 CSS 클래스명을 반환합니다.
+  // 초기 이유식은 1단계(early1)와 2단계(early2)를 시각적으로 구분하기 위해 별도 클래스를 사용합니다.
+  const getStageTagClass = (recipe) => {
+    if (recipe.stage === "early") {
+      return recipe.subStage === "early1" ? "tagEarly1" : "tagEarly2";
+    }
+    if (recipe.stage === "middle") return "tagMiddle";
+    if (recipe.stage === "late") return "tagLate";
+    return "tagComplete";
+  };
+
+  // 레시피의 stage와 subStage를 기반으로 태그에 표시할 한국어 라벨을 반환합니다.
+  const getStageTagText = (recipe) => {
+    if (recipe.stage === "early") {
+      return recipe.subStage === "early1" ? "초기 1단계" : "초기 2단계";
+    }
+    if (recipe.stage === "middle") return "중기";
+    if (recipe.stage === "late") return "후기";
+    return "완료기";
+  };
+
+  // 레시피 상세 모달용 라벨 — "이유식" 접미사가 붙은 형태를 반환합니다.
+  const getStageTagTextFull = (recipe) => {
+    if (recipe.stage === "early") {
+      return recipe.subStage === "early1" ? "초기 1단계 이유식" : "초기 2단계 이유식";
+    }
+    if (recipe.stage === "middle") return "중기 이유식";
+    if (recipe.stage === "late") return "후기 이유식";
+    return "완료기 이유식";
+  };
+
+  // 초기 1단계 레시피의 이유식 도입 권장 순서입니다.
+  // 곡물(쌀→찹쌀→오트밀) → 순한 채소(애호박→감자→고구마→단호박)
+  // → 녹색 채소(브로콜리→양배추→시금치→청경채→비타민)
+  // → 기타 채소(당근→완두콩→콜리플라워→오이) → 과일(바나나→아보카도)
+  const EARLY1_FEED_ORDER = {
+    recipeEarly01: 1,
+    recipeEarly17: 2,
+    recipeEarly13: 3,
+    recipeEarly02: 4,
+    recipeEarly06: 5,
+    recipeEarly04: 6,
+    recipeEarly05: 7,
+    recipeEarly03: 8,
+    recipeEarly18: 9,
+    recipeEarly10: 10,
+    recipeEarly12: 11,
+    recipeEarly16: 12,
+    recipeEarly07: 13,
+    recipeEarly09: 14,
+    recipeEarly20: 15,
+    recipeEarly21: 16,
+    recipeEarly11: 17,
+    recipeEarly19: 18,
+  };
+
+  // 초기 2단계 레시피의 이유식 도입 권장 순서입니다.
+  // 육류 단독(소고기→닭고기) → 소고기+채소 조합 → 소고기+과일 조합
+  // → 닭고기+채소 조합 → 채소·과일 복합 → 곡물 변형+고기 → 3재료 복합
+  const EARLY2_FEED_ORDER = {
+    // 육류 단독 도입 — 철분 보충을 위해 가장 먼저 도입
+    recipeEarly15: 1,
+    recipeEarly14: 2,
+    // 소고기 + 채소 조합 — 익숙한 채소부터 조합
+    recipeEarly34: 3,
+    recipeEarly25: 4,
+    recipeEarly33: 5,
+    recipeEarly28: 6,
+    recipeEarly40: 7,
+    recipeEarly32: 8,
+    // 소고기 + 과일 조합 — 비타민C가 철분 흡수를 도움
+    recipeEarly50: 9,
+    recipeEarly35: 10,
+    recipeEarly08: 11,
+    recipeEarly37: 12,
+    // 닭고기 + 채소·과일 조합
+    recipeEarly27: 13,
+    recipeEarly41: 14,
+    recipeEarly49: 15,
+    recipeEarly38: 16,
+    // 채소·과일 복합 미음 — 고기 없는 조합
+    recipeEarly22: 17,
+    recipeEarly26: 18,
+    recipeEarly29: 19,
+    recipeEarly31: 20,
+    recipeEarly39: 21,
+    recipeEarly42: 22,
+    recipeEarly24: 23,
+    recipeEarly30: 24,
+    recipeEarly36: 25,
+    // 곡물 변형 + 고기 조합
+    recipeEarly43: 26,
+    recipeEarly44: 27,
+    recipeEarly45: 28,
+    recipeEarly46: 29,
+    // 3가지 재료 복합 미음
+    recipeEarly23: 30,
+    recipeEarly47: 31,
+    recipeEarly48: 32,
+  };
 
   // 비로그인 상태에서 보호된 탭 진입 시도 시 로그인 후 이동할 탭을 임시 저장합니다.
   const [pendingTab, setPendingTab] = useState(null);
@@ -711,13 +814,8 @@ export default function App() {
                           className="recipeCard"
                           onClick={() => setSelectedRecipe(recipe)}
                         >
-                          <span className={`recipeStageTag ${recipe.stage === "early" ? "tagEarly" :
-                            recipe.stage === "middle" ? "tagMiddle" :
-                            recipe.stage === "late" ? "tagLate" : "tagComplete"
-                          }`}>
-                            {recipe.stage === "early" ? "초기" :
-                              recipe.stage === "middle" ? "중기" :
-                              recipe.stage === "late" ? "후기" : "완료기"}
+                          <span className={`recipeStageTag ${getStageTagClass(recipe)}`}>
+                            {getStageTagText(recipe)}
                           </span>
                           <h3 className="recipeCardName">{recipe.name}</h3>
                           <p className="recipeCardDesc">{recipe.description}</p>
@@ -758,35 +856,74 @@ export default function App() {
                   ))}
                 </div>
 
-                {babyFoodStages.filter(s => s.id === stageTab).map(stage => (
-                  <div className="stageDetailCard" key={stage.id}>
-                    <div className="stageInfoLeft">
-                      <span className="stageInfoPeriod">{stage.period}</span>
-                      <h3 className="stageInfoTitle">{stage.title} 가이드</h3>
-                      <p className="stageInfoDesc">{stage.description}</p>
+                {babyFoodStages.filter(s => s.id === stageTab).map(stage => {
+                  // 초기 탭에서는 subStages가 있으면 서브탭으로 전환하여 1단계/2단계를 구분합니다.
+                  // 중기/후기/완료기에서는 기존과 동일하게 stage 데이터를 직접 보여줍니다.
+                  const hasSubStages = stage.subStages && stage.subStages.length > 0;
+                  const displayData = hasSubStages
+                    ? stage.subStages.find(sub => sub.id === earlySubTab) || stage.subStages[0]
+                    : stage;
 
-                      <div className="stageSummaryGrid">
-                        <div className="summaryItem">
-                          <div className="summaryLabel">권장 섭취 횟수</div>
-                          <div className="summaryVal">{stage.dailyCount}</div>
-                        </div>
-                        <div className="summaryItem">
-                          <div className="summaryLabel">음식의 굳기/질감</div>
-                          <div className="summaryVal">{stage.texture}</div>
+                  return (
+                  <div key={stage.id}>
+                    {/* 초기 탭에서만 서브탭(1단계/2단계) 표시 */}
+                    {hasSubStages && (
+                      <div className="earlySubTabWrapper">
+                        {stage.subStages.map(sub => (
+                          <button
+                            key={sub.id}
+                            className={`earlySubTab ${earlySubTab === sub.id ? "earlySubTabActive" : ""}`}
+                            onClick={() => setEarlySubTab(sub.id)}
+                          >
+                            {sub.title}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="stageDetailCard">
+                      <div className="stageInfoLeft">
+                        <span className="stageInfoPeriod">{displayData.period}</span>
+                        <h3 className="stageInfoTitle">{displayData.title || stage.title} 가이드</h3>
+                        <p className="stageInfoDesc">{displayData.description}</p>
+
+                        <div className="stageSummaryGrid">
+                          <div className="summaryItem">
+                            <div className="summaryLabel">권장 섭취 횟수</div>
+                            <div className="summaryVal">{displayData.dailyCount}</div>
+                          </div>
+                          <div className="summaryItem">
+                            <div className="summaryLabel">음식의 굳기/질감</div>
+                            <div className="summaryVal">{displayData.texture}</div>
+                          </div>
+                          {/* 초기 서브탭에서만 1회 권장량 표시 */}
+                          {displayData.amount && (
+                            <div className="summaryItem">
+                              <div className="summaryLabel">1회 권장량</div>
+                              <div className="summaryVal">{displayData.amount}</div>
+                            </div>
+                          )}
+                          {displayData.keyIngredients && (
+                            <div className="summaryItem">
+                              <div className="summaryLabel">핵심 식재료</div>
+                              <div className="summaryVal">{displayData.keyIngredients}</div>
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </div>
 
-                    <div className="stageInfoRight">
-                      <h4 className="guideTitle">단계별 중요 영양 & 조리 수칙</h4>
-                      <ul className="guideList">
-                        {stage.guidelines.map((line, idx) => (
-                          <li key={idx} className={`guideItem${line.startsWith("[알레르기 체크]") ? " guideItemAlert" : ""}`}>{line}</li>
-                        ))}
-                      </ul>
+                      <div className="stageInfoRight">
+                        <h4 className="guideTitle">단계별 중요 영양 & 조리 수칙</h4>
+                        <ul className="guideList">
+                          {displayData.guidelines.map((line, idx) => (
+                            <li key={idx} className={`guideItem${line.startsWith("[알레르기 체크]") ? " guideItemAlert" : ""}`}>{line}</li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </section>
 
@@ -798,20 +935,30 @@ export default function App() {
               </p>
 
               <div className="recipesGrid">
-                {/* 메인 페이지 가이드의 선택된 탭 단계(stageTab)에 부합하는 이유식 레시피들만 필터링하여 전체 추천 목록을 한 화면에 전부 노출시킵니다. */}
-                {recipes && Array.isArray(recipes) && recipes.filter(recipe => recipe?.stage === stageTab).map(recipe => (
+                {/* 메인 페이지 가이드의 선택된 탭 단계(stageTab)에 부합하는 이유식 레시피들만 필터링하고, 초기(early) 탭일 때는 1단계를 먼저 보여줍니다. */}
+                {recipes && Array.isArray(recipes) && recipes
+                  .filter(recipe => recipe?.stage === stageTab)
+                  .sort((a, b) => {
+                    // 초기 이유식 탭에서 1단계를 2단계보다 앞에 두고,
+                    // 1단계 내에서는 이유식 도입 권장 순서(곡물→채소→과일)로 정렬합니다.
+                    if (stageTab === "early") {
+                      const subOrder = { early1: 0, early2: 1 };
+                      const subDiff = (subOrder[a.subStage] ?? 1) - (subOrder[b.subStage] ?? 1);
+                      if (subDiff !== 0) return subDiff;
+                      // 같은 단계 내에서 이유식 도입 권장 순서대로 정렬합니다.
+                      const orderMap = a.subStage === "early1" ? EARLY1_FEED_ORDER : EARLY2_FEED_ORDER;
+                      return (orderMap[a.id] ?? 99) - (orderMap[b.id] ?? 99);
+                    }
+                    return 0;
+                  })
+                  .map(recipe => (
                   <div
                     key={recipe.id}
                     className="recipeCard"
                     onClick={() => setSelectedRecipe(recipe)}
                   >
-                    <span className={`recipeStageTag ${recipe.stage === "early" ? "tagEarly" :
-                      recipe.stage === "middle" ? "tagMiddle" :
-                      recipe.stage === "late" ? "tagLate" : "tagComplete"
-                      }`}>
-                      {recipe.stage === "early" ? "초기" :
-                        recipe.stage === "middle" ? "중기" :
-                        recipe.stage === "late" ? "후기" : "완료기"}
+                    <span className={`recipeStageTag ${getStageTagClass(recipe)}`}>
+                      {getStageTagText(recipe)}
                     </span>
                     <h3 className="recipeCardName">{recipe.name}</h3>
                     <p className="recipeCardDesc">{recipe.description}</p>
@@ -1169,13 +1316,8 @@ export default function App() {
 
             <div className="modalBody">
               <div className="modalHeader">
-                <span className={`recipeStageTag ${selectedRecipe.stage === "early" ? "tagEarly" :
-                  selectedRecipe.stage === "middle" ? "tagMiddle" :
-                  selectedRecipe.stage === "late" ? "tagLate" : "tagComplete"
-                  }`} style={{ alignSelf: "flex-start" }}>
-                  {selectedRecipe.stage === "early" ? "초기 이유식" :
-                    selectedRecipe.stage === "middle" ? "중기 이유식" :
-                    selectedRecipe.stage === "late" ? "후기 이유식" : "완료기 이유식"}
+                <span className={`recipeStageTag ${getStageTagClass(selectedRecipe)}`} style={{ alignSelf: "flex-start" }}>
+                  {getStageTagTextFull(selectedRecipe)}
                 </span>
                 <h2 className="modalTitle">{selectedRecipe.name}</h2>
                 <p className="modalDesc">{selectedRecipe.description}</p>
