@@ -219,6 +219,109 @@ export default function App() {
     recipeEarly48: 32,
   };
 
+  // 중기 레시피 도입 권장 순서입니다.
+  // 소고기(철분·뇌 발달) → 닭고기 → 달걀 → 두부 → 생선 → 잡곡 변형 → 채소·과일만
+  const MIDDLE_FEED_ORDER = {
+    recipeMiddle22: 1,  // 애호박소고기죽 — 소고기 기본 입문
+    recipeMiddle04: 2,  // 시금치 소고기죽
+    recipeMiddle01: 3,  // 브로콜리 쇠고기죽
+    recipeMiddle19: 4,  // 소고기미역죽
+    recipeMiddle25: 5,  // 당근양배추쇠고기죽
+    recipeMiddle45: 6,  // 감자배추쇠고기죽
+    recipeMiddle18: 7,  // 소고기청경채표고버섯죽
+    recipeMiddle20: 8,  // 청경채김가루쇠고기죽
+    recipeMiddle41: 9,  // 오이감자쇠고기죽
+    recipeMiddle29: 10, // 미역버섯쇠고기죽
+    recipeMiddle14: 11, // 사과당근쇠고기죽
+    recipeMiddle42: 12, // 쇠고기아보카도배죽
+    recipeMiddle43: 13, // 쇠고기콜리플라워가지김죽
+    recipeMiddle16: 14, // 쇠고기귀리단호박죽 — 잡곡 조합 소고기
+    recipeMiddle17: 15, // 현미단호박쇠고기죽
+    recipeMiddle37: 16, // 찹현미단호박쇠고기죽
+    recipeMiddle26: 17, // 쇠고기귀리타락죽
+    recipeMiddle12: 18, // 찹쌀 닭죽 — 닭고기 기본 입문
+    recipeMiddle15: 19, // 단호박양파닭죽
+    recipeMiddle23: 20, // 닭고기당근죽
+    recipeMiddle32: 21, // 배추닭죽
+    recipeMiddle24: 22, // 닭고기청경채당근죽
+    recipeMiddle35: 23, // 애호박버섯닭죽
+    recipeMiddle21: 24, // 닭고기콜리플라워애호박죽
+    recipeMiddle05: 25, // 닭고기감자비트죽
+    recipeMiddle08: 26, // 닭고기아보카도고구마죽
+    recipeMiddle07: 27, // 달걀 애호박 당근죽 — 달걀 노른자 입문
+    recipeMiddle46: 28, // 배추시금치달걀죽
+    recipeMiddle09: 29, // 두부 시금치죽 — 두부 입문
+    recipeMiddle10: 30, // 두부브로콜리무죽
+    recipeMiddle36: 31, // 연두부청경채무죽
+    recipeMiddle03: 32, // 대구살당근애호박죽 — 흰살생선 입문
+    recipeMiddle28: 33, // 단호박브로콜리죽 — 채소·과일만
+    recipeMiddle27: 34, // 양송이고구마시금치죽
+    recipeMiddle33: 35, // 새송이애호박양파죽
+    recipeMiddle11: 36, // 양배추다시마쌀죽
+    recipeMiddle40: 37, // 고구마사과죽
+    recipeMiddle30: 38, // 배브로콜리감자죽
+    recipeMiddle13: 39, // 아보카도사과양파죽
+    recipeMiddle34: 40, // 수수단호박오이죽 — 잡곡 변형
+    recipeMiddle39: 41, // 수수애호박양배추죽
+    recipeMiddle31: 42, // 배찹쌀근대죽
+    recipeMiddle38: 43, // 흑미연두부버섯죽
+    recipeMiddle44: 44, // 콜리플라워고구마귀리죽
+  };
+
+  // 후기 레시피 도입 권장 순서입니다.
+  // 소고기(철분) → 닭고기 → 두부 → 잡곡 → 치즈 조합
+  const LATE_FEED_ORDER = {
+    recipeLate09: 1,  // 쇠고기과일무른밥 — 소고기 기본 입문
+    recipeLate10: 2,  // 쇠고기버섯볶은무른밥
+    recipeLate11: 3,  // 쇠고기야채버섯볶은무른밥
+    recipeLate16: 4,  // 쇠고기콜리플라워단호박무른밥
+    recipeLate14: 5,  // 쇠고기아보카도배무른밥
+    recipeLate06: 6,  // 닭고기당근시금치무른밥 — 닭고기 입문
+    recipeLate13: 7,  // 닭고기양배추무른밥
+    recipeLate04: 8,  // 찹쌀닭고기버섯무른밥
+    recipeLate07: 9,  // 닭고기대추무른밥
+    recipeLate15: 10, // 닭고기아보카도감자무른밥
+    recipeLate18: 11, // 닭고기콜리플라워배적채무른밥
+    recipeLate03: 12, // 연두부미역무른밥 — 두부 입문
+    recipeLate12: 13, // 애호박연두부무른밥
+    recipeLate08: 14, // 밤단호박차조무른밥 — 잡곡 변형
+    recipeLate02: 15, // 야채치즈무른밥 — 치즈 조합
+    recipeLate01: 16, // 과일치즈무른밥
+    recipeLate05: 17, // 고구마시금치치즈무른밥
+    recipeLate17: 18, // 콜리플라워감자치즈무른밥
+  };
+
+  // 완료기 레시피 도입 권장 순서입니다.
+  // 쇠고기진밥 → 닭고기진밥 → 달걀·해산물 → 두부 → 국·찌개 → 반찬·특별식
+  const COMPLETE_FEED_ORDER = {
+    recipeComplete09: 1,  // 쇠고기영양진밥 — 소고기 기본 입문
+    recipeComplete08: 2,  // 쇠고기사과볶은진밥
+    recipeComplete11: 3,  // 쇠고기아보카도배추진밥
+    recipeComplete17: 4,  // 쇠고기콜리플라워청경채진밥
+    recipeComplete18: 5,  // 흑미닭고기영양진밥 — 닭고기 입문
+    recipeComplete20: 6,  // 닭고기사과볶은진밥
+    recipeComplete03: 7,  // 닭고기야채덮밥
+    recipeComplete19: 8,  // 닭고기무감자진밥
+    recipeComplete31: 9,  // 닭고기콜리플라워근대진밥
+    recipeComplete14: 10, // 닭고기콜리플라워근대진밥(변형)
+    recipeComplete12: 11, // 닭고기아보카도사과진밥
+    recipeComplete21: 12, // 닭고기가지연두부진밥
+    recipeComplete32: 13, // 닭고기무감자진밥(변형)
+    recipeComplete01: 14, // 사과당근달걀진밥 — 달걀 입문
+    recipeComplete16: 15, // 콜리플라워연두부비타민진밥 — 두부
+    recipeComplete13: 16, // 새우아보카도브로콜리진밥 — 해산물 입문
+    recipeComplete15: 17, // 게살아보카도버섯진밥
+    recipeComplete02: 18, // 새우버섯볶은치즈진밥
+    recipeComplete06: 19, // 쇠고기무국 — 국·찌개
+    recipeComplete22: 20, // 쇠고기된장국
+    recipeComplete07: 21, // 연두부된장국
+    recipeComplete23: 22, // 버섯된장국
+    recipeComplete24: 23, // 무아욱된장국
+    recipeComplete10: 24, // 아기쇠고기장조림 — 반찬
+    recipeComplete04: 25, // 꼬마김밥 — 특별식
+    recipeComplete05: 26, // 아기떡볶이
+  };
+
   // 비로그인 상태에서 보호된 탭 진입 시도 시 로그인 후 이동할 탭을 임시 저장합니다.
   const [pendingTab, setPendingTab] = useState(null);
 
@@ -368,6 +471,17 @@ export default function App() {
     return months < 0 ? 0 : months;
   };
 
+  // 초기 탭이 선택될 때 아기 월령에 맞는 서브탭(1단계/2단계)을 자동으로 전환합니다.
+  // 4개월은 early1(초기 1단계), 5~6개월은 early2(초기 2단계)로 이동시킵니다.
+  // 비로그인이거나 초기 단계 범위(4~6개월)가 아니면 기본값(early1)을 유지합니다.
+  useEffect(() => {
+    if (stageTab !== "early" || !userProfile?.babyBirth) return;
+    const months = calculateMonths(userProfile.babyBirth);
+    if (months >= 4 && months <= 6) {
+      setEarlySubTab(months <= 4 ? "early1" : "early2");
+    }
+  }, [stageTab, userProfile]);
+
   // 개월 수에 맞는 이유식 단계를 결정합니다.
   // 후기(10~11개월)와 완료기(12~23개월)를 별도 stageId로 분리하여 레시피 필터와 UI 태그가 각 단계에 맞게 표시되도록 합니다.
   const determineStage = (months) => {
@@ -408,6 +522,62 @@ export default function App() {
         description: "이유식 단계를 졸업하여 어른들과 비슷한 식사를 할 수 있는 유아식 단계입니다. 저염식 반찬을 추천합니다."
       };
     }
+  };
+
+  // 아기 월령에 따라 현재 적용 가능한 모든 이유식 단계를 배열로 반환합니다.
+  // 5개월은 초기 1·2단계가 동시에 해당하고, 6·9·11개월은 현재 단계 + 다음 단계를 함께 반환합니다.
+  const getApplicableStages = (months) => {
+    if (months < 4 || months >= 24) return [];
+
+    const results = [];
+    const earlyStage = babyFoodStages.find(s => s.id === "early");
+    const middleStage = babyFoodStages.find(s => s.id === "middle");
+    const lateStage = babyFoodStages.find(s => s.id === "late");
+    const completeStage = babyFoodStages.find(s => s.id === "complete");
+
+    // 초기 1단계: 생후 4~5개월
+    if (months >= 4 && months <= 5) {
+      const sub = earlyStage.subStages.find(s => s.id === "early1");
+      results.push({ stageId: "early", subStageId: "early1", stageName: sub.title, isUpcoming: false, stageData: earlyStage, subStageData: sub });
+    }
+
+    // 초기 2단계: 생후 5~6개월 (5개월에서 1단계와 겹침)
+    if (months >= 5 && months <= 6) {
+      const sub = earlyStage.subStages.find(s => s.id === "early2");
+      results.push({ stageId: "early", subStageId: "early2", stageName: sub.title, isUpcoming: false, stageData: earlyStage, subStageData: sub });
+    }
+
+    // 6개월: 초기 마지막 달 → 중기 이유식 다음 단계 예고
+    if (months === 6) {
+      results.push({ stageId: "middle", subStageId: null, stageName: middleStage.title, isUpcoming: true, stageData: middleStage, subStageData: null });
+    }
+
+    // 중기: 생후 7~9개월
+    if (months >= 7 && months <= 9) {
+      results.push({ stageId: "middle", subStageId: null, stageName: middleStage.title, isUpcoming: false, stageData: middleStage, subStageData: null });
+    }
+
+    // 9개월: 중기 마지막 달 → 후기 이유식 다음 단계 예고
+    if (months === 9) {
+      results.push({ stageId: "late", subStageId: null, stageName: lateStage.title, isUpcoming: true, stageData: lateStage, subStageData: null });
+    }
+
+    // 후기: 생후 10~11개월
+    if (months >= 10 && months <= 11) {
+      results.push({ stageId: "late", subStageId: null, stageName: lateStage.title, isUpcoming: false, stageData: lateStage, subStageData: null });
+    }
+
+    // 11개월: 후기 마지막 달 → 완료기 이유식 다음 단계 예고
+    if (months === 11) {
+      results.push({ stageId: "complete", subStageId: null, stageName: completeStage.title, isUpcoming: true, stageData: completeStage, subStageData: null });
+    }
+
+    // 완료기: 생후 12~23개월
+    if (months >= 12 && months <= 23) {
+      results.push({ stageId: "complete", subStageId: null, stageName: completeStage.title, isUpcoming: false, stageData: completeStage, subStageData: null });
+    }
+
+    return results;
   };
 
   const handleCalculate = (e) => {
@@ -716,6 +886,21 @@ export default function App() {
     return `${y}-${m}-${d}`;
   };
 
+  // 단계·서브스테이지에 해당하는 피드 오더 맵을 반환합니다.
+  const getFeedOrderMap = (stageId, subStageId) => {
+    if (stageId === "early") return subStageId === "early1" ? EARLY1_FEED_ORDER : EARLY2_FEED_ORDER;
+    if (stageId === "middle") return MIDDLE_FEED_ORDER;
+    if (stageId === "late") return LATE_FEED_ORDER;
+    if (stageId === "complete") return COMPLETE_FEED_ORDER;
+    return {};
+  };
+
+  // 필터링된 레시피를 피드 오더 순서대로 정렬하여 반환합니다.
+  const getSortedRecipesByOrder = (stageId, subStageId, filtered) => {
+    const orderMap = getFeedOrderMap(stageId, subStageId);
+    return [...filtered].sort((a, b) => (orderMap[a.id] ?? 999) - (orderMap[b.id] ?? 999));
+  };
+
   // 특정 Date 객체에 해당하는 단계별 메뉴 배열을 반환합니다. (달력 타일 렌더링에 사용)
   const getDayMenus = (date) => {
     if (!userProfile?.babyBirth) return [];
@@ -724,13 +909,20 @@ export default function App() {
     const stageInfo = determineStage(months);
     if (stageInfo.stageId === "none" || stageInfo.stageId === "graduation") return [];
 
-    const stageRecipes = recipes.filter(r => r.stage === stageInfo.stageId);
-    if (!stageRecipes.length) return [];
+    // 초기 단계인 경우 월령에 맞는 서브스테이지(1단계/2단계) 레시피만 추천합니다.
+    const subStageId = months <= 4 ? "early1" : "early2";
+    const filtered = recipes.filter(r =>
+      r.stage === stageInfo.stageId &&
+      (stageInfo.stageId !== "early" || r.subStage === subStageId)
+    );
+    if (!filtered.length) return [];
 
+    // 먹어야 하는 순서대로 정렬한 뒤, daySeed로 오늘 위치를 결정합니다.
+    const sorted = getSortedRecipesByOrder(stageInfo.stageId, subStageId, filtered);
     const daySeed = Math.floor(date.getTime() / (1000 * 60 * 60 * 24));
     const mealCount = stageInfo.stageId === "early" ? 1 : stageInfo.stageId === "middle" ? 2 : 3;
     return Array.from({ length: mealCount }, (_, i) =>
-      stageRecipes[(daySeed + i) % stageRecipes.length]
+      sorted[(daySeed + i) % sorted.length]
     );
   };
 
@@ -744,9 +936,16 @@ export default function App() {
       return { months, ...stageInfo, meals: [] };
     }
 
-    const stageRecipes = recipes.filter(r => r.stage === stageInfo.stageId);
-    if (!stageRecipes.length) return null;
+    // 초기 단계인 경우 월령에 맞는 서브스테이지(1단계/2단계) 레시피만 추천합니다.
+    const subStageId = months <= 4 ? "early1" : "early2";
+    const filtered = recipes.filter(r =>
+      r.stage === stageInfo.stageId &&
+      (stageInfo.stageId !== "early" || r.subStage === subStageId)
+    );
+    if (!filtered.length) return null;
 
+    // 먹어야 하는 순서대로 정렬한 뒤, daySeed로 오늘 위치를 결정합니다.
+    const sorted = getSortedRecipesByOrder(stageInfo.stageId, subStageId, filtered);
     const dateObj = new Date(menuPickerDate + "T12:00:00");
     const daySeed = Math.floor(dateObj.getTime() / (1000 * 60 * 60 * 24));
 
@@ -760,7 +959,7 @@ export default function App() {
     const labels = mealLabels[stageInfo.stageId];
     const meals = labels.map((label, i) => ({
       label,
-      recipe: stageRecipes[(daySeed + i) % stageRecipes.length]
+      recipe: sorted[(daySeed + i) % sorted.length]
     }));
 
     return { months, ...stageInfo, meals };
@@ -1028,8 +1227,8 @@ export default function App() {
               </div>
             </section>
 
-            {/* 인기 레시피 6개 미리보기 */}
-            <section className="recipesSection">
+            {/* 인기 레시피 6개 미리보기 — 간식 탭에서는 레시피 섹션을 숨깁니다 */}
+            {stageTab !== "snack" && <section className="recipesSection">
               <h2 className="sectionTitle">이유식 메뉴 & 레시피</h2>
               <p style={{ textAlign: "center", fontSize: "1.4rem", color: "#666666", marginTop: "1rem" }}>
                 아기들이 가장 선호하고 부모님들이 자주 끓이는 필수 레시피 모음입니다.
@@ -1040,15 +1239,23 @@ export default function App() {
                 {recipes && Array.isArray(recipes) && recipes
                   .filter(recipe => recipe?.stage === stageTab)
                   .sort((a, b) => {
-                    // 초기 이유식 탭에서 1단계를 2단계보다 앞에 두고,
-                    // 1단계 내에서는 이유식 도입 권장 순서(곡물→채소→과일)로 정렬합니다.
+                    // 각 단계별 이유식 도입 권장 순서대로 정렬합니다.
                     if (stageTab === "early") {
+                      // 초기: 1단계(early1)를 2단계(early2)보다 앞에 두고, 각 단계 내 도입 순서로 정렬합니다.
                       const subOrder = { early1: 0, early2: 1 };
                       const subDiff = (subOrder[a.subStage] ?? 1) - (subOrder[b.subStage] ?? 1);
                       if (subDiff !== 0) return subDiff;
-                      // 같은 단계 내에서 이유식 도입 권장 순서대로 정렬합니다.
                       const orderMap = a.subStage === "early1" ? EARLY1_FEED_ORDER : EARLY2_FEED_ORDER;
                       return (orderMap[a.id] ?? 99) - (orderMap[b.id] ?? 99);
+                    }
+                    if (stageTab === "middle") {
+                      return (MIDDLE_FEED_ORDER[a.id] ?? 99) - (MIDDLE_FEED_ORDER[b.id] ?? 99);
+                    }
+                    if (stageTab === "late") {
+                      return (LATE_FEED_ORDER[a.id] ?? 99) - (LATE_FEED_ORDER[b.id] ?? 99);
+                    }
+                    if (stageTab === "complete") {
+                      return (COMPLETE_FEED_ORDER[a.id] ?? 99) - (COMPLETE_FEED_ORDER[b.id] ?? 99);
                     }
                     return 0;
                   })
@@ -1070,7 +1277,7 @@ export default function App() {
                   </div>
                 ))}
               </div>
-            </section>
+            </section>}
 
             </>
             )}
@@ -1146,37 +1353,73 @@ export default function App() {
                   );
                 })()}
 
-                {/* 현재 보는 월 기준 이유식 단계 요약 카드 */}
+                {/* 현재 보는 월 기준 이유식 단계 요약 카드 — 겹치는 단계가 있으면 모두 표시 */}
+                {/* 월 중간에 단계가 시작되는 경우는 마지막 날 기준으로, 졸업(24개월+)이 되는 달은 월초 기준으로 폴백합니다. */}
                 {(() => {
                   if (!userProfile?.babyBirth) return null;
-                  const months = calculateMonthsAtDate(userProfile.babyBirth, calendarViewDate);
-                  const stageInfo = determineStage(months);
-                  const stageData = babyFoodStages.find(s => s.id === stageInfo.stageId);
-                  if (!stageData) return null;
+                  const lastDayOfMonth = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() + 1, 0);
+                  const monthsAtEnd = calculateMonthsAtDate(userProfile.babyBirth, lastDayOfMonth);
+                  const monthsAtStart = calculateMonthsAtDate(userProfile.babyBirth, calendarViewDate);
+                  const months = (monthsAtEnd >= 24 && monthsAtStart < 24) ? monthsAtStart : monthsAtEnd;
+                  const stages = getApplicableStages(months);
+                  if (!stages.length) return null;
                   return (
-                    <div className="stageInfoCard">
-                      <div className="stageInfoBadge">{stageData.title} 이유식</div>
-                      <ul className="stageInfoList">
-                        <li className="stageInfoItem">
-                          <span className="stageInfoLabel">시기</span>
-                          <span className="stageInfoValue">{stageData.period}</span>
-                        </li>
-                        <li className="stageInfoItem">
-                          <span className="stageInfoLabel">횟수</span>
-                          <span className="stageInfoValue">{stageData.dailyCount}</span>
-                        </li>
-                        <li className="stageInfoItem">
-                          <span className="stageInfoLabel">형태</span>
-                          <span className="stageInfoValue">{stageData.texture}</span>
-                        </li>
-                        <li className="stageInfoItem">
-                          <span className="stageInfoLabel">주재료</span>
-                          <span className="stageInfoValue">{stageData.keyIngredients}</span>
-                        </li>
-                      </ul>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+                      {stages.map((stage, idx) => {
+                        const displayData = stage.subStageData || stage.stageData;
+                        return (
+                          <div
+                            key={idx}
+                            className="stageInfoCard"
+                            style={stage.isUpcoming ? { backgroundColor: "#fff9f6", borderColor: "#ffcbb7" } : {}}
+                          >
+                            <div
+                              className="stageInfoBadge"
+                              style={stage.isUpcoming ? { backgroundColor: "#ffb38a" } : {}}
+                            >
+                              {displayData.title || stage.stageData.title} 이유식
+                            </div>
+                            <ul className="stageInfoList">
+                              <li className="stageInfoItem">
+                                <span className="stageInfoLabel">시기</span>
+                                <span className="stageInfoValue">{displayData.period}</span>
+                              </li>
+                              <li className="stageInfoItem">
+                                <span className="stageInfoLabel">횟수</span>
+                                <span className="stageInfoValue">{displayData.dailyCount}</span>
+                              </li>
+                              {displayData.amount && (
+                                <li className="stageInfoItem">
+                                  <span className="stageInfoLabel">1회 권장량</span>
+                                  <span className="stageInfoValue">{displayData.amount}</span>
+                                </li>
+                              )}
+                              <li className="stageInfoItem">
+                                <span className="stageInfoLabel">형태</span>
+                                <span className="stageInfoValue">{displayData.texture}</span>
+                              </li>
+                              {displayData.snack && (
+                                <li className="stageInfoItem">
+                                  <span className="stageInfoLabel">간식</span>
+                                  <span className="stageInfoValue">{displayData.snack}</span>
+                                </li>
+                              )}
+                              <li className="stageInfoItem">
+                                <span className="stageInfoLabel">주재료</span>
+                                <span className="stageInfoValue">{displayData.keyIngredients}</span>
+                              </li>
+                            </ul>
+                          </div>
+                        );
+                      })}
                     </div>
                   );
                 })()}
+
+                {/* 사용자가 식단을 참고용으로만 인지하고 부담 없이 진행할 수 있도록 돕는 빨간색 안내 메시지입니다. */}
+                <p style={{ color: "#d32f2f", fontSize: "1.4rem", fontWeight: 600, marginTop: "-1.6rem", marginBottom: "-1.6rem" }}>
+                  추천 레시피는 단지 참고용 입니다. 꼭 이대로 안먹이셔도 됩니다.
+                </p>
 
                 <div className="menuCalendarWrapper">
                   <Calendar

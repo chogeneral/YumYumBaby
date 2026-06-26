@@ -1596,13 +1596,6 @@ select {
   padding-top: 2.4rem;
 }
 
-.reviewSectionTitle {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #2c2c2c;
-  border-left: 0.3rem solid #ff8e72;
-  padding-left: 1rem;
-}
 
 /* 레시피 상세 후기 작성 영역 */
 .nonMemberUsernameInput {
