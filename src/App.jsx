@@ -46,6 +46,9 @@ const KOREAN_HOLIDAYS = new Set([
   "2024-12-25", "2025-12-25", "2026-12-25", "2027-12-25",
 ]);
 
+// 후기 페이지당 표시 개수
+const REVIEW_PAGE_SIZE = 10;
+
 // 애플리케이션의 전체 기능과 라우팅, 회원 관리를 수행하는 메인 App 컴포넌트입니다.
 export default function App() {
   // --- 상태 관리 정의 ---
@@ -103,6 +106,14 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [recipeFilter, setRecipeFilter] = useState("all");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+
+  // 레시피 후기 목록, 페이지, 총 개수, 입력값, 등록 중 여부
+  const [reviews, setReviews] = useState([]);
+  const [reviewPage, setReviewPage] = useState(1);
+  const [reviewTotalCount, setReviewTotalCount] = useState(0);
+  const [reviewText, setReviewText] = useState("");
+  const [reviewSubmitting, setReviewSubmitting] = useState(false);
+
   const [stageTab, setStageTab] = useState("early");
   // 초기 탭 내부에서 1단계/2단계를 전환하기 위한 서브탭 상태입니다.
   const [earlySubTab, setEarlySubTab] = useState("early1");
@@ -260,6 +271,88 @@ export default function App() {
     // 컴포넌트 언마운트 시 구독 해제 — 메모리 누수 방지
     return () => subscription.unsubscribe();
   }, []);
+
+  // 레시피 모달이 열리면 해당 레시피의 후기를 1페이지부터 불러옵니다.
+  // 모달이 닫히면(selectedRecipe === null) 후기 상태를 초기화합니다.
+  useEffect(() => {
+    if (selectedRecipe) {
+      setReviewPage(1);
+      setReviewText("");
+      fetchReviews(selectedRecipe.id, 1);
+    } else {
+      setReviews([]);
+      setReviewTotalCount(0);
+    }
+  }, [selectedRecipe?.id]);
+
+  // --- 후기(recipe_reviews) 관련 함수 ---
+
+  // 특정 레시피의 후기를 페이지 단위로 Supabase에서 조회합니다.
+  // PostgreSQL의 식별자 대소문자 매핑 에러를 방지하고 표준을 따르기 위해 테이블명을 recipe_reviews로 호출하도록 수정했습니다.
+  const fetchReviews = async (recipeId, page) => {
+    const from = (page - 1) * REVIEW_PAGE_SIZE;
+    const to = from + REVIEW_PAGE_SIZE - 1;
+    const { data, count, error } = await supabase
+      .from("recipe_reviews")
+      .select("*", { count: "exact" })
+      .eq("recipe_id", recipeId)
+      .order("created_at", { ascending: false })
+      .range(from, to);
+    if (!error) {
+      setReviews(data || []);
+      setReviewTotalCount(count || 0);
+    }
+  };
+
+  // 후기를 Supabase에 등록합니다. 등록 완료 후 1페이지로 이동하여 목록을 갱신합니다.
+  // 비회원 작성 차단 정책에 맞게, 로그인된 회원 세션 정보를 기반으로 작성자의 id와 닉네임을 수집해 recipe_reviews 테이블에 인서트하도록 구현했습니다.
+  const handleReviewSubmit = async () => {
+    if (!reviewText.trim() || reviewSubmitting || !supabaseSession) return;
+    setReviewSubmitting(true);
+    const { error } = await supabase
+      .from("recipe_reviews")
+      .insert({
+        recipe_id: selectedRecipe.id,
+        user_id: supabaseSession.user.id,
+        username: userProfile?.username || "회원",
+        content: reviewText.trim()
+      });
+    if (!error) {
+      setReviewText("");
+      setReviewPage(1);
+      await fetchReviews(selectedRecipe.id, 1);
+    }
+    setReviewSubmitting(false);
+  };
+
+  // 본인이 작성한 후기를 삭제합니다. 삭제 후 현재 페이지 또는 마지막 페이지로 이동합니다.
+  // 에러 없는 정상적인 삭제 통신을 위해 테이블명을 recipe_reviews로 호출하고, 삭제 성공 시 바뀐 전체 후기 개수에 비례해 적절한 다음 페이지 데이터를 보여주도록 설계했습니다.
+  const handleReviewDelete = async (reviewId) => {
+    if (!window.confirm("후기를 삭제할까요?")) return;
+    const { error } = await supabase
+      .from("recipe_reviews")
+      .delete()
+      .eq("id", reviewId);
+    if (!error) {
+      const newTotal = reviewTotalCount - 1;
+      const maxPage = Math.max(1, Math.ceil(newTotal / REVIEW_PAGE_SIZE));
+      const nextPage = reviewPage > maxPage ? maxPage : reviewPage;
+      setReviewPage(nextPage);
+      await fetchReviews(selectedRecipe.id, nextPage);
+    }
+  };
+
+  // 후기 페이지를 변경합니다.
+  const handleReviewPageChange = async (newPage) => {
+    setReviewPage(newPage);
+    await fetchReviews(selectedRecipe.id, newPage);
+  };
+
+  // 날짜 문자열을 YYYY.MM.DD 형식으로 변환합니다.
+  const formatReviewDate = (dateStr) => {
+    const d = new Date(dateStr);
+    return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+  };
 
   // --- 비즈니스 로직 함수 정의 ---
 
@@ -430,9 +523,17 @@ export default function App() {
       }
     }
 
-    alert("회원가입이 완료되었습니다! 이메일 인증 후 로그인해 주세요.");
     setRegisterForm({ email: "", parentName: "", babyName: "", babyBirth: "", password: "" });
-    setAuthMode("login");
+
+    // 이메일 인증이 비활성화된 경우 signUp이 즉시 session을 반환하므로 자동 로그인 처리합니다.
+    if (data.session) {
+      setShowAuthModal(false);
+      setCurrentTab("home");
+      alert("회원가입이 완료되었습니다! 환영합니다.");
+    } else {
+      setAuthMode("login");
+      alert("회원가입이 완료되었습니다! 이메일 인증 후 로그인해 주세요.");
+    }
   };
 
   // Supabase Auth 로그인 — 세션 복구는 onAuthStateChange 가 자동 처리합니다.
@@ -1358,9 +1459,101 @@ export default function App() {
                   rel="noopener noreferrer"
                   className="youtubeBtn"
                 >
-                  ▶&nbsp; 유튜브에서 영상 보기
+                  유튜브에서 영상 보기
                 </a>
               )}
+
+              {/* 후기 섹션 */}
+              <div className="reviewSection">
+
+                {/* 로그인한 회원만 후기를 입력할 수 있도록 폼 노출 조건을 제어합니다. */}
+                {supabaseSession ? (
+                  <div className="reviewForm">
+                    <textarea
+                      className="reviewTextarea"
+                      placeholder="이 레시피를 만들어 보셨나요? 후기를 남겨주세요! (300자 이내)"
+                      value={reviewText}
+                      onChange={(e) => setReviewText(e.target.value)}
+                      maxLength={300}
+                      rows={3}
+                    />
+                    <div className="reviewFormFooter">
+                      <span className="reviewCharCount">{reviewText.length}/300</span>
+                      <button
+                        className="reviewSubmitBtn"
+                        onClick={handleReviewSubmit}
+                        disabled={reviewSubmitting || !reviewText.trim()}
+                      >
+                        {reviewSubmitting ? "등록 중..." : "후기 등록"}
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="reviewLoginNotice">
+                    <button
+                      className="reviewLoginLink"
+                      onClick={() => { setSelectedRecipe(null); setShowAuthModal(true); }}
+                    >
+                      로그인
+                    </button>
+                    &nbsp;후 후기를 남길 수 있어요.
+                  </p>
+                )}
+
+                {/* 후기 목록 */}
+                {reviews.length > 0 ? (
+                  <>
+                    <ul className="reviewList">
+                      {reviews.map((review) => (
+                        <li key={review.id} className="reviewItem">
+                          <div className="reviewItemHeader">
+                            <div className="reviewAvatar">{review.username.charAt(0)}</div>
+                            <div className="reviewMeta">
+                              <span className="reviewUsername">{review.username}</span>
+                              <span className="reviewDate">{formatReviewDate(review.created_at)}</span>
+                            </div>
+                            {/* 본인 후기에만 삭제 버튼 노출 */}
+                            {supabaseSession?.user?.id === review.user_id && (
+                              <button
+                                className="reviewDeleteBtn"
+                                onClick={() => handleReviewDelete(review.id)}
+                              >
+                                삭제
+                              </button>
+                            )}
+                          </div>
+                          <p className="reviewContent">{review.content}</p>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* 10개 초과 시 페이지네이션 */}
+                    {reviewTotalCount > REVIEW_PAGE_SIZE && (
+                      <div className="reviewPagination">
+                        <button
+                          className="reviewPageBtn"
+                          onClick={() => handleReviewPageChange(reviewPage - 1)}
+                          disabled={reviewPage === 1}
+                        >
+                          <ChevronLeft size={16} />
+                        </button>
+                        <span className="reviewPageInfo">
+                          {reviewPage} / {Math.ceil(reviewTotalCount / REVIEW_PAGE_SIZE)}
+                        </span>
+                        <button
+                          className="reviewPageBtn"
+                          onClick={() => handleReviewPageChange(reviewPage + 1)}
+                          disabled={reviewPage >= Math.ceil(reviewTotalCount / REVIEW_PAGE_SIZE)}
+                        >
+                          <ChevronRight size={16} />
+                        </button>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <p className="reviewEmpty">아직 후기가 없어요. 첫 번째 후기를 남겨주세요!</p>
+                )}
+              </div>
             </div>
           </div>
         </div>
