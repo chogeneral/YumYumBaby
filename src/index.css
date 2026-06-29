@@ -1808,3 +1808,1336 @@ select {
   color: #555555;
   font-weight: 500;
 }
+
+/* 레시피 후기 탭 배너 */
+.reviewsBanner {
+  background: linear-gradient(135deg, #fff5f2 0%, #ffe8e0 100%);
+  text-align: center;
+  padding: 5rem 2rem 4rem;
+  border-bottom: 0.1rem solid #ffd8cc;
+}
+
+.reviewsBannerTitle {
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: #2c2c2c;
+  margin: 0.8rem 0;
+}
+
+.reviewsBannerDesc {
+  font-size: 1.5rem;
+  color: #666666;
+  margin-top: 0.8rem;
+}
+
+/* 후기 게시판 */
+.boardSection {
+  padding: 4rem 2rem 6rem;
+}
+
+.boardContainer {
+  max-width: 96rem;
+  margin: 0 auto;
+}
+
+.boardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.6rem;
+}
+
+.boardTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.boardCount {
+  font-size: 1.4rem;
+  color: #888888;
+}
+
+.boardLoading {
+  text-align: center;
+  padding: 4rem 0;
+  font-size: 1.5rem;
+  color: #aaaaaa;
+}
+
+/* 게시판 테이블 */
+.boardTable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.colNum {
+  width: 7rem;
+}
+
+/* 제목 */
+.colRecipe {
+  width: auto;
+}
+
+.colAuthor {
+  width: 10rem;
+}
+
+.colDate {
+  width: 11rem;
+}
+
+.colViews {
+  width: 7rem;
+}
+
+.boardTable thead tr {
+  background-color: #fff5f2;
+  border-top: 0.2rem solid #ff8e72;
+  border-bottom: 0.1rem solid #ffd8cc;
+}
+
+.boardTable thead th {
+  padding: 1.2rem 1.4rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #555555;
+  text-align: center;
+}
+
+.boardTable tbody tr {
+  border-bottom: 0.1rem solid #f0f0f0;
+  transition: background-color 0.15s ease;
+}
+
+.boardTable tbody tr:hover {
+  background-color: #fffaf8;
+}
+
+.boardEmpty {
+  text-align: center;
+  padding: 5rem 0;
+  font-size: 1.5rem;
+  color: #aaaaaa;
+}
+
+.boardCellNum {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #888888;
+  padding: 1.4rem 1rem;
+}
+
+.boardCellRecipe {
+  text-align: left;
+  padding: 1.4rem 1rem;
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.boardRecipeLink {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #ff8e72;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.boardRecipeLink:hover {
+  color: #e06a50;
+}
+
+.boardRecipeUnknown {
+  font-size: 1.4rem;
+  color: #cccccc;
+}
+
+
+
+.boardCellAuthor {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #555555;
+  padding: 1.4rem 1rem;
+}
+
+.boardCellDate {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #888888;
+  padding: 1.4rem 1rem;
+}
+
+/* 조회수 셀 */
+.boardCellViews {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #888888;
+  padding: 1.4rem 1rem;
+}
+
+/* 게시판 페이지네이션 */
+.boardPagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding-top: 2.4rem;
+}
+
+.boardPageBtn {
+  min-width: 3.4rem;
+  height: 3.4rem;
+  padding: 0 0.8rem;
+  border-radius: 0.6rem;
+  border: 0.1rem solid #e0e0e0;
+  font-size: 1.4rem;
+  color: #555555;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  background-color: #ffffff;
+}
+
+.boardPageBtn:hover:not(:disabled) {
+  background-color: #fff0eb;
+  border-color: #ff8e72;
+  color: #ff8e72;
+}
+
+.boardPageBtn:disabled {
+  color: #cccccc;
+  border-color: #eeeeee;
+  cursor: not-allowed;
+}
+
+.boardPageBtnActive {
+  background-color: #ff8e72;
+  border-color: #ff8e72;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.boardPageBtnActive:hover:not(:disabled) {
+  background-color: #e06a50;
+  border-color: #e06a50;
+  color: #ffffff;
+}
+
+/* 제목 링크 */
+.boardTitleLink {
+  color: #3c3c3c;
+  text-decoration: none;
+  transition: color 0.15s ease;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.boardTitleLink:hover {
+  color: #ff8e72;
+  text-decoration: underline;
+}
+
+/* 게시판 상세보기 */
+.boardDetailHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.boardDetailBackBtn {
+  font-size: 1.35rem;
+  color: #ff8e72;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.8rem 2rem;
+  border-radius: 0.6rem;
+  border: 0.1rem solid #ffe5dd;
+  background-color: #fff8f6;
+  transition: background-color 0.2s ease;
+}
+
+.boardDetailBackBtn:hover {
+  background-color: #ffe5dd;
+}
+
+.boardDetailCard {
+  background-color: #ffffff;
+  border: 0.1rem solid #f0f0f0;
+  border-radius: 1.2rem;
+  padding: 3rem;
+}
+
+.boardDetailMeta {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 1.6rem;
+}
+
+.boardDetailDate {
+  font-size: 1.3rem;
+  color: #999999;
+}
+
+.boardDetailTitle {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2c2c2c;
+  margin-bottom: 1.2rem;
+  line-height: 1.4;
+}
+
+.boardDetailAuthor {
+  font-size: 1.35rem;
+  color: #888888;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.boardDetailViews {
+  color: #aaaaaa;
+}
+
+.boardDetailDivider {
+  height: 0.1rem;
+  background-color: #f0f0f0;
+  margin-bottom: 2.4rem;
+}
+
+.boardDetailContent {
+  font-size: 1.5rem;
+  line-height: 1.8;
+  color: #2c2c2c;
+  min-height: 20rem;
+  word-break: break-word;
+}
+
+/* 게시판 상세보기 */
+.boardDetailContent.ql-editor {
+  padding: 0;
+  height: auto;
+}
+
+.boardDetailContent img {
+  max-width: 100%;
+  border-radius: 0.6rem;
+  margin: 1rem 0;
+}
+
+.boardDetailActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 0.1rem solid #f0f0f0;
+}
+
+.boardDetailDeleteBtn {
+  font-size: 1.35rem;
+  color: #d32f2f;
+  padding: 0.8rem 2rem;
+  border: 0.1rem solid #ffcdd2;
+  border-radius: 0.6rem;
+  background-color: #fff5f5;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.boardDetailDeleteBtn:hover {
+  background-color: #ffcdd2;
+}
+
+/* 게시판 상세보기 */
+.boardDetailOwnerActions {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.boardDetailEditBtn {
+  font-size: 1.35rem;
+  color: #ff8e72;
+  padding: 0.8rem 2rem;
+  border: 0.1rem solid #ffe5dd;
+  border-radius: 0.6rem;
+  background-color: #fff8f6;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.boardDetailEditBtn:hover {
+  background-color: #ffe5dd;
+}
+
+/* 게시판 글쓰기 폼 */
+.boardWriteHeader {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  margin-bottom: 2.8rem;
+}
+
+.boardBackBtn {
+  font-size: 1.4rem;
+  color: #888888;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem 0;
+  transition: color 0.2s ease;
+}
+
+.boardBackBtn:hover {
+  color: #ff8e72;
+}
+
+.boardWriteTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.boardWriteForm {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  background-color: #ffffff;
+  border: 0.1rem solid #f0f0f0;
+  border-radius: 1.2rem;
+  padding: 3rem;
+}
+
+.boardWriteField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.boardWriteLabel {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c2c2c;
+}
+
+.boardWriteRequired {
+  color: #ff8e72;
+}
+
+/* 구분 셀렉트 박스 */
+.boardWriteCategorySelect {
+  width: 100%;
+  max-width: 24rem;
+  border: 0.1rem solid #e0e0e0;
+  border-radius: 0.8rem;
+  padding: 1rem 1.4rem;
+  font-size: 1.5rem;
+  color: #2c2c2c;
+  background-color: #ffffff;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.boardWriteCategorySelect:focus {
+  border-color: #ff8e72;
+}
+
+/* 구분 배지 */
+.boardCellCategory {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.boardCategoryBadge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.boardCategoryBadgeReview {
+  background-color: #fff3ef;
+  color: #e06a50;
+}
+
+.boardCategoryBadgeNew {
+  background-color: #eef6ff;
+  color: #3b82f6;
+}
+
+.boardCategoryBadgeEtc {
+  background-color: #f5f5f5;
+  color: #888888;
+}
+
+/* 구분 컬럼 너비 */
+.colCategory {
+  width: 11rem;
+}
+
+.boardWriteInput {
+  width: 100%;
+  border: 0.1rem solid #e0e0e0;
+  border-radius: 0.8rem;
+  padding: 1rem 1.4rem;
+  font-size: 1.5rem;
+  color: #2c2c2c;
+  background-color: #ffffff;
+  outline: none;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.boardWriteInput:focus {
+  border-color: #ff8e72;
+}
+
+/* Quill 에디터 래퍼 */
+.boardQuillWrapper {
+  border: 0.1rem solid #e0e0e0;
+  border-radius: 0.8rem;
+  transition: border-color 0.2s ease;
+}
+
+.boardQuillWrapper:focus-within {
+  border-color: #ff8e72;
+}
+
+/* 에디터 툴바 */
+.boardQuillWrapper .ql-toolbar {
+  border: none;
+  border-bottom: 0.1rem solid #e0e0e0;
+  background-color: #fafafa;
+  padding: 0.8rem 1rem;
+  position: sticky;
+  top: 5.6rem;
+  z-index: 50;
+  border-radius: 0.8rem 0.8rem 0 0;
+}
+
+.boardQuillWrapper .ql-container {
+  border: none;
+  font-size: 1.5rem;
+  min-height: 90rem;
+}
+
+.boardQuillWrapper .ql-editor {
+  min-height: 90rem;
+  padding: 1.4rem;
+  line-height: 1.7;
+  color: #2c2c2c;
+}
+
+.boardQuillWrapper .ql-editor.ql-blank::before {
+  color: #aaaaaa;
+  font-style: normal;
+  font-size: 1.4rem;
+}
+
+.boardQuillWrapper .ql-editor img {
+  max-width: 100%;
+  border-radius: 0.4rem;
+}
+
+.boardQuillWrapper .ql-picker.ql-size .ql-picker-label::before,
+.boardQuillWrapper .ql-picker.ql-size .ql-picker-item::before {
+  content: attr(data-value);
+}
+
+.boardQuillWrapper .ql-picker.ql-size .ql-picker-label[data-value=""]::before,
+.boardQuillWrapper .ql-picker.ql-size .ql-picker-item[data-value=""]::before {
+  content: "기본";
+}
+
+.boardWriteCharCount {
+  font-size: 1.3rem;
+  color: #aaaaaa;
+  text-align: right;
+}
+
+.boardWriteActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.2rem;
+  padding-top: 0.4rem;
+}
+
+.boardWriteCancelBtn {
+  padding: 1rem 2.4rem;
+  background-color: #f5f5f5;
+  color: #555555;
+  border: 0.1rem solid #e0e0e0;
+  border-radius: 0.8rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.boardWriteCancelBtn:hover {
+  background-color: #ebebeb;
+}
+
+.boardWriteSubmitBtn {
+  padding: 1rem 2.8rem;
+  background-color: #ff8e72;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.8rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.boardWriteSubmitBtn:hover:not(:disabled) {
+  background-color: #e06a50;
+}
+
+.boardWriteSubmitBtn:disabled {
+  background-color: #ffcfc4;
+  cursor: not-allowed;
+}
+
+/* 게시판 글쓰기 밸리데이션 에러 */
+.boardWriteErrorMsg {
+  color: #e53935;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: #fff5f5;
+  border: 1px solid #ffcdd2;
+  border-radius: 6px;
+}
+
+/* 게시판 글쓰기 버튼 영역 */
+.boardWriteArea {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.boardWriteBtn {
+  padding: 1rem 2.4rem;
+  background-color: #ff8e72;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.8rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.boardWriteBtn:hover {
+  background-color: #e06a50;
+}
+
+.boardWriteBtnDisabled {
+  background-color: #f0f0f0;
+  color: #888888;
+}
+
+.boardWriteBtnDisabled:hover {
+  background-color: #e8e8e8;
+}
+
+/* 댓글 */
+.boardCommentSection {
+  margin-top: 4rem;
+  padding: 0 1rem;
+}
+
+.boardCommentSectionTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1.6rem;
+}
+
+.boardCommentList {
+  margin-bottom: 2.4rem;
+}
+
+.boardCommentEmpty {
+  text-align: center;
+  padding: 3rem 0;
+  color: #888888;
+  font-size: 1.4rem;
+  border: 0.1rem solid #e2e8f0;
+  border-radius: 0.8rem;
+  background-color: #f8fafc;
+}
+
+.boardCommentItem {
+  display: flex;
+  align-items: flex-start;
+  padding: 1.6rem;
+  border: 0.1rem solid #e2e8f0;
+  border-radius: 0.8rem;
+  background-color: #f8fafc;
+}
+
+.boardCommentAvatar {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background-color: #fff5f5;
+  border: 0.1rem solid #ffd3d3;
+  color: #d36480;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.boardCommentBody {
+  flex: 1;
+  margin-left: 1.2rem;
+}
+
+.boardCommentMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.6rem;
+}
+
+.boardCommentAuthorName {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #333333;
+}
+
+.boardCommentDate {
+  font-size: 1.2rem;
+  color: #888888;
+}
+
+.boardCommentText {
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: #444444;
+  word-break: break-all;
+}
+
+.boardCommentSecretTag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.4rem;
+  margin-right: 0.3rem;
+  vertical-align: 1px;
+}
+
+.boardCommentSecretPlaceholder {
+  color: #888888;
+  font-style: italic;
+}
+
+.boardCommentActions {
+  align-self: flex-start;
+  margin-left: 1.2rem;
+}
+
+.boardCommentDeleteBtn {
+  font-size: 1.2rem;
+  color: #888888;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.boardCommentDeleteBtn:hover {
+  color: #d32f2f;
+  text-decoration: underline;
+}
+
+/* 댓글 */
+.boardCommentGroup {
+  margin-bottom: 1.6rem;
+  border-bottom: 0.1rem solid #f1f5f9;
+  padding-bottom: 1.6rem;
+}
+
+.boardCommentGroup:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.boardCommentReplyBtn {
+  font-size: 1.2rem;
+  color: #888888;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.8rem;
+}
+
+.boardCommentReplyBtn:hover {
+  color: #d45f78;
+  text-decoration: underline;
+}
+
+/* 후기 상세페이지 댓글 수정 기능 */
+.boardCommentEditBtn {
+  font-size: 1.2rem;
+  color: #888888;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.8rem;
+}
+
+.boardCommentEditBtn:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.boardCommentEditForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+  width: 100%;
+}
+
+.boardCommentEditInput {
+  width: 100%;
+  min-height: 8rem;
+  padding: 1rem 1.2rem;
+  font-size: 1.4rem;
+  color: #333333;
+  background-color: #ffffff;
+  border: 0.1rem solid #cbd5e1;
+  border-radius: 0.6rem;
+  resize: vertical;
+}
+
+.boardCommentEditInput:focus {
+  outline: none;
+  border-color: #d45f78;
+}
+
+.boardCommentEditButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+}
+
+.boardCommentEditSaveBtn {
+  padding: 0.6rem 1.2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #d45f78;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.boardCommentEditSaveBtn:hover {
+  background-color: #b84f64;
+}
+
+.boardCommentEditCancelBtn {
+  padding: 0.6rem 1.2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #475569;
+  background-color: #f1f5f9;
+  border: 0.1rem solid #e2e8f0;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.boardCommentEditCancelBtn:hover {
+  background-color: #e2e8f0;
+}
+
+.boardReplyList {
+  margin-top: 1rem;
+}
+
+.boardReplyItem {
+  background-color: #f1f5f9;
+  border-color: #e2e8f0;
+}
+
+/* 대댓글 꺾임 화살표 컨텐츠 - 흰색 영역에 배치 */
+.boardReplyArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1.2rem;
+  margin-top: 2.2rem; /* 대댓글 카드 패딩 및 상단 아바타선에 위치 대응 */
+  flex-shrink: 0;
+}
+
+/* 대댓글 래퍼 - 꺾임 화살표와 카드를 나란히 수평 정렬 */
+.boardReplyWrapper {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* 대댓글 카드 가로 영역 100% 확장 */
+.boardReplyWrapper .boardCommentItem {
+  flex: 1;
+}
+
+.boardReplyAvatar {
+  width: 2.8rem;
+  height: 2.8rem;
+  font-size: 1.1rem;
+}
+
+.boardReplyLabel {
+  font-size: 1.1rem;
+  color: #d45f78;
+  border: 0.1rem solid #ffd3d3;
+  padding: 0.1rem 0.4rem;
+  background-color: #fff5f5;
+  border-radius: 0.3rem;
+  margin-left: 0.4rem;
+  font-weight: 600;
+}
+
+.boardReplyFormContainer {
+  margin-left: 4rem;
+  margin-top: 1rem;
+}
+
+.boardReplyInput {
+  border-radius: 0.8rem 0 0 0.8rem;
+  height: 7.2rem;
+}
+
+.boardReplyFormActions {
+  display: flex;
+  flex-direction: column;
+  height: 7.2rem;
+}
+
+.boardReplySubmitBtn {
+  width: 6.4rem;
+  flex: 1;
+  background-color: #d45f78;
+  color: #ffffff;
+  border: none;
+  border-radius: 0 0.8rem 0 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.boardReplySubmitBtn:hover {
+  background-color: #be4e65;
+}
+
+.boardReplySubmitBtn:disabled {
+  background-color: #e2e8f0;
+  color: #888888;
+  cursor: not-allowed;
+}
+
+.boardReplyCancelBtn {
+  width: 6.4rem;
+  height: 2.8rem;
+  background-color: #f1f5f9;
+  color: #555555;
+  border: 0.1rem solid #e2e8f0;
+  border-top: none;
+  border-radius: 0 0 0.8rem 0;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.boardReplyCancelBtn:hover {
+  background-color: #e2e8f0;
+}
+
+.boardCommentFormContainer {
+  margin-top: 2rem;
+}
+
+.boardCommentFormRow {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.boardCommentInput {
+  flex: 1;
+  height: 8rem;
+  padding: 1.2rem;
+  font-size: 1.4rem;
+  border: 0.1rem solid #e2e8f0;
+  border-radius: 0.8rem 0 0 0.8rem;
+  background-color: #ffffff;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.boardCommentInput:focus {
+  border-color: #d36480;
+}
+
+.boardCommentSubmitBtn {
+  width: 8rem;
+  height: 8rem;
+  background-color: #d45f78;
+  color: #ffffff;
+  border: none;
+  border-radius: 0 0.8rem 0.8rem 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.boardCommentSubmitBtn:hover {
+  background-color: #be4e65;
+}
+
+.boardCommentSubmitBtn:disabled {
+  background-color: #e2e8f0;
+  color: #888888;
+  cursor: not-allowed;
+}
+
+.boardCommentFormFooter {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.boardCommentSecretLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.boardCommentSecretLabel input[type="checkbox"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  accent-color: #d45f78;
+}
+
+.boardCommentSecretText {
+  font-size: 1.3rem;
+  color: #555555;
+}
+
+/* 대댓글 모달 */
+.replyModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 300;
+  padding: 2rem;
+}
+
+.replyModalContent {
+  background-color: #ffffff;
+  border-radius: 2.4rem;
+  width: 100%;
+  max-width: 52rem;
+  padding: 3rem;
+  position: relative;
+  box-shadow: 0 0.8rem 3rem rgba(0, 0, 0, 0.1);
+  animation: replyModalFadeIn 0.3s ease;
+}
+
+@keyframes replyModalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.replyModalCloseBtn {
+  position: absolute;
+  top: 2.4rem;
+  right: 2.4rem;
+  background-color: #f8f9fa;
+  border: 0.1rem solid #e9ecef;
+  border-radius: 50%;
+  width: 3.6rem;
+  height: 3.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #495057;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.replyModalCloseBtn:hover {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.replyModalHeader {
+  margin-bottom: 2rem;
+}
+
+.replyModalSubtitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #adb5bd;
+  letter-spacing: 0.1rem;
+  display: block;
+}
+
+.replyModalTitle {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #212529;
+  margin-top: 0.4rem;
+  margin-bottom: 0;
+}
+
+.replyModalBody {
+  margin-bottom: 2.4rem;
+}
+
+.replyModalParentBox {
+  background-color: #f8f9fa;
+  border-radius: 1.2rem;
+  padding: 1.6rem;
+  margin-bottom: 2rem;
+  border: 0.1rem solid #f1f3f5;
+}
+
+.replyModalParentAuthor {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #212529;
+  margin-bottom: 0.6rem;
+}
+
+.replyModalParentContent {
+  font-size: 1.3rem;
+  color: #495057;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.replyModalLabel {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.8rem;
+}
+
+.replyModalTextarea {
+  width: 100%;
+  height: 14rem;
+  border: 0.15rem solid #cf627e;
+  border-radius: 1.2rem;
+  padding: 1.6rem;
+  font-size: 1.4rem;
+  color: #212529;
+  resize: none;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.replyModalTextarea:focus {
+  border-color: #b84f67;
+}
+
+.replyModalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.replyModalSecretCheck {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.3rem;
+  color: #495057;
+  cursor: pointer;
+  user-select: none;
+}
+
+.replyModalSecretCheck input {
+  width: 1.6rem;
+  height: 1.6rem;
+  accent-color: #cf627e;
+  cursor: pointer;
+}
+
+.replyModalFooterRight {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.replyModalMaxChars {
+  font-size: 1.3rem;
+  color: #868e96;
+}
+
+.replyModalSubmitBtn {
+  background-color: #cf627e;
+  color: #ffffff;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.8rem 2.4rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  height: 4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.replyModalSubmitBtn:hover {
+  background-color: #b84f67;
+}
+
+.replyModalSubmitBtn:disabled {
+  background-color: #e9ecef;
+  color: #adb5bd;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .colNum {
+    width: 4.5rem;
+  }
+
+  .colRecipe {
+    width: 10rem;
+  }
+
+  .colAuthor {
+    width: 7rem;
+  }
+
+  .colDate {
+    width: 8.5rem;
+  }
+
+  .colViews {
+    width: 5.5rem;
+  }
+
+  .boardTable thead th,
+  .boardCellNum,
+  .boardCellRecipe,
+  .boardCellAuthor,
+  .boardCellDate,
+  .boardCellViews {
+    font-size: 1.2rem;
+    padding: 1rem 0.6rem;
+  }
+}
+
+/* 후기 게시판 모바일 전용 카드 리스트 */
+.boardMobileList {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* 모바일 해상도에서 PC용 표 형태 레이아웃 숨김 */
+  .boardTable {
+    display: none;
+  }
+
+  /* 모바일 리스트 노출 */
+  .boardMobileList {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  /* 각 게시글 카드 아이템: 굵은 검은색 구분선 적용 */
+  .boardMobileItem {
+    padding: 2rem 0;
+    border-top: 0.2rem solid #000000;
+  }
+
+  .boardMobileItem:last-child {
+    border-bottom: 0.1rem solid #e2e8f0;
+  }
+
+  /* 카테고리 표시 */
+  .boardMobileCategory {
+    font-size: 1.3rem;
+    color: #cf627e; /* 베베레시피 포인트 로즈 컬러 매핑 */
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+  }
+
+  /* 제목 영역 */
+  .boardMobileTitle {
+    margin-bottom: 0.8rem;
+  }
+
+  /* 굵고 명확한 블랙 타이틀 링크 */
+  .boardMobileTitleLink {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #000000;
+    text-decoration: none;
+    line-height: 1.4;
+  }
+
+  .boardMobileTitleLink:hover {
+    text-decoration: underline;
+  }
+
+  /* 메타데이터 정보 행 */
+  .boardMobileMeta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 1.3rem;
+    color: #888888;
+  }
+
+  /* 메타 구분 마침표 */
+  .boardMobileMetaDivider {
+    margin: 0 0.8rem;
+    color: #dddddd;
+  }
+}

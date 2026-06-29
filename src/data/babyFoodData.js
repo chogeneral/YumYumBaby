@@ -2424,6 +2424,195 @@ export const babyFoodRecipes = [
       "떡이 말랑하고 부드럽게 퍼지도록 충분히 익힌 후, 마지막에 참깨가루를 뿌려 골고루 섞어주면 완성입니다."
     ],
     tips: "배즙을 넣으면 자연 단맛이 나서 설탕 없이도 아이가 잘 먹습니다. 떡은 얇게 썰어야 빨리 익고 아기가 씹기 쉽습니다. 간장은 극소량만 사용해 짜지 않게 주의하세요."
+  },
+
+  // --- 간식 레시피 (snack) ---
+  {
+    id: "recipeSnack01",
+    stage: "snack",
+    subStage: "snack1",
+    name: "바나나사과버무림",
+    description: "바나나와 사과를 으깨서 섞는 간단한 중기 간식입니다. 자연 단맛이 강해 아기가 좋아하며, 조리 도구 없이도 쉽게 만들 수 있습니다.",
+    ingredients: "바나나 1/2개(약 60g), 사과 1/4개(약 50g)",
+    instructions: [
+      "사과는 껍질과 씨를 제거한 후 강판에 곱게 갈거나, 작게 잘라 끓는 물에 3~4분 삶아서 부드럽게 만들어 줍니다.",
+      "바나나는 껍질을 벗긴 후 포크로 곱게 으깨줍니다. 덩어리가 없도록 부드럽게 으깨는 것이 포인트입니다.",
+      "으깬 바나나와 갈거나 삶은 사과를 한 그릇에 담아 골고루 섞어주면 완성입니다."
+    ],
+    tips: "사과는 갈면 갈변(갈색으로 변함)할 수 있으므로 만든 즉시 먹이거나, 삶아서 식힌 후 섞는 방법을 권장합니다. 중기 초반에는 사과를 더 곱게 갈거나 체에 내려주세요."
+  },
+  {
+    id: "recipeSnack02",
+    stage: "snack",
+    subStage: "snack2",
+    name: "아기두유",
+    description: "검은콩을 삶아 곱게 갈아 만든 무가당 순수 두유입니다. 식물성 단백질과 칼슘이 풍부하며, 10개월 이후 후기 간식으로 적합합니다.",
+    ingredients: "검은콩 또는 대두 30g, 물 250ml (불린 후 기준)",
+    instructions: [
+      "콩은 물에 8~12시간 충분히 불려줍니다. 불린 콩은 2배 이상으로 부피가 커집니다.",
+      "불린 콩을 냄비에 넣고 잠길 만큼 물을 부어 콩이 완전히 부드러워질 때까지 약 15~20분간 삶아줍니다.",
+      "삶은 콩을 믹서에 넣고 물 250ml를 함께 부어 입자가 없도록 1분 이상 곱게 갈아줍니다.",
+      "곱게 간 두유를 고운 면포나 거즈 천에 붓고 짜서 콩 껍질과 비지를 걸러냅니다.",
+      "걸러낸 두유를 냄비에 붓고 중불에서 한 번 끓어오를 때까지 끓여 완성합니다. 식혀서 먹이세요."
+    ],
+    tips: "두유는 10개월 이후 후기부터 소량씩 주는 것이 좋습니다. 처음에는 1~2숟가락부터 시작해 콩 알레르기 반응을 3~4일간 확인하세요. 설탕·소금은 절대 넣지 않습니다."
+  },
+  {
+    id: "recipeSnack03",
+    stage: "snack",
+    subStage: "snack2",
+    name: "고구마새우전",
+    description: "삶은 고구마와 다진 새우를 쌀가루와 섞어 부쳐낸 후기 간식 전입니다. 달콤한 고구마와 고소한 새우의 조합으로 아기가 잘 먹는 핑거푸드입니다.",
+    ingredients: "고구마 100g, 새우살 30g, 쌀가루 2큰술(약 20g), 달걀 1/2개, 식용유 약간",
+    instructions: [
+      "고구마는 껍질을 벗기고 삶아서 부드럽게 으깨줍니다. 포크나 절구를 사용해 덩어리가 없도록 곱게 으깨는 것이 중요합니다.",
+      "새우살은 내장과 껍질을 완전히 제거한 후 칼로 곱게 다져줍니다.",
+      "으깬 고구마에 다진 새우, 쌀가루, 달걀을 넣고 잘 섞어 반죽을 만들어줍니다. 반죽이 너무 묽으면 쌀가루를 조금 더 추가합니다.",
+      "달군 팬에 식용유를 아주 살짝 두르고 반죽을 한 숟가락씩 올려 납작하게 눌러 펴줍니다.",
+      "약불에서 한쪽 면이 노릇해지면 뒤집어 반대쪽도 골고루 익혀 완성합니다."
+    ],
+    tips: "새우는 알레르기를 유발할 수 있으므로 처음 먹이기 전 반드시 3~4일간 알레르기 반응을 확인하세요. 달걀 알레르기가 있는 경우 달걀은 생략하고 쌀가루 양을 늘려주세요."
+  },
+  {
+    id: "recipeSnack04",
+    stage: "snack",
+    subStage: "snack3",
+    name: "감자잣핑거볼",
+    description: "삶은 감자를 동글게 빚고 잣가루를 묻힌 완료기 핑거푸드입니다. 감자의 포슬한 식감과 잣의 고소한 풍미가 어우러져 영양 간식으로 좋습니다.",
+    ingredients: "감자 150g, 잣 15g",
+    instructions: [
+      "감자는 껍질을 벗기고 끓는 물에 완전히 부드러워질 때까지 삶아줍니다. 포크로 쉽게 으깨질 정도가 되면 충분히 익은 것입니다.",
+      "잣은 팬에 기름 없이 살짝 볶아 고소함을 살린 후 믹서나 블렌더로 가루처럼 곱게 갈아줍니다.",
+      "삶은 감자를 포크나 절구로 덩어리 없이 곱게 으깨줍니다.",
+      "으깬 감자를 아기가 한 입에 먹기 좋은 크기로 동글게 빚어 핑거볼 모양을 만들어 줍니다.",
+      "빚은 감자볼 위에 갈아놓은 잣가루를 골고루 뿌리거나 굴려서 묻혀 완성합니다."
+    ],
+    tips: "잣 등 견과류는 12개월 이후 아기에게 제공하세요. 반드시 곱게 갈아서 사용해야 하며, 통째로 주면 질식 위험이 있습니다. 감자는 식으면 단단해지므로 따뜻할 때 빚는 것이 편합니다."
+  },
+  {
+    id: "recipeSnack05",
+    stage: "snack",
+    subStage: "snack2",
+    name: "밤고구마핑거볼",
+    description: "삶은 밤과 고구마를 함께 으깨 동글게 빚은 후기 핑거푸드입니다. 밤의 구수함과 고구마의 자연 단맛이 어우러져 별도의 간을 하지 않아도 맛있습니다.",
+    ingredients: "밤 5개(약 60g), 고구마 100g",
+    instructions: [
+      "밤은 껍질과 속껍질(떫은 맛이 나는 얇은 갈색 껍질)을 모두 제거한 후 끓는 물에 15~20분간 충분히 삶아 부드럽게 만들어줍니다.",
+      "고구마는 껍질을 벗기고 삶아서 부드럽게 으깨줍니다.",
+      "삶은 밤을 포크나 절구로 곱게 으깨줍니다. 덩어리가 남지 않도록 꼼꼼하게 으깨주세요.",
+      "으깬 밤과 고구마를 한 그릇에 넣고 잘 섞어줍니다.",
+      "아기가 손으로 잡기 좋은 크기로 동글동글하게 빚어 핑거볼 형태로 만들어 완성합니다."
+    ],
+    tips: "밤은 속껍질까지 완전히 제거해야 떫은 맛이 나지 않습니다. 고구마의 단맛 덕분에 아기가 좋아하는 간식이 됩니다. 냉장 보관 후 1~2일 내에 먹이세요."
+  },
+  {
+    id: "recipeSnack06",
+    stage: "snack",
+    subStage: "snack1",
+    name: "아보카도바나나버무림",
+    description: "아보카도와 바나나를 함께 으깨 섞은 중기 간식입니다. 아보카도의 건강한 지방과 바나나의 자연 당분이 조화를 이루며, 조리 없이 간편하게 만들 수 있습니다.",
+    ingredients: "잘 익은 아보카도 1/4개(약 40g), 바나나 1/3개(약 40g)",
+    instructions: [
+      "아보카도는 세로로 반을 갈라 씨를 제거한 후 숟가락으로 과육을 파냅니다. 껍질이 검고 손으로 눌렀을 때 살짝 들어가는 완숙 아보카도를 사용하세요.",
+      "포크로 아보카도 과육을 덩어리 없이 곱게 으깨줍니다.",
+      "바나나는 껍질을 벗기고 포크로 부드럽게 으깨줍니다.",
+      "으깬 아보카도와 바나나를 골고루 섞어 완성합니다."
+    ],
+    tips: "아보카도는 공기에 닿으면 갈변하므로 만든 직후 바로 먹이는 것이 좋습니다. 아보카도는 건강한 불포화지방산이 풍부하여 뇌 발달에 도움이 됩니다. 처음 먹이는 경우 소량부터 시작해 알레르기를 확인하세요."
+  },
+  {
+    id: "recipeSnack07",
+    stage: "snack",
+    subStage: "snack1",
+    name: "고구마브로콜리버무림",
+    description: "삶은 고구마와 브로콜리를 함께 으깨 섞은 초기·중기 간식입니다. 고구마의 단맛이 브로콜리 특유의 향을 중화시켜 채소를 거부하는 아기에게 도움이 됩니다.",
+    ingredients: "고구마 80g, 브로콜리 꽃 부분 30g",
+    instructions: [
+      "고구마는 껍질을 벗기고 끓는 물에 부드럽게 삶아 포크로 곱게 으깨줍니다.",
+      "브로콜리는 꽃 부분만 잘라 물에 10분간 담가 먼지를 제거한 후 끓는 물에 3~4분간 데쳐 부드럽게 만들어줍니다.",
+      "데친 브로콜리를 잘게 다지거나 믹서로 곱게 갈아줍니다. 중기 초반에는 더 곱게, 중기 후반부터는 조금 더 입자를 남겨도 됩니다.",
+      "으깬 고구마와 다진 브로콜리를 골고루 섞어 완성합니다."
+    ],
+    tips: "브로콜리는 비타민C와 베타카로틴이 풍부합니다. 고구마 비율을 처음에는 높이고, 아기가 익숙해지면 브로콜리 비율을 점차 늘려가세요."
+  },
+  {
+    id: "recipeSnack08",
+    stage: "snack",
+    subStage: "snack1",
+    name: "감자오이버무림",
+    description: "삶은 감자와 갈아낸 오이를 섞은 중기 간식입니다. 포슬포슬한 감자와 수분이 풍부한 오이의 조화가 아기에게 새로운 식감 경험을 제공합니다.",
+    ingredients: "감자 100g, 오이 30g (씨 제거 후 기준)",
+    instructions: [
+      "감자는 껍질을 벗기고 끓는 물에 완전히 부드러워질 때까지 삶아줍니다.",
+      "오이는 껍질을 벗기고 씨 부분(가운데 하얀 부분)을 숟가락으로 제거한 후 강판에 곱게 갈아줍니다.",
+      "갈아낸 오이를 면포나 거즈로 살짝 짜서 과도한 수분을 제거해줍니다.",
+      "삶은 감자를 포크로 곱게 으깨줍니다.",
+      "으깬 감자와 갈아낸 오이를 골고루 섞어 완성합니다. 농도가 너무 묽으면 오이의 수분을 더 짜서 조절하세요."
+    ],
+    tips: "오이는 95% 이상이 수분으로 이루어져 수분 보충에 좋습니다. 씨 부분을 제거해야 묽어지지 않습니다. 감자는 으깬 직후 사용해야 뭉치지 않고 잘 섞입니다."
+  },
+  {
+    id: "recipeSnack09",
+    stage: "snack",
+    subStage: "snack1",
+    name: "바나나검은콩버무림",
+    description: "바나나와 삶은 검은콩을 함께 으깨 섞은 중기 간식입니다. 검은콩의 안토시아닌과 철분, 바나나의 칼륨이 균형 잡힌 영양 간식이 됩니다.",
+    ingredients: "바나나 1/2개(약 60g), 검은콩 20g",
+    instructions: [
+      "검은콩은 물에 8~12시간 이상 충분히 불려줍니다. 불린 콩은 냄비에 잠길 만큼 물을 부어 완전히 부드러워질 때까지 20분 이상 삶아줍니다.",
+      "삶은 검은콩은 껍질까지 함께 절구나 믹서로 곱게 갈아줍니다. 껍질이 거슬릴 경우 고운 체에 내려 껍질을 제거해도 됩니다.",
+      "바나나는 껍질을 벗기고 포크로 부드럽게 으깨줍니다.",
+      "으깬 바나나와 갈아낸 검은콩을 골고루 섞어 완성합니다."
+    ],
+    tips: "검은콩은 콩류 알레르기를 유발할 수 있으므로 처음 먹이는 경우 소량부터 시작해 3~4일간 반응을 확인하세요. 바나나의 달콤함이 콩의 구수한 맛과 잘 어울립니다."
+  },
+  {
+    id: "recipeSnack10",
+    stage: "snack",
+    subStage: "snack1",
+    name: "단호박건포도버무림",
+    description: "쪄낸 단호박과 불린 건포도를 섞은 중기 간식입니다. 단호박의 자연 단맛에 건포도의 달콤함이 더해져 설탕 없이도 아기가 좋아하는 맛을 냅니다.",
+    ingredients: "단호박 100g, 건포도 10g",
+    instructions: [
+      "건포도는 따뜻한 물에 10분 이상 담가 충분히 불려 부드럽게 만들어줍니다.",
+      "단호박은 씨와 껍질을 제거하고 작게 잘라 김이 오른 찜기에 10~15분간 쪄서 완전히 부드럽게 만들어줍니다.",
+      "쪄낸 단호박을 포크나 절구로 덩어리 없이 곱게 으깨줍니다.",
+      "불린 건포도를 잘게 다져줍니다. 건포도가 통째로 들어가면 질식 위험이 있으므로 반드시 잘게 다져주세요.",
+      "으깬 단호박과 잘게 다진 건포도를 골고루 섞어 완성합니다."
+    ],
+    tips: "건포도는 당분이 높으므로 소량만 사용하세요. 단호박은 찌면 단맛이 더 강해집니다. 건포도를 통째로 주면 질식 위험이 있으니 반드시 잘게 다져서 사용하세요."
+  },
+  {
+    id: "recipeSnack11",
+    stage: "snack",
+    subStage: "snack2",
+    name: "사과젤리",
+    description: "사과즙을 한천으로 굳혀 만든 후기 간식 젤리입니다. 말랑말랑한 식감으로 잇몸으로 씹는 연습을 할 수 있으며, 인공 첨가물 없이 순수한 과일의 단맛을 즐길 수 있습니다.",
+    ingredients: "사과 1개(약 200g), 한천(우뭇가사리) 가루 2g, 물 150ml",
+    instructions: [
+      "사과는 껍질과 씨를 제거한 후 믹서로 곱게 갈아 사과즙을 만들어줍니다. 약 150ml의 사과즙이 나옵니다.",
+      "냄비에 사과즙과 물 150ml를 붓고 한천 가루 2g을 넣어 주걱으로 잘 저어 풀어줍니다.",
+      "중불에서 한천이 완전히 녹을 때까지 끓여줍니다. 한천은 끓여야 녹으므로 충분히 가열해주세요.",
+      "완전히 녹은 사과한천액을 네모난 용기나 아이스큐브 틀에 부어줍니다.",
+      "상온에서 20~30분 식힌 후 냉장고에 넣어 1~2시간 굳혀줍니다. 굳으면 아기가 집기 좋은 크기로 잘라 완성합니다."
+    ],
+    tips: "한천은 젤라틴과 달리 식물성 재료로 만들어져 아기에게 더 안전합니다. 12개월 미만에게는 과일즙 대신 삶은 사과를 갈아 사용하세요. 냉장 보관 후 2~3일 내에 먹이세요."
+  },
+  {
+    id: "recipeSnack12",
+    stage: "snack",
+    subStage: "snack1",
+    name: "바나나연두부달걀찜",
+    description: "바나나, 연두부, 달걀을 섞어 쪄낸 중기 간식찜입니다. 세 가지 재료의 부드러운 식감이 합쳐져 아기가 삼키기 쉽고, 단백질과 칼슘을 동시에 섭취할 수 있습니다.",
+    ingredients: "바나나 1/3개(약 40g), 연두부 50g, 달걀 1개",
+    instructions: [
+      "바나나는 껍질을 벗기고 포크로 최대한 곱게 으깨줍니다.",
+      "연두부는 체에 내리거나 포크로 으깨어 부드럽게 풀어줍니다. 연두부는 수분이 많으므로 너무 세게 짜지 않아도 됩니다.",
+      "달걀은 그릇에 깨서 잘 풀어 균일한 달걀물을 만들어줍니다.",
+      "으깬 바나나, 연두부, 달걀물을 한 그릇에 담아 골고루 섞어줍니다.",
+      "찜기에 물을 붓고 끓어오르면 반죽을 담은 그릇을 올려 뚜껑을 닫고 중약불에서 15~18분간 쪄줍니다. 이쑤시개를 꽂았을 때 반죽이 묻어나오지 않으면 완성입니다."
+    ],
+    tips: "달걀은 처음 먹이는 경우 3~4일간 알레르기 반응을 확인하세요. 연두부 덕분에 달걀찜이 더욱 부드러워집니다. 쪄낸 직후 뜨거우므로 충분히 식혀서 먹이세요."
   }
 
 ];
@@ -3674,6 +3863,114 @@ export const recipeMedia = {
       "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeSnack01: {
+    imageUrl: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtu.be/4DCKHMSawp8",
+    stepImages: [
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeSnack02: {
+    imageUrl: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtu.be/ryDVT5D2PTU",
+    stepImages: [
+      "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeSnack03: {
+    imageUrl: "https://images.unsplash.com/photo-1518977676901-baab3a2c79de?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtu.be/tgNgYaQ81UQ",
+    stepImages: [
+      "https://images.unsplash.com/photo-1518977676901-baab3a2c79de?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1508002366005-75a695ee5b47?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeSnack04: {
+    imageUrl: "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtu.be/1URknvMiRzM",
+    stepImages: [
+      "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1518977676901-baab3a2c79de?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeSnack05: {
+    imageUrl: "https://images.unsplash.com/photo-1508002366005-75a695ee5b47?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtu.be/Gpj83WtfMNA",
+    stepImages: [
+      "https://images.unsplash.com/photo-1508002366005-75a695ee5b47?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeSnack06: {
+    imageUrl: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtu.be/4BqZne1femA",
+    stepImages: [
+      "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeSnack07: {
+    imageUrl: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtu.be/mongtXFPkOw",
+    stepImages: [
+      "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1508002366005-75a695ee5b47?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeSnack08: {
+    imageUrl: "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtu.be/ooUbMwXJbFc",
+    stepImages: [
+      "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1518977676901-baab3a2c79de?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeSnack09: {
+    imageUrl: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtu.be/_XwjryRMBX4",
+    stepImages: [
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeSnack10: {
+    imageUrl: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtu.be/AhZhGneY7kE",
+    stepImages: [
+      "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeSnack11: {
+    imageUrl: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtu.be/AxBrs4Bg6jM",
+    stepImages: [
+      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeSnack12: {
+    imageUrl: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtu.be/SqfPzCnP13Y",
+    stepImages: [
+      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
     ]
   }
 };

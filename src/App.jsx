@@ -1,4 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import ReactQuill, { Quill } from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
+
+// Quill 픽셀 단위 폰트 사이즈를 사용하도록 등록합니다.
+const QuillSize = Quill.import("attributors/style/size");
+QuillSize.whitelist = ["12px", "14px", "16px", "18px", "20px", "24px", "28px", "36px"];
+Quill.register(QuillSize, true);
 import {
   Search,
   ChevronRight,
@@ -51,6 +59,99 @@ const REVIEW_PAGE_SIZE = 10;
 
 // 애플리케이션의 전체 기능과 라우팅, 회원 관리를 수행하는 메인 App 컴포넌트입니다.
 export default function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Quill 에디터 인스턴스 참조 — 이미지 삽입 시 커서 위치를 가져오기 위해 사용합니다.
+  const quillRef = useRef(null);
+
+  // HTML 태그를 제거하여 게시판 목록의 내용 미리보기에 사용합니다.
+  const stripHtml = useCallback((html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
+  }, []);
+
+  // 서비스 운영 정책상 금지된 욕설 목록입니다.
+  const PROFANITY_LIST = [
+    "시발", "씨발", "ㅅㅂ", "개새끼", "개새", "새끼", "미친놈", "미친년", "병신",
+    "ㅂㅅ", "존나", "ㅈㄴ", "년놈", "씹", "ㅆㅂ", "지랄", "ㅈㄹ", "빡대가리",
+    "창녀", "보지", "자지", "딸딸이", "꺼져", "죽어", "뒤져", "닥쳐", "개소리",
+    "fuck", "shit", "bitch", "asshole", "bastard"
+  ];
+
+  // 제목과 내용에 금지 욕설이 포함되어 있는지 검사합니다.
+  const containsProfanity = (text) => {
+    const lower = text.toLowerCase();
+    return PROFANITY_LIST.some(word => lower.includes(word.toLowerCase()));
+  };
+
+  // 이미지 아이콘 클릭 시 파일 선택 → Supabase Storage 업로드 → 에디터에 삽입합니다.
+  const handleQuillImage = useCallback(() => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.click();
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (!file || !quillRef.current) return;
+
+      // 이미지 파일 형식 검사 (jpg, jpeg, png, gif, webp만 허용)
+      const allowedTypes = ["jpg", "jpeg", "png", "gif", "webp"];
+      const ext = file.name.split(".").pop().toLowerCase();
+      if (!allowedTypes.includes(ext)) {
+        setBoardWriteError("jpg, jpeg, png, gif, webp 형식의 이미지만 업로드할 수 있습니다.");
+        return;
+      }
+
+      // 이미지 용량 검사 (5MB 이하)
+      if (file.size > 5 * 1024 * 1024) {
+        setBoardWriteError("이미지 크기는 5MB 이하만 업로드할 수 있습니다.");
+        return;
+      }
+
+      const fileName = `${Date.now()}.${ext}`;
+      const { data, error } = await supabase.storage
+        .from("review-images")
+        .upload(fileName, file);
+      if (error) {
+        setBoardWriteError("이미지 업로드에 실패했습니다. 잠시 후 다시 시도해주세요.");
+        return;
+      }
+      setBoardWriteError("");
+      const { data: urlData } = supabase.storage
+        .from("review-images")
+        .getPublicUrl(data.path);
+      const editor = quillRef.current.getEditor();
+      const range = editor.getSelection(true);
+      editor.insertEmbed(range.index, "image", urlData.publicUrl);
+      editor.setSelection(range.index + 1);
+    };
+  }, []);
+
+  // Quill 툴바 설정 — imageHandler를 핸들러로 등록합니다.
+  const quillModules = useMemo(() => ({
+    toolbar: {
+      container: [
+        ["image"],
+        [{ size: ["12px", "14px", "16px", "18px", "20px", "24px", "28px", "36px"] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ color: [] }],
+        [{ align: [] }],
+        [{ list: "bullet" }],
+        ["clean"],
+      ],
+      handlers: {
+        image: handleQuillImage,
+      },
+    },
+  }), [handleQuillImage]);
+
+  const quillFormats = [
+    "size", "bold", "italic", "underline", "strike",
+    "color", "align", "list", "image",
+  ];
+
   // --- 상태 관리 정의 ---
   const [currentTab, setCurrentTab] = useState("home");
 
@@ -107,12 +208,51 @@ export default function App() {
   const [recipeFilter, setRecipeFilter] = useState("all");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
-  // 레시피 후기 목록, 페이지, 총 개수, 입력값, 등록 중 여부
+  // 레시피 후기 목록, 페이지, 총 개수, 입력값, 등록 중 여부 (모달 내 후기용)
   const [reviews, setReviews] = useState([]);
   const [reviewPage, setReviewPage] = useState(1);
   const [reviewTotalCount, setReviewTotalCount] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [reviewSubmitting, setReviewSubmitting] = useState(false);
+
+  // 레시피 후기 탭 게시판 — 전체 후기를 페이지 단위로 조회합니다.
+  const [boardReviews, setBoardReviews] = useState([]);
+  const [boardPage, setBoardPage] = useState(1);
+  const [boardTotalCount, setBoardTotalCount] = useState(0);
+  const [boardLoading, setBoardLoading] = useState(false);
+
+  // 게시판 뷰 전환 — "list": 목록, "write": 글쓰기 폼, "detail": 상세보기
+  const [boardView, setBoardView] = useState("list");
+  // 상세보기에서 표시할 선택된 게시글 데이터를 보관합니다.
+  const [selectedBoardReview, setSelectedBoardReview] = useState(null);
+  const [boardWriteCategory, setBoardWriteCategory] = useState("레시피 후기");
+  const [boardWriteTitle, setBoardWriteTitle] = useState("");
+  const [boardWriteContent, setBoardWriteContent] = useState("");
+  const [boardWriteSubmitting, setBoardWriteSubmitting] = useState(false);
+  const [boardWriteError, setBoardWriteError] = useState("");
+  // 현재 수정 중인 게시글의 ID를 보관합니다. null인 경우 신규 작성, 값이 있으면 수정 모드로 작동합니다.
+  const [boardEditId, setBoardEditId] = useState(null);
+  // 후기 게시판 상세페이지의 댓글 목록 데이터 상태입니다.
+  const [boardComments, setBoardComments] = useState([]);
+  // 댓글 입력 창의 입력 텍스트 값을 보관하는 상태입니다.
+  const [boardCommentText, setBoardCommentText] = useState("");
+  // 비밀 댓글 작성 여부를 결정하는 체크박스 상태입니다.
+  const [boardCommentIsSecret, setBoardCommentIsSecret] = useState(false);
+  // 댓글 등록 통신이 진행되는 동안 중복 클릭 및 등록을 막기 위한 로딩 상태입니다.
+  const [boardCommentSubmitting, setBoardCommentSubmitting] = useState(false);
+  // 대댓글(답글) 작성 모달 팝업의 노출 상태를 관리합니다.
+  const [showReplyModal, setShowReplyModal] = useState(false);
+  // 대댓글(답글)을 달고자 하는 부모 댓글의 정보를 객체 형태로 보관합니다.
+  const [replyParentComment, setReplyParentComment] = useState(null);
+  // 대댓글(답글) 입력 필드에 들어가는 입력 텍스트 상태입니다.
+  const [boardReplyText, setBoardReplyText] = useState("");
+  // 대댓글(답글)을 비밀 댓글로 작성할지 여부를 관리하는 상태 변수입니다. 
+  // 원댓글이 비밀글인 경우 자동으로 상속되어 true 상태가 되며, 일반 댓글의 대댓글인 경우 사용자가 직접 선택할 수 있습니다.
+  const [boardReplyIsSecret, setBoardReplyIsSecret] = useState(false);
+  // 현재 수정 중인 댓글의 고유 ID를 관리합니다. null인 경우 수정 상태가 아닙니다.
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  // 수정 중인 댓글의 텍스트 본문 내용을 보관하는 상태 변수입니다.
+  const [editingCommentText, setEditingCommentText] = useState("");
 
   const [stageTab, setStageTab] = useState("early");
   // 초기 탭 내부에서 1단계/2단계를 전환하기 위한 서브탭 상태입니다.
@@ -126,6 +266,11 @@ export default function App() {
     }
     if (recipe.stage === "middle") return "tagMiddle";
     if (recipe.stage === "late") return "tagLate";
+    if (recipe.stage === "snack") {
+      if (recipe.subStage === "snack1") return "tagMiddle";
+      if (recipe.subStage === "snack2") return "tagLate";
+      return "tagComplete";
+    }
     return "tagComplete";
   };
 
@@ -136,6 +281,11 @@ export default function App() {
     }
     if (recipe.stage === "middle") return "중기";
     if (recipe.stage === "late") return "후기";
+    if (recipe.stage === "snack") {
+      if (recipe.subStage === "snack1") return "중기 간식";
+      if (recipe.subStage === "snack2") return "후기 간식";
+      return "완료기 간식";
+    }
     return "완료기";
   };
 
@@ -146,6 +296,11 @@ export default function App() {
     }
     if (recipe.stage === "middle") return "중기 이유식";
     if (recipe.stage === "late") return "후기 이유식";
+    if (recipe.stage === "snack") {
+      if (recipe.subStage === "snack1") return "중기 간식";
+      if (recipe.subStage === "snack2") return "후기 간식";
+      return "완료기 간식";
+    }
     return "완료기 이유식";
   };
 
@@ -322,6 +477,23 @@ export default function App() {
     recipeComplete05: 26, // 아기떡볶이
   };
 
+  // 간식 레시피 도입 권장 순서입니다.
+  // 초기·중기 버무림류 → 후기 전·젤리류 → 완료기 견과 핑거푸드 순으로 정렬합니다.
+  const SNACK_FEED_ORDER = {
+    recipeSnack07: 1,  // 고구마브로콜리버무림 — 초기/중기 간식 입문
+    recipeSnack01: 2,  // 바나나사과버무림
+    recipeSnack06: 3,  // 아보카도바나나버무림
+    recipeSnack08: 4,  // 감자오이버무림
+    recipeSnack09: 5,  // 바나나검은콩버무림
+    recipeSnack10: 6,  // 단호박건포도버무림
+    recipeSnack12: 7,  // 바나나연두부달걀찜
+    recipeSnack02: 8,  // 아기두유 — 후기 간식
+    recipeSnack03: 9,  // 고구마새우전
+    recipeSnack05: 10, // 밤고구마핑거볼
+    recipeSnack11: 11, // 사과젤리
+    recipeSnack04: 12, // 감자잣핑거볼 — 완료기 간식
+  };
+
   // 비로그인 상태에서 보호된 탭 진입 시도 시 로그인 후 이동할 탭을 임시 저장합니다.
   const [pendingTab, setPendingTab] = useState(null);
 
@@ -388,6 +560,49 @@ export default function App() {
     }
   }, [selectedRecipe?.id]);
 
+  // 레시피 후기 탭을 열 때 목록 뷰로 초기화하고 1페이지를 불러옵니다.
+  useEffect(() => {
+    if (currentTab === "reviews") {
+      setBoardPage(1);
+      fetchBoardReviews(1);
+    }
+  }, [currentTab]);
+
+  // URL 경로를 읽어 탭·뷰 상태를 초기화합니다. 브라우저 직접 접근 및 뒤로가기를 지원합니다.
+  useEffect(() => {
+    const path = location.pathname;
+    if (path === "/reviews/write") {
+      setCurrentTab("reviews");
+      // 수정 모드가 아닌 신규 작성 모드인 경우에만 폼 값을 공백으로 초기화합니다.
+      if (!boardEditId) {
+        setBoardWriteCategory("레시피 후기");
+        setBoardWriteTitle("");
+        setBoardWriteContent("");
+      }
+      setBoardView("write");
+    } else if (path === "/reviews/detail") {
+      setCurrentTab("reviews");
+      if (!selectedBoardReview) {
+        setBoardView("list");
+        setBoardEditId(null);
+        navigate("/reviews");
+      }
+    } else if (path === "/reviews") {
+      setCurrentTab("reviews");
+      setBoardView("list");
+      setBoardEditId(null);
+    }
+  }, [location.pathname]);
+
+  // 상세보기할 후기글이 바뀔 때마다 해당 글에 귀속된 댓글 목록을 Supabase로부터 즉각 가져옵니다.
+  useEffect(() => {
+    if (selectedBoardReview?.id) {
+      fetchBoardComments(selectedBoardReview.id);
+    } else {
+      setBoardComments([]);
+    }
+  }, [selectedBoardReview?.id]);
+
   // --- 후기(recipe_reviews) 관련 함수 ---
 
   // 특정 레시피의 후기를 페이지 단위로 Supabase에서 조회합니다.
@@ -451,10 +666,413 @@ export default function App() {
     await fetchReviews(selectedRecipe.id, newPage);
   };
 
+  // 게시판 글쓰기 폼에서 후기를 등록합니다. 성공 시 목록으로 돌아가 1페이지를 새로 불러옵니다.
+  const handleBoardWriteSubmit = async (e) => {
+    // 폼 제출 등으로 인해 페이지가 상단으로 자동 스크롤되거나 리프레시되는 기본 동작을 방지합니다.
+    if (e) {
+      e.preventDefault();
+    }
+    // Quill 에디터의 빈 상태는 "<p><br></p>"이므로 텍스트 기준으로 검사합니다.
+    const titleText = boardWriteTitle.trim();
+    const contentText = stripHtml(boardWriteContent).trim();
+    setBoardWriteError("");
+
+    if (!titleText) {
+      setBoardWriteError("제목을 입력해주세요.");
+      return;
+    }
+    if (titleText.length < 2) {
+      setBoardWriteError("제목은 2자 이상 입력해주세요.");
+      return;
+    }
+    if (!contentText) {
+      setBoardWriteError("내용을 입력해주세요.");
+      return;
+    }
+    if (contentText.length < 5) {
+      setBoardWriteError("내용은 5자 이상 입력해주세요.");
+      return;
+    }
+    if (containsProfanity(titleText) || containsProfanity(contentText)) {
+      setBoardWriteError("욕설 및 비속어는 사용할 수 없습니다.");
+      return;
+    }
+    if (boardWriteSubmitting || !supabaseSession) return;
+    setBoardWriteSubmitting(true);
+
+    if (boardEditId) {
+      // boardEditId가 존재하면 기존 게시글을 수정(UPDATE)하는 로직을 수행합니다.
+      const { data, error } = await supabase
+        .from("recipe_reviews")
+        .update({
+          category: boardWriteCategory,
+          title: boardWriteTitle.trim(),
+          content: boardWriteContent.trim()
+        })
+        .eq("id", boardEditId)
+        .select()
+        .single();
+
+      if (!error) {
+        setBoardWriteCategory("레시피 후기");
+        setBoardWriteTitle("");
+        setBoardWriteContent("");
+        setBoardEditId(null);
+        
+        // 수정 완료 후 상세 페이지 화면에 갱신된 데이터를 표시합니다.
+        if (data) {
+          setSelectedBoardReview(data);
+        } else {
+          setSelectedBoardReview(prev => prev ? {
+            ...prev,
+            category: boardWriteCategory,
+            title: boardWriteTitle.trim(),
+            content: boardWriteContent.trim()
+          } : null);
+        }
+        
+        setBoardView("detail");
+        await fetchBoardReviews(boardPage);
+        navigate("/reviews/detail");
+      } else {
+        // Supabase 수정 응답 에러를 콘솔에 기록하고 사용자에게 보여줍니다.
+        console.error("게시글 수정 실패:", error);
+        setBoardWriteError("수정에 실패했습니다. 다시 시도해주세요.");
+      }
+    } else {
+      // boardEditId가 존재하지 않으면 새로운 게시글을 등록(INSERT)하는 로직을 수행합니다.
+      const { error } = await supabase
+        .from("recipe_reviews")
+        .insert({
+          user_id: supabaseSession.user.id,
+          username: userProfile?.username || "회원",
+          category: boardWriteCategory,
+          title: boardWriteTitle.trim(),
+          content: boardWriteContent.trim()
+        });
+
+      if (!error) {
+        setBoardWriteCategory("레시피 후기");
+        setBoardWriteTitle("");
+        setBoardWriteContent("");
+        setBoardPage(1);
+        await fetchBoardReviews(1);
+        navigate("/reviews");
+      } else {
+        // Supabase 등록 응답 에러를 콘솔에 기록하고 사용자에게 보여줍니다.
+        console.error("게시글 등록 실패:", error);
+        setBoardWriteError("등록에 실패했습니다. 다시 시도해주세요.");
+      }
+    }
+    setBoardWriteSubmitting(false);
+  };
+
+  // 게시판 탭에서 전체 후기를 페이지 단위로 조회합니다.
+  const fetchBoardReviews = async (page) => {
+    setBoardLoading(true);
+    const from = (page - 1) * REVIEW_PAGE_SIZE;
+    const to = from + REVIEW_PAGE_SIZE - 1;
+    // 각 레시피 후기에 연결된 댓글의 총 개수를 가져오기 위해 review_comments(id) 조인 쿼리를 함께 전송합니다.
+    const { data, count, error } = await supabase
+      .from("recipe_reviews")
+      .select("*, review_comments(id)", { count: "exact" })
+      .order("created_at", { ascending: false })
+      .range(from, to);
+    if (!error) {
+      setBoardReviews(data || []);
+      setBoardTotalCount(count || 0);
+    }
+    setBoardLoading(false);
+  };
+
+  // 게시글을 클릭하여 상세 페이지로 진입할 때 조회수를 1 카운트(증가) 시키는 비즈니스 로직입니다.
+  const handleBoardReviewClick = async (review) => {
+    // 로컬 상태를 우선 detail 뷰로 세팅하여 상세화면으로 빠른 전환을 유도합니다.
+    setSelectedBoardReview(review);
+    setBoardView("detail");
+    navigate("/reviews/detail");
+
+    // Supabase RPC 함수(increment_views)를 실행하여 RLS 보안 권한에 제약받지 않고 조회수를 안전하게 1 증가시킵니다.
+    const { error: rpcError } = await supabase
+      .rpc("increment_views", { review_id: review.id });
+
+    if (!rpcError) {
+      // 조회수가 갱신된 최신 후기 데이터 단건을 다시 불러옵니다.
+      const { data: updatedReview, error: fetchError } = await supabase
+        .from("recipe_reviews")
+        .select("*, review_comments(id)")
+        .eq("id", review.id)
+        .single();
+
+      if (!fetchError && updatedReview) {
+        // 조회수가 갱신된 최신 데이터를 선택된 후기 상태 변수에 갱신 반영합니다.
+        setSelectedBoardReview(updatedReview);
+        // 목록에서의 조회수 실시간 동기화를 위해 현재 페이지의 전체 목록 데이터도 재패칭합니다.
+        fetchBoardReviews(boardPage);
+      }
+    } else {
+      console.error("조회수 카운팅 중 데이터베이스 통신 오류 발생:", rpcError);
+    }
+  };
+
   // 날짜 문자열을 YYYY.MM.DD 형식으로 변환합니다.
   const formatReviewDate = (dateStr) => {
     const d = new Date(dateStr);
     return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+  };
+
+  // 댓글의 날짜를 YYYY-MM-DD HH:mm 형식으로 세밀하게 포맷팅합니다.
+  const formatCommentDate = (dateStr) => {
+    const d = new Date(dateStr);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const date = String(d.getDate()).padStart(2, "0");
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    return `${year}-${month}-${date} ${hours}:${minutes}`;
+  };
+
+  // 특정 게시글의 모든 댓글 목록을 생성 일자 순으로 불러옵니다.
+  const fetchBoardComments = async (reviewId) => {
+    const { data, error } = await supabase
+      .from("review_comments")
+      .select("*")
+      .eq("review_id", reviewId)
+      .order("created_at", { ascending: true });
+    if (!error) {
+      setBoardComments(data || []);
+    } else {
+      console.error("댓글 불러오기 오류:", error);
+    }
+  };
+
+  // 작성한 댓글을 등록합니다. 일반 댓글(부모)과 대댓글(답글)을 하나의 함수에서 parentId 유무에 따라 안전하게 인서트합니다.
+  const handleBoardCommentSubmit = async (reviewId, parentId = null, isSecretInput = false) => {
+    // parentId가 있으면 대댓글 입력창 텍스트를 검증하고, 없으면 일반 댓글 텍스트를 검증합니다.
+    const textToSubmit = parentId ? boardReplyText.trim() : boardCommentText.trim();
+    if (!textToSubmit || boardCommentSubmitting) return;
+    if (!supabaseSession) {
+      alert("로그인 후 댓글을 작성할 수 있습니다.");
+      return;
+    }
+    setBoardCommentSubmitting(true);
+    
+    // 일반 댓글은 boardCommentIsSecret 상태를 반영하고, 대댓글은 모달에서 전달받은 isSecretInput 값(부모 상속 혹은 사용자 선택)을 최종 비밀글 상태로 적용하여 데이터를 보호합니다.
+    const isSecretValue = parentId ? isSecretInput : boardCommentIsSecret;
+
+    const { error } = await supabase
+      .from("review_comments")
+      .insert({
+        review_id: reviewId,
+        user_id: supabaseSession.user.id,
+        username: userProfile?.username || "회원",
+        content: textToSubmit,
+        is_secret: isSecretValue,
+        parent_id: parentId
+      });
+    if (!error) {
+      if (parentId) {
+        // 대댓글 등록 성공 시 답글 입력값 및 비밀글 설정을 비우고 답글 모달 팝업을 닫습니다.
+        setBoardReplyText("");
+        setBoardReplyIsSecret(false);
+        setReplyParentComment(null);
+        setShowReplyModal(false);
+      } else {
+        // 일반 댓글 등록 성공 시 입력 창을 초기화합니다.
+        setBoardCommentText("");
+        setBoardCommentIsSecret(false);
+      }
+      await fetchBoardComments(reviewId);
+    } else {
+      console.error("댓글 등록 실패:", error);
+      alert("댓글 등록에 실패했습니다.");
+    }
+    setBoardCommentSubmitting(false);
+  };
+
+  // 작성한 댓글을 삭제합니다. RLS 보안 규칙에 따라 본인 댓글만 삭제가 실행됩니다.
+  const handleBoardCommentDelete = async (commentId, reviewId) => {
+    if (!window.confirm("댓글을 삭제할까요?")) return;
+    const { error } = await supabase
+      .from("review_comments")
+      .delete()
+      .eq("id", commentId);
+    if (!error) {
+      await fetchBoardComments(reviewId);
+    } else {
+      console.error("댓글 삭제 실패:", error);
+      alert("댓글 삭제 권한이 없거나 오류가 발생했습니다.");
+    }
+  };
+
+  // 작성한 댓글 또는 대댓글의 내용을 업데이트합니다. RLS 보안 규칙에 따라 본인 댓글만 수정이 실행됩니다.
+  const handleBoardCommentUpdate = async (commentId, reviewId) => {
+    const trimmedText = editingCommentText.trim();
+    // 수정 내용이 비어 있거나 이미 전송 중인 경우 처리를 스킵합니다.
+    if (!trimmedText || boardCommentSubmitting) return;
+
+    setBoardCommentSubmitting(true);
+    const { error } = await supabase
+      .from("review_comments")
+      .update({ content: trimmedText })
+      .eq("id", commentId); // 수정 대상 댓글 고유 ID와 매치합니다.
+
+    if (!error) {
+      // 수정 완료 후 수정 모드 상태를 초기화합니다.
+      setEditingCommentId(null);
+      setEditingCommentText("");
+      // 댓글 목록을 최신 버전으로 새로고침합니다.
+      await fetchBoardComments(reviewId);
+    } else {
+      console.error("댓글 수정 실패:", error);
+      alert("댓글 수정 권한이 없거나 데이터베이스 통신 오류가 발생했습니다.");
+    }
+    setBoardCommentSubmitting(false);
+  };
+
+  // 대댓글을 무제한(재귀형)으로 렌더링하기 위한 헬퍼 함수입니다.
+  // 첫 대댓글은 기존 css 규격대로 여백을 넓게(4rem) 배치하고, 대대댓글(depth >= 2) 이상부터는 화면 가로폭 부족 현상을 고려하여 여백(1.5rem)을 다르게 지정합니다.
+  const renderCommentNode = (comment, depth = 0) => {
+    // 본인이 작성한 댓글인지 판단합니다.
+    const isCommentOwner = supabaseSession && supabaseSession.user.id === comment.user_id;
+    // 현재 상세페이지 게시글(후기글)의 작성자 본인인지 판단합니다.
+    const isPostAuthor = supabaseSession && supabaseSession.user.id === selectedBoardReview.user_id;
+    
+    // 댓글 작성자 본인이거나 후기글 작성자인 경우, 혹은 비밀댓글이 아닌 경우에는 댓글 내용을 조회할 수 있도록 권한을 설정합니다.
+    const canViewSecret = !comment.is_secret || isCommentOwner || isPostAuthor;
+    const avatarChar = comment.username ? comment.username.charAt(0) : "회";
+
+    // 현재 댓글의 ID를 parent_id로 삼는 자식 대댓글들을 필터링합니다.
+    const childReplies = boardComments.filter((c) => c.parent_id === comment.id);
+
+    // 현재 댓글 카드가 수정 모드 상태인지 판단합니다.
+    const isEditing = editingCommentId === comment.id;
+
+    return (
+      <div key={comment.id} className="boardCommentGroup">
+        {/* 뎁스가 1 이상(대댓글)일 경우, 흰색 배경 영역 상에서 꺾임 화살표(ㄴ)와 회색 카드가 수평으로 나란히 위치하도록 boardReplyWrapper로 감싸줍니다. */}
+        <div className={depth > 0 ? "boardReplyWrapper" : ""}>
+          {/* 대댓글(depth > 0)일 경우, 사용자가 요청한 시안과 동일하게 회색 카드 바깥(흰색 배경 영역) 좌측에 ㄴ자 화살표를 렌더링합니다. */}
+          {depth > 0 && (
+            <div className="boardReplyArrow">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 2V10C4 11.1046 4.89543 12 6 12H13" stroke="#94a3b8" strokeWidth="2.0" strokeLinecap="round"/>
+              </svg>
+            </div>
+          )}
+
+          {/* 댓글 카드 영역 */}
+          <div className={`boardCommentItem ${depth > 0 ? "boardReplyItem" : ""}`}>
+            <div className={`boardCommentAvatar ${depth > 0 ? "boardReplyAvatar" : ""}`}>
+              <span>{avatarChar}</span>
+            </div>
+            <div className="boardCommentBody">
+              <div className="boardCommentMeta">
+                <span className="boardCommentAuthorName">{comment.username}</span>
+                {depth > 0 && <span className="boardReplyLabel">답글</span>}
+                <span className="boardCommentDate">{formatCommentDate(comment.created_at)}</span>
+              </div>
+              {isEditing ? (
+                // 인라인 수정 폼 영역: 수정 모드일 때 텍스트 영역을 입력 폼으로 치환합니다.
+                <div className="boardCommentEditForm">
+                  <textarea
+                    className="boardCommentEditInput"
+                    value={editingCommentText}
+                    onChange={(e) => setEditingCommentText(e.target.value)}
+                  />
+                  <div className="boardCommentEditButtons">
+                    <button
+                      type="button"
+                      className="boardCommentEditSaveBtn"
+                      disabled={boardCommentSubmitting || !editingCommentText.trim()}
+                      onClick={() => handleBoardCommentUpdate(comment.id, selectedBoardReview.id)}
+                    >
+                      저장
+                    </button>
+                    <button
+                      type="button"
+                      className="boardCommentEditCancelBtn"
+                      onClick={() => {
+                        setEditingCommentId(null);
+                        setEditingCommentText("");
+                      }}
+                    >
+                      취소
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                // 댓글 내용 표시 영역
+                <div className="boardCommentText">
+                  {canViewSecret ? (
+                    <>
+                      {comment.is_secret && (
+                        <span className="boardCommentSecretTag">🔒</span>
+                      )}
+                      {comment.content}
+                    </>
+                  ) : (
+                    <span className="boardCommentSecretPlaceholder">🔒 비밀 댓글입니다.</span>
+                  )}
+                </div>
+              )}
+            </div>
+            <div className="boardCommentActions">
+              {!isEditing && supabaseSession && (
+                <button
+                  type="button"
+                  className="boardCommentReplyBtn"
+                  onClick={() => {
+                    // 대댓글의 대상이 되는 부모 댓글 객체를 상태에 세팅합니다.
+                    setReplyParentComment(comment);
+                    // 답글 입력창을 공백으로 초기화합니다.
+                    setBoardReplyText("");
+                    // 부모 댓글의 비밀글 설정을 상속받아 비밀글 여부의 토글 기본값을 설정합니다.
+                    setBoardReplyIsSecret(comment.is_secret);
+                    // 대댓글 전용 모달 팝업을 오픈합니다.
+                    setShowReplyModal(true);
+                  }}
+                >
+                  답글
+                </button>
+              )}
+              {!isEditing && isCommentOwner && (
+                <>
+                  <button
+                    type="button"
+                    className="boardCommentEditBtn"
+                    onClick={() => {
+                      // 선택된 댓글의 ID와 본문 내용을 수정 전용 상태 변수에 장착합니다.
+                      setEditingCommentId(comment.id);
+                      setEditingCommentText(comment.content);
+                    }}
+                  >
+                    수정
+                  </button>
+                  <button
+                    type="button"
+                    className="boardCommentDeleteBtn"
+                    onClick={() => handleBoardCommentDelete(comment.id, selectedBoardReview.id)}
+                  >
+                    삭제
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* 자식 대댓글(답글) 리스트: 자식 리스트가 존재할 시 재귀적으로 노드를 출력합니다. */}
+        {childReplies.length > 0 && (
+          <div 
+            className="boardReplyList" 
+            style={{ marginLeft: depth > 0 ? "1.5rem" : "4.0rem" }}
+          >
+            {childReplies.map((reply) => renderCommentNode(reply, depth + 1))}
+          </div>
+        )}
+      </div>
+    );
   };
 
   // --- 비즈니스 로직 함수 정의 ---
@@ -892,6 +1510,7 @@ export default function App() {
     if (stageId === "middle") return MIDDLE_FEED_ORDER;
     if (stageId === "late") return LATE_FEED_ORDER;
     if (stageId === "complete") return COMPLETE_FEED_ORDER;
+    if (stageId === "snack") return SNACK_FEED_ORDER;
     return {};
   };
 
@@ -1010,7 +1629,12 @@ export default function App() {
           </span>
           <span
             className={`navLink ${currentTab === "reviews" ? "navLinkActive" : ""}`}
-            onClick={() => setCurrentTab("reviews")}
+            onClick={() => {
+              // 레시피 후기 탭을 활성화합니다.
+              setCurrentTab("reviews");
+              // 상세화면이나 글쓰기 화면에 진입한 상태인 경우, 즉각 목록 화면으로 돌아가도록 boardView를 list로 초기화합니다.
+              setBoardView("list");
+            }}
           >
             레시피 후기
           </span>
@@ -1227,11 +1851,13 @@ export default function App() {
               </div>
             </section>
 
-            {/* 인기 레시피 6개 미리보기 — 간식 탭에서는 레시피 섹션을 숨깁니다 */}
-            {stageTab !== "snack" && <section className="recipesSection">
-              <h2 className="sectionTitle">이유식 메뉴 & 레시피</h2>
+            {/* 단계별 레시피 미리보기 — 간식 탭 포함 모든 탭에서 표시합니다 */}
+            {<section className="recipesSection">
+              <h2 className="sectionTitle">{stageTab === "snack" ? "간식 레시피" : "이유식 메뉴 & 레시피"}</h2>
               <p style={{ textAlign: "center", fontSize: "1.4rem", color: "#666666", marginTop: "1rem" }}>
-                아기들이 가장 선호하고 부모님들이 자주 끓이는 필수 레시피 모음입니다.
+                {stageTab === "snack"
+                  ? "MammaYou 채널의 단계별 아기 간식 레시피 모음입니다."
+                  : "아기들이 가장 선호하고 부모님들이 자주 끓이는 필수 레시피 모음입니다."}
               </p>
 
               <div className="recipesGrid">
@@ -1256,6 +1882,9 @@ export default function App() {
                     }
                     if (stageTab === "complete") {
                       return (COMPLETE_FEED_ORDER[a.id] ?? 99) - (COMPLETE_FEED_ORDER[b.id] ?? 99);
+                    }
+                    if (stageTab === "snack") {
+                      return (SNACK_FEED_ORDER[a.id] ?? 99) - (SNACK_FEED_ORDER[b.id] ?? 99);
                     }
                     return 0;
                   })
@@ -1487,7 +2116,431 @@ export default function App() {
               </p>
             </div>
 
+            {/* 후기 게시판 — boardView에 따라 목록/글쓰기 화면을 전환합니다 */}
+            <section className="boardSection">
+              <div className="boardContainer">
 
+                {boardView === "list" && (
+                  <>
+                    <div className="boardHeader">
+                      <h2 className="boardTitle">후기 게시판</h2>
+                      <span className="boardCount">총 {boardTotalCount}개</span>
+                    </div>
+
+                    {boardLoading ? (
+                      <div className="boardLoading">불러오는 중...</div>
+                    ) : (
+                      <>
+                        {/* PC 버전 테이블 뷰: 데스크톱 해상도에서만 테이블 형태로 표출됩니다. */}
+                        <table className="boardTable">
+                          <colgroup>
+                            <col className="colNum" />
+                            <col className="colCategory" />
+                            <col className="colRecipe" />
+                            <col className="colAuthor" />
+                            <col className="colDate" />
+                            <col className="colViews" />
+                          </colgroup>
+                          <thead>
+                            <tr>
+                              <th scope="col">번호</th>
+                              <th scope="col">구분</th>
+                              <th scope="col">제목</th>
+                              <th scope="col">작성자</th>
+                              <th scope="col">작성일</th>
+                              <th scope="col">조회수</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {boardReviews.length === 0 ? (
+                              <tr>
+                                <td colSpan={6} className="boardEmpty">
+                                  아직 작성된 후기가 없습니다. 첫 후기를 남겨보세요!
+                                </td>
+                              </tr>
+                            ) : (
+                              boardReviews.map((review, idx) => {
+                                const rowNum = boardTotalCount - ((boardPage - 1) * REVIEW_PAGE_SIZE) - idx;
+                                const cat = review.category || "레시피 후기";
+                                const badgeClass = cat === "신규 레시피 후기"
+                                  ? "boardCategoryBadgeNew"
+                                  : cat === "기타"
+                                    ? "boardCategoryBadgeEtc"
+                                    : "boardCategoryBadgeReview";
+                                return (
+                                  <tr key={review.id} className="boardRow">
+                                    <td className="boardCellNum">{rowNum}</td>
+                                    <td className="boardCellCategory">
+                                      <span className={`boardCategoryBadge ${badgeClass}`}>
+                                        {cat}
+                                      </span>
+                                    </td>
+                                    <td className="boardCellRecipe">
+                                      {/* 제목을 a 태그로 감싸서 클릭 시 상세페이지로 이동합니다 */}
+                                      <a
+                                        href="/reviews/detail"
+                                        className="boardTitleLink"
+                                        onClick={(e) => {
+                                          e.preventDefault();
+                                          handleBoardReviewClick(review); // 조회수 증가 및 상세페이지 진입을 수행합니다.
+                                        }}
+                                      >
+                                        {review.title || "(제목 없음)"}
+                                      </a>
+                                    </td>
+                                    <td className="boardCellAuthor">{review.username}</td>
+                                    <td className="boardCellDate">{formatReviewDate(review.created_at)}</td>
+                                    <td className="boardCellViews">{review.views || 0}</td>
+                                  </tr>
+                                );
+                              })
+                            )}
+                          </tbody>
+                        </table>
+
+                        {/* 모바일 버전 카드형 리스트 뷰: 모바일 해상도(768px 이하)에서만 이미지처럼 노출됩니다. */}
+                        <div className="boardMobileList">
+                          {boardReviews.length === 0 ? (
+                            <div className="boardEmpty">아직 작성된 후기가 없습니다. 첫 후기를 남겨보세요!</div>
+                          ) : (
+                            boardReviews.map((review) => {
+                              const cat = review.category || "레시피 후기";
+                              // 조인 쿼리로 받아온 자식 댓글 목록 개수를 댓글 개수로 표시합니다.
+                              const commentCount = review.review_comments?.length || 0;
+                              return (
+                                <div key={review.id} className="boardMobileItem">
+                                  {/* 게시글 구분을 표시하는 카테고리 영역 */}
+                                  <div className="boardMobileCategory">{cat}</div>
+                                  {/* 굵고 명확한 블랙 타이틀 제목 링크 */}
+                                  <div className="boardMobileTitle">
+                                    <a
+                                      href="/reviews/detail"
+                                      className="boardMobileTitleLink"
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        handleBoardReviewClick(review); // 조회수 증가 및 상세페이지 진입을 수행합니다.
+                                      }}
+                                    >
+                                      {review.title || "(제목 없음)"}
+                                    </a>
+                                  </div>
+                                  {/* 메타데이터 정보 행: 댓글수, 작성자, 작성일, 조회수를 한 줄에 나열합니다. */}
+                                  <div className="boardMobileMeta">
+                                    <span>댓글 {commentCount}</span>
+                                    <span className="boardMobileMetaDivider">·</span>
+                                    <span>{review.username}</span>
+                                    <span className="boardMobileMetaDivider">·</span>
+                                    <span>{formatReviewDate(review.created_at)}</span>
+                                    <span className="boardMobileMetaDivider">·</span>
+                                    <span>조회 {review.views || 0}</span>
+                                  </div>
+                                </div>
+                              );
+                            })
+                          )}
+                        </div>
+
+                        {boardTotalCount > REVIEW_PAGE_SIZE && (
+                          <div className="boardPagination">
+                            <button
+                              className="boardPageBtn"
+                              disabled={boardPage === 1}
+                              onClick={() => { const p = boardPage - 1; setBoardPage(p); fetchBoardReviews(p); }}
+                            >
+                              이전
+                            </button>
+                            {Array.from(
+                              { length: Math.ceil(boardTotalCount / REVIEW_PAGE_SIZE) },
+                              (_, i) => i + 1
+                            ).map(p => (
+                              <button
+                                key={p}
+                                className={`boardPageBtn ${boardPage === p ? "boardPageBtnActive" : ""}`}
+                                onClick={() => { setBoardPage(p); fetchBoardReviews(p); }}
+                              >
+                                {p}
+                              </button>
+                            ))}
+                            <button
+                              className="boardPageBtn"
+                              disabled={boardPage === Math.ceil(boardTotalCount / REVIEW_PAGE_SIZE)}
+                              onClick={() => { const p = boardPage + 1; setBoardPage(p); fetchBoardReviews(p); }}
+                            >
+                              다음
+                            </button>
+                          </div>
+                        )}
+                      </>
+                    )}
+
+                    {/* 글쓰기 버튼 */}
+                    <div className="boardWriteArea">
+                      {supabaseSession ? (
+                        <button
+                          className="boardWriteBtn"
+                          onClick={() => {
+                            setBoardWriteContent("");
+                            navigate("/reviews/write");
+                          }}
+                        >
+                          글쓰기
+                        </button>
+                      ) : (
+                        <button
+                          className="boardWriteBtn boardWriteBtnDisabled"
+                          onClick={() => { setAuthMode("login"); setShowAuthModal(true); }}
+                        >
+                          로그인 후 글쓰기
+                        </button>
+                      )}
+                    </div>
+                  </>
+                )}
+
+                {/* 상세보기 뷰 — 선택한 게시글의 전체 내용을 표시합니다 */}
+                {boardView === "detail" && selectedBoardReview && (
+                  <>
+                    <div className="boardDetailCard">
+                      <div className="boardDetailMeta">
+                        <span className={`boardCategoryBadge ${
+                          (selectedBoardReview.category || "레시피 후기") === "신규 레시피 후기"
+                            ? "boardCategoryBadgeNew"
+                            : (selectedBoardReview.category || "레시피 후기") === "기타"
+                              ? "boardCategoryBadgeEtc"
+                              : "boardCategoryBadgeReview"
+                        }`}>
+                          {selectedBoardReview.category || "레시피 후기"}
+                        </span>
+                        <span className="boardDetailDate">{formatReviewDate(selectedBoardReview.created_at)}</span>
+                      </div>
+
+                      <h2 className="boardDetailTitle">{selectedBoardReview.title || "(제목 없음)"}</h2>
+
+                      <div className="boardDetailAuthor">
+                        <span>작성자: {selectedBoardReview.username}</span>
+                        <span className="boardDetailViews">조회수: {selectedBoardReview.views || 0}</span>
+                      </div>
+
+                      <div className="boardDetailDivider" />
+
+                      {/* Quill 정렬 클래스 스타일이 깨지지 않도록 ql-editor를 추가하여 HTML 컨텐츠를 안전하게 렌더링합니다 */}
+                      <div
+                        className="boardDetailContent ql-editor"
+                        dangerouslySetInnerHTML={{ __html: selectedBoardReview.content }}
+                      />
+
+                      {/* 하단 버튼 영역: 목록으로 버튼은 왼쪽에 배치하고, 본인 글인 경우 삭제 버튼을 우측에 렌더링합니다 */}
+                      <div className="boardDetailActions">
+                        <button
+                          className="boardDetailBackBtn"
+                          onClick={() => {
+                            // 목록 페이지로 돌아가며 뷰 모드를 목록 리스트로 변경합니다.
+                            setBoardView("list");
+                            navigate("/reviews");
+                          }}
+                        >
+                          목록
+                        </button>
+                        {supabaseSession && supabaseSession.user.id === selectedBoardReview.user_id && (
+                          <div className="boardDetailOwnerActions">
+                            <button
+                              className="boardDetailDeleteBtn"
+                              onClick={async () => {
+                                if (!window.confirm("이 글을 삭제할까요?")) return;
+                                const { error } = await supabase
+                                  .from("recipe_reviews")
+                                  .delete()
+                                  .eq("id", selectedBoardReview.id);
+                                if (!error) {
+                                  // 삭제 성공 시 목록 상태로 되돌리고 리뷰를 갱신합니다.
+                                  setSelectedBoardReview(null);
+                                  setBoardView("list");
+                                  setBoardPage(1);
+                                  await fetchBoardReviews(1);
+                                  navigate("/reviews");
+                                } else {
+                                  alert("삭제 권한이 없거나 오류가 발생했습니다.");
+                                }
+                              }}
+                            >
+                              삭제
+                            </button>
+                            <button
+                              className="boardDetailEditBtn"
+                              onClick={() => {
+                                // 현재 상세보기 게시글 정보를 글쓰기/수정 폼의 상태값으로 로드하고 수정 모드를 켭니다.
+                                setBoardEditId(selectedBoardReview.id);
+                                setBoardWriteCategory(selectedBoardReview.category || "레시피 후기");
+                                setBoardWriteTitle(selectedBoardReview.title || "");
+                                setBoardWriteContent(selectedBoardReview.content || "");
+                                setBoardView("write");
+                                navigate("/reviews/write");
+                              }}
+                            >
+                              수정
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* 댓글 섹션: 후기 상세 페이지의 댓글 영역을 표시합니다 */}
+                    <div className="boardCommentSection">
+                      <h3 className="boardCommentSectionTitle">댓글</h3>
+
+                      {/* 댓글 목록 영역 */}
+                      <div className="boardCommentList">
+                        {boardComments.length === 0 ? (
+                          <div className="boardCommentEmpty">등록된 댓글이 없습니다. 첫 댓글을 남겨보세요!</div>
+                        ) : (
+                          (() => {
+                            // 대댓글 구조를 재귀적으로 그리기 위해 최상위 부모 댓글(parent_id가 없는 댓글)만 1차로 필터링하여 진입합니다.
+                            const rootComments = boardComments.filter((c) => !c.parent_id);
+                            return rootComments.map((rootComment) => renderCommentNode(rootComment, 0));
+                          })()
+                        )}
+                      </div>
+
+                      {/* 댓글 작성 폼 영역 */}
+                      <div className="boardCommentFormContainer">
+                        <div className="boardCommentFormRow">
+                          <textarea
+                            className="boardCommentInput"
+                            placeholder={supabaseSession ? "댓글을 입력해 주세요." : "로그인 후 댓글을 작성할 수 있습니다."}
+                            value={boardCommentText}
+                            disabled={!supabaseSession}
+                            onChange={(e) => setBoardCommentText(e.target.value)}
+                          />
+                          <button
+                            type="button"
+                            className="boardCommentSubmitBtn"
+                            disabled={boardCommentSubmitting || !boardCommentText.trim() || !supabaseSession}
+                            onClick={() => handleBoardCommentSubmit(selectedBoardReview.id)}
+                          >
+                            확인
+                          </button>
+                        </div>
+                        <div className="boardCommentFormFooter">
+                          <label className="boardCommentSecretLabel">
+                            <input
+                              type="checkbox"
+                              checked={boardCommentIsSecret}
+                              disabled={!supabaseSession}
+                              onChange={(e) => setBoardCommentIsSecret(e.target.checked)}
+                            />
+                            <span className="boardCommentSecretText">비밀 댓글</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {boardView === "write" && (
+                  <>
+                    {/* 글쓰기/수정 폼 헤더 */}
+                    <div className="boardWriteHeader">
+                      <button
+                        className="boardBackBtn"
+                        onClick={() => {
+                          if (boardEditId) {
+                            // 수정 모드 중 이탈 시에는 수정 상태를 해제하고 보던 상세페이지로 복귀합니다.
+                            setBoardEditId(null);
+                            setBoardView("detail");
+                            navigate("/reviews/detail");
+                          } else {
+                            navigate("/reviews");
+                          }
+                        }}
+                      >
+                        ← 목록으로
+                      </button>
+                      <h2 className="boardWriteTitle">{boardEditId ? "후기 수정" : "후기 작성"}</h2>
+                    </div>
+
+                    <div className="boardWriteForm">
+                      {/* 구분 선택 */}
+                      <div className="boardWriteField">
+                        <select
+                          id="writeCategorySelect"
+                          className="boardWriteCategorySelect"
+                          value={boardWriteCategory}
+                          onChange={e => setBoardWriteCategory(e.target.value)}
+                        >
+                          <option value="레시피 후기">레시피 후기</option>
+                          <option value="신규 레시피 후기">신규 레시피 후기</option>
+                          <option value="기타">기타</option>
+                        </select>
+                      </div>
+
+                      {/* 제목 입력 */}
+                      <div className="boardWriteField">
+                        <input
+                          id="writeTitleInput"
+                          type="text"
+                          className="boardWriteInput"
+                          placeholder="제목을 입력해주세요. (최대 100자)"
+                          maxLength={100}
+                          value={boardWriteTitle}
+                          onChange={e => setBoardWriteTitle(e.target.value)}
+                        />
+                      </div>
+
+                      {/* 내용 작성 */}
+                      <div className="boardWriteField">
+                        <div className="boardQuillWrapper">
+                          <ReactQuill
+                            ref={quillRef}
+                            theme="snow"
+                            value={boardWriteContent}
+                            onChange={setBoardWriteContent}
+                            modules={quillModules}
+                            formats={quillFormats}
+                            placeholder="이유식을 만들어 본 솔직한 후기를 작성해주세요."
+                          />
+                        </div>
+                      </div>
+
+                      {/* 밸리데이션 에러 메시지 */}
+                      {boardWriteError && (
+                        <p className="boardWriteErrorMsg">{boardWriteError}</p>
+                      )}
+
+                      {/* 버튼 영역 */}
+                      <div className="boardWriteActions">
+                        <button
+                          type="button"
+                          className="boardWriteCancelBtn"
+                          onClick={(e) => {
+                            // 페이지 전환 시 브라우저의 원치 않는 기본 스크롤 동작을 예방합니다.
+                            e.preventDefault();
+                            if (boardEditId) {
+                              // 수정 모드 중 취소할 때는 수정 상태를 해제하고 보던 상세페이지로 되돌아갑니다.
+                              setBoardEditId(null);
+                              setBoardView("detail");
+                              navigate("/reviews/detail");
+                            } else {
+                              navigate("/reviews");
+                            }
+                          }}
+                        >
+                          취소
+                        </button>
+                        <button
+                          type="button"
+                          className="boardWriteSubmitBtn"
+                          disabled={boardWriteSubmitting}
+                          onClick={(e) => handleBoardWriteSubmit(e)}
+                        >
+                          {boardWriteSubmitting ? (boardEditId ? "수정 중..." : "등록 중...") : (boardEditId ? "수정완료" : "등록하기")}
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+              </div>
+            </section>
 
           </div>
         )}
@@ -2102,6 +3155,66 @@ export default function App() {
                   </button>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 6. 대댓글(답글) 작성 팝업 모달: 사용자가 요청한 스크린샷 시안에 맞추어 디자인을 대폭 개선하고 비밀 댓글 토글 기능을 추가한 레이아웃입니다 */}
+      {showReplyModal && replyParentComment && (
+        <div className="replyModalOverlay" onMouseDown={() => { setShowReplyModal(false); setReplyParentComment(null); setBoardReplyIsSecret(false); }}>
+          <div className="replyModalContent" onMouseDown={(e) => e.stopPropagation()}>
+            <button
+              className="replyModalCloseBtn"
+              onClick={() => { setShowReplyModal(false); setReplyParentComment(null); setBoardReplyIsSecret(false); }}
+            >
+              <X size={20} />
+            </button>
+            <div className="replyModalHeader">
+              <span className="replyModalSubtitle">REPLY</span>
+              <h2 className="replyModalTitle">댓글달기</h2>
+            </div>
+            <div className="replyModalBody">
+              {/* 선택된 원댓글 정보를 둥근 회색 테두리 박스 형태로 상단에 고정 표시하여 가독성을 높입니다 */}
+              <div className="replyModalParentBox">
+                <div className="replyModalParentAuthor">{replyParentComment.username}</div>
+                <div className="replyModalParentContent">
+                  {replyParentComment.is_secret ? "🔒 비밀 댓글입니다." : replyParentComment.content}
+                </div>
+              </div>
+              
+              <div className="replyModalLabel">댓글 내용</div>
+              <textarea
+                className="replyModalTextarea"
+                placeholder="대댓글을 입력해 주세요."
+                value={boardReplyText}
+                maxLength={2000}
+                onChange={(e) => setBoardReplyText(e.target.value)}
+              />
+            </div>
+            <div className="replyModalFooter">
+              {/* 비밀 댓글 토글 영역입니다. 원댓글이 비밀글이면 보안상 체크박스를 무조건 체크 상태로 유지하여 비활성화시킵니다 */}
+              <label className="replyModalSecretCheck">
+                <input
+                  type="checkbox"
+                  checked={boardReplyIsSecret}
+                  disabled={replyParentComment.is_secret}
+                  onChange={(e) => setBoardReplyIsSecret(e.target.checked)}
+                />
+                <span>비밀 댓글</span>
+              </label>
+              
+              <div className="replyModalFooterRight">
+                <span className="replyModalMaxChars">최대 2,000자</span>
+                <button
+                  type="button"
+                  className="replyModalSubmitBtn"
+                  disabled={boardCommentSubmitting || !boardReplyText.trim()}
+                  onClick={() => handleBoardCommentSubmit(selectedBoardReview.id, replyParentComment.id, boardReplyIsSecret)}
+                >
+                  등록
+                </button>
+              </div>
             </div>
           </div>
         </div>
