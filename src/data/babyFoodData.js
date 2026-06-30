@@ -2056,8 +2056,8 @@ export const babyFoodRecipes = [
   {
     id: "recipeComplete19",
     stage: "complete",
-    name: "닭고기무감자진밥",
-    description: "닭고기와 소화를 돕는 무, 포만감을 주는 감자가 들어간 든든한 완료기 진밥입니다. 깔끔하고 담백한 맛으로 속이 편안합니다.",
+    name: "닭고기무감자볶음진밥",
+    description: "닭고기와 소화를 돕는 무, 포만감을 주는 감자가 들어간 든든한 완료기 볶음진밥입니다. 참기름에 볶아 고소하고 담백한 맛으로 속이 편안합니다.",
     ingredients: "진밥 150g, 닭안심 50g, 무 40g, 감자 40g, 양파 15g, 닭 육수 50ml, 참기름 약간",
     instructions: [
       "닭안심은 찬물에 30분 담가 핏물을 빼고 5mm 이하로 잘게 다져줍니다.",
@@ -2142,28 +2142,9 @@ export const babyFoodRecipes = [
     tips: "전분물로 소스를 걸쭉하게 만들면 밥 위에 잘 얹혀 먹기 편합니다. 알배추는 데친 후 사용해야 아기가 소화하기 편합니다. 야채는 아이 기호에 맞게 바꿔도 좋습니다."
   },
   {
-    id: "recipeComplete31",
-    stage: "complete",
-    name: "닭고기콜리플라워근대진밥",
-    description: "닭고기 육수에 콜리플라워, 근대, 고구마, 건포도를 넣어 끓인 완료기 진밥입니다. 다양한 채소와 과일의 영양을 한 그릇에 담아 아이의 균형 잡힌 식사를 도와줍니다.",
-    ingredients: "쌀 90~120g (불린 쌀), 닭고기 60g, 콜리플라워 40g, 근대 20g, 고구마 45g, 건포도 8g, 양파 20g, 물 450cc",
-    instructions: [
-      "쌀은 찬물에 30분에서 1시간 정도 불려줍니다.",
-      "닭고기는 편 썰어 찬물에 1시간 정도 담가 핏물을 제거해 줍니다.",
-      "핏물을 제거한 닭고기는 분량의 물과 양파를 넣고 함께 끓여줍니다. 육수가 끓어오르면 약불로 줄인 뒤 뚜껑을 닫고 약 5분 정도 더 끓여 육수를 내줍니다.",
-      "익힌 닭고기는 건져내어 5mm 크기로 다지고, 같이 끓인 양파는 7mm 크기로 다져줍니다.",
-      "콜리플라워와 근대는 끓는 물에 살짝 데친 후 7mm 크기로 다져줍니다.",
-      "고구마는 10mm 크기로 깍둑썰기하듯 다지고, 건포도는 잘게 다져줍니다.",
-      "완성된 육수에 다진 닭고기, 불린 쌀, 다진 고구마를 먼저 넣고 센 불에서 끓여줍니다.",
-      "육수가 끓어오르면 약불로 줄인 뒤, 콜리플라워, 건포도, 양파, 근대를 모두 넣어 함께 끓여줍니다.",
-      "무른 진밥~진밥 농도가 되도록 저어가며 푹 끓여주면 완성됩니다."
-    ],
-    tips: "콜리플라워와 근대는 데친 후 사용해야 아기가 소화하기 편합니다. 건포도는 자연 단맛을 더해주며 곱게 다져야 삼키기 쉽습니다. 고구마는 충분히 익혀야 소화에 부담이 없습니다."
-  },
-  {
     id: "recipeComplete32",
     stage: "complete",
-    name: "닭고기무감자진밥",
+    name: "닭고기무감자육수진밥",
     description: "닭고기 육수에 감자와 무를 넣어 끓인 담백하고 부드러운 완료기 진밥입니다. 무의 소화 효소가 닭고기 소화를 도와 아이 속을 편안하게 해줍니다.",
     ingredients: "쌀 90g (불린 쌀 114g 또는 밥 180g), 닭고기 60g, 양파 15g, 감자 45g, 무 60g, 물 660cc (밥으로 조리 시 360cc)",
     instructions: [
@@ -4363,15 +4344,6 @@ export const recipeMedia = {
       "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1598965402089-897ce52e8355?w=600&h=220&fit=crop&q=80"
-    ]
-  },
-  recipeComplete31: {
-    imageUrl: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=63iFSqWg36Q",
-    stepImages: [
-      "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeComplete32: {

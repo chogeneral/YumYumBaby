@@ -486,12 +486,11 @@ export default function App() {
     recipeComplete18: 5,  // 흑미닭고기영양진밥 — 닭고기 입문
     recipeComplete20: 6,  // 닭고기사과볶은진밥
     recipeComplete03: 7,  // 닭고기야채덮밥
-    recipeComplete19: 8,  // 닭고기무감자진밥
-    recipeComplete31: 9,  // 닭고기콜리플라워근대진밥
-    recipeComplete14: 10, // 닭고기콜리플라워근대진밥(변형)
-    recipeComplete12: 11, // 닭고기아보카도사과진밥
-    recipeComplete21: 12, // 닭고기가지연두부진밥
-    recipeComplete32: 13, // 닭고기무감자진밥(변형)
+    recipeComplete19: 8,  // 닭고기무감자볶음진밥
+    recipeComplete14: 9,  // 닭고기콜리플라워근대진밥
+    recipeComplete12: 10, // 닭고기아보카도사과진밥
+    recipeComplete21: 11, // 닭고기가지연두부진밥
+    recipeComplete32: 12, // 닭고기무감자육수진밥
     recipeComplete01: 14, // 사과당근달걀진밥 — 달걀 입문
     recipeComplete16: 15, // 콜리플라워연두부비타민진밥 — 두부
     recipeComplete13: 16, // 새우아보카도브로콜리진밥 — 해산물 입문
