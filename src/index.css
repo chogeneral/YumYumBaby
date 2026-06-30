@@ -1114,6 +1114,100 @@ select {
   color: #ff8e72;
 }
 
+/* 마이페이지 새 댓글 알림 목록 */
+.myPageNotifCount {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ff4444;
+  background-color: #fff0f0;
+  padding: 0.3rem 1rem;
+  border-radius: 2rem;
+  border: 0.1rem solid #ffcccc;
+}
+
+.myPageNotifEmpty {
+  font-size: 1.5rem;
+  color: #aaaaaa;
+  text-align: center;
+  padding: 2.4rem 0;
+}
+
+.myPageNotifList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  list-style: none;
+}
+
+.myPageNotifItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.8rem 2rem;
+  background-color: #fffdf9;
+  border: 0.1rem solid #f5edeb;
+  border-radius: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.myPageNotifItem:hover {
+  background-color: #fff4f0;
+  border-color: #ffd4c8;
+}
+
+.myPageNotifItemTop {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.myPageNotifCategory {
+  font-size: 1.2rem;
+  color: #ff8e72;
+  background-color: #fff0eb;
+  padding: 0.2rem 0.8rem;
+  border-radius: 2rem;
+  border: 0.1rem solid #ffd4c8;
+  font-weight: 600;
+}
+
+.myPageNotifBadge {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #ff4444;
+  padding: 0.2rem 0.8rem;
+  border-radius: 2rem;
+}
+
+.myPageNotifReviewTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c2c2c;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.myPageNotifCommentPreview {
+  font-size: 1.35rem;
+  color: #666666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.myPageNotifAuthor {
+  font-weight: 600;
+  color: #444444;
+}
+
+.myPageNotifTime {
+  font-size: 1.2rem;
+  color: #aaaaaa;
+}
+
 /* 마이페이지 헤더 버튼 그룹 */
 .myPageHeaderActions {
   display: flex;

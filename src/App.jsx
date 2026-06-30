@@ -244,6 +244,8 @@ export default function App() {
   const [boardCommentSubmitting, setBoardCommentSubmitting] = useState(false);
   // 내 후기글에 새 댓글이 달렸을 때 마이페이지 네비에 N 배지를 표시하기 위한 상태입니다.
   const [hasNewComment, setHasNewComment] = useState(false);
+  // 새 댓글이 달린 내 후기글 목록 — 마이페이지에 알림 목록으로 표시합니다.
+  const [myReviewsWithNewComments, setMyReviewsWithNewComments] = useState([]);
   // 대댓글(답글) 작성 모달 팝업의 노출 상태를 관리합니다.
   const [showReplyModal, setShowReplyModal] = useState(false);
   // 대댓글(답글)을 달고자 하는 부모 댓글의 정보를 객체 형태로 보관합니다.
@@ -524,31 +526,77 @@ export default function App() {
     }
   };
 
-  // 내 후기글에 마지막 확인 이후 새 댓글이 달렸는지 조회하여 N 배지 표시 여부를 설정합니다.
+  // 내 후기글에 마지막 확인 이후 새 댓글이 달렸는지 조회합니다.
+  // N 배지 여부와 마이페이지 알림 목록을 함께 갱신합니다.
   // 마지막 확인 시각은 localStorage에 유저별로 보관합니다.
   const checkNewComments = async (userId) => {
     const storageKey = `notif_checked_${userId}`;
     const lastChecked = localStorage.getItem(storageKey) || new Date(0).toISOString();
 
-    // 내가 작성한 후기글 ID 목록 조회
+    // 내가 작성한 후기글 목록 조회
     const { data: myReviews } = await supabase
       .from("recipe_reviews")
-      .select("id")
+      .select("id, title, category")
       .eq("user_id", userId);
 
-    if (!myReviews?.length) return;
+    if (!myReviews?.length) {
+      setHasNewComment(false);
+      setMyReviewsWithNewComments([]);
+      return;
+    }
 
     const reviewIds = myReviews.map((r) => r.id);
 
-    // 내 후기글에 달린 새 댓글 중 내가 직접 단 댓글은 제외
+    // 내 후기글에 달린 새 댓글 조회 (내가 단 댓글 제외), 최신순 정렬
     const { data: newComments } = await supabase
       .from("review_comments")
-      .select("id")
+      .select("id, review_id, username, content, created_at, is_secret")
       .in("review_id", reviewIds)
       .neq("user_id", userId)
-      .gt("created_at", lastChecked);
+      .gt("created_at", lastChecked)
+      .order("created_at", { ascending: false });
 
-    setHasNewComment((newComments?.length ?? 0) > 0);
+    if (!newComments?.length) {
+      setHasNewComment(false);
+      setMyReviewsWithNewComments([]);
+      return;
+    }
+
+    // review_id 기준으로 그룹핑하여 댓글 수와 최신 댓글을 집계합니다.
+    const grouped = {};
+    for (const comment of newComments) {
+      if (!grouped[comment.review_id]) {
+        grouped[comment.review_id] = { count: 0, latestComment: comment };
+      }
+      grouped[comment.review_id].count += 1;
+    }
+
+    // 후기글 정보와 새 댓글 정보를 병합합니다.
+    const result = myReviews
+      .filter((r) => grouped[r.id])
+      .map((r) => ({
+        ...r,
+        newCommentCount: grouped[r.id].count,
+        latestComment: grouped[r.id].latestComment,
+      }));
+
+    setMyReviewsWithNewComments(result);
+    setHasNewComment(result.length > 0);
+  };
+
+  // 마이페이지 알림 목록에서 항목 클릭 시 해당 후기 상세페이지로 이동합니다.
+  const handleMyPageNotifClick = async (reviewId) => {
+    const { data: review } = await supabase
+      .from("recipe_reviews")
+      .select("*, review_comments(id)")
+      .eq("id", reviewId)
+      .single();
+    if (review) {
+      setSelectedBoardReview(review);
+      setBoardView("detail");
+      setCurrentTab("reviews");
+      navigate("/reviews/detail");
+    }
   };
 
   // --- 앱 마운트 시 세션 복구 및 실시간 구독 ---
@@ -1778,9 +1826,10 @@ export default function App() {
             <span
               className={`navLink ${currentTab === "myPage" ? "navLinkActive" : ""}`}
               onClick={() => {
-                // 마이페이지 진입 시 N 배지를 초기화하고 마지막 확인 시각을 갱신합니다.
+                // 마이페이지 진입 시 N 배지와 알림 목록을 초기화하고 마지막 확인 시각을 갱신합니다.
                 localStorage.setItem(`notif_checked_${supabaseSession.user.id}`, new Date().toISOString());
                 setHasNewComment(false);
+                setMyReviewsWithNewComments([]);
                 setCurrentTab("myPage");
               }}
               style={{ position: "relative" }}
@@ -2757,6 +2806,43 @@ export default function App() {
                   회원 탈퇴하기
                 </button>
               </div>
+            </div>
+
+            {/* 새 댓글 알림 목록 */}
+            <div className="myPageCard">
+              <div className="myPageHeader">
+                <h2 className="myPageTitle">새 댓글 알림</h2>
+                {myReviewsWithNewComments.length > 0 && (
+                  <span className="myPageNotifCount">{myReviewsWithNewComments.length}건</span>
+                )}
+              </div>
+
+              {myReviewsWithNewComments.length === 0 ? (
+                <p className="myPageNotifEmpty">새로 달린 댓글이 없습니다.</p>
+              ) : (
+                <ul className="myPageNotifList">
+                  {myReviewsWithNewComments.map((review) => (
+                    <li
+                      key={review.id}
+                      className="myPageNotifItem"
+                      onClick={() => handleMyPageNotifClick(review.id)}
+                    >
+                      <div className="myPageNotifItemTop">
+                        <span className="myPageNotifCategory">{review.category}</span>
+                        <span className="myPageNotifBadge">+{review.newCommentCount}개</span>
+                      </div>
+                      <p className="myPageNotifReviewTitle">{review.title}</p>
+                      <p className="myPageNotifCommentPreview">
+                        <span className="myPageNotifAuthor">{review.latestComment.username}</span>
+                        {review.latestComment.is_secret
+                          ? " · 🔒 비밀 댓글입니다."
+                          : ` · ${review.latestComment.content.slice(0, 40)}${review.latestComment.content.length > 40 ? "..." : ""}`}
+                      </p>
+                      <span className="myPageNotifTime">{formatCommentDate(review.latestComment.created_at)}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </section>
         )}
