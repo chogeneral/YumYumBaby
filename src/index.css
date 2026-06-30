@@ -465,6 +465,41 @@ select {
   color: #ffffff;
 }
 
+/* 완료기 밥/국/반찬 서브탭 */
+.completeSubTabWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 2.4rem;
+}
+
+.completeSubTab {
+  padding: 0.8rem 2.8rem;
+  border-radius: 10rem;
+  font-weight: 600;
+  font-size: 1.45rem;
+  cursor: pointer;
+  background-color: #f5f9f0;
+  border: 0.15rem solid #c3dba6;
+  color: #5a8a35;
+  transition: all 0.2s ease;
+}
+
+.completeSubTab:hover {
+  background-color: #e5f2d5;
+  border-color: #7ab648;
+}
+
+.completeSubTabActive {
+  background-color: #7ab648;
+  border-color: #7ab648;
+  color: #ffffff;
+}
+
+.completeSubTabActive:hover {
+  color: #ffffff;
+}
+
 .stageDetailCard {
   background-color: #ffffff;
   border-radius: 2rem;
@@ -1439,6 +1474,15 @@ select {
   .earlySubTab {
     font-size: 1.2rem;
     padding: 0.6rem 1.4rem;
+  }
+
+  .completeSubTabWrapper {
+    gap: 0.6rem;
+  }
+
+  .completeSubTab {
+    font-size: 1.2rem;
+    padding: 0.6rem 1.8rem;
   }
 }
 

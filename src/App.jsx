@@ -263,6 +263,17 @@ export default function App() {
   const [stageTab, setStageTab] = useState("early");
   // 초기 탭 내부에서 1단계/2단계를 전환하기 위한 서브탭 상태입니다.
   const [earlySubTab, setEarlySubTab] = useState("early1");
+  // 완료기 탭 내부에서 밥/국/반찬을 전환하기 위한 서브탭 상태입니다.
+  const [completeTab, setCompleteTab] = useState("밥");
+
+  // 완료기 레시피의 카테고리(밥/국/반찬)를 이름 패턴으로 판별합니다.
+  // 국류는 이름에 "국"이 포함되고, 반찬류는 특수 음식명으로 구분하며, 나머지는 밥류로 분류합니다.
+  const getCompleteType = (recipe) => {
+    const name = recipe.name || "";
+    if (name.includes("국")) return "국";
+    if (name.includes("장조림") || name.includes("김밥") || name.includes("떡볶이")) return "반찬";
+    return "밥";
+  };
 
   // 레시피의 stage와 subStage를 기반으로 태그에 적용할 CSS 클래스명을 반환합니다.
   // 초기 이유식은 1단계(early1)와 2단계(early2)를 시각적으로 구분하기 위해 별도 클래스를 사용합니다.
@@ -1237,6 +1248,11 @@ export default function App() {
     }
   }, [stageTab, userProfile]);
 
+  // 완료기 이외의 탭으로 이동할 때 completeTab을 기본값(밥)으로 초기화합니다.
+  useEffect(() => {
+    if (stageTab !== "complete") setCompleteTab("밥");
+  }, [stageTab]);
+
   // 개월 수에 맞는 이유식 단계를 결정합니다.
   // 후기(10~11개월)와 완료기(12~23개월)를 별도 stageId로 분리하여 레시피 필터와 UI 태그가 각 단계에 맞게 표시되도록 합니다.
   const determineStage = (months) => {
@@ -2106,10 +2122,30 @@ export default function App() {
                   : "아기들이 가장 선호하고 부모님들이 자주 끓이는 필수 레시피 모음입니다."}
               </p>
 
+              {/* 완료기 탭에서만 밥/국/반찬 서브탭을 표시합니다 */}
+              {stageTab === "complete" && (
+                <div className="completeSubTabWrapper">
+                  {["밥", "국", "반찬"].map(tab => (
+                    <button
+                      key={tab}
+                      className={`completeSubTab ${completeTab === tab ? "completeSubTabActive" : ""}`}
+                      onClick={() => setCompleteTab(tab)}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                </div>
+              )}
+
               <div className="recipesGrid">
                 {/* 메인 페이지 가이드의 선택된 탭 단계(stageTab)에 부합하는 이유식 레시피들만 필터링하고, 초기(early) 탭일 때는 1단계를 먼저 보여줍니다. */}
                 {recipes && Array.isArray(recipes) && recipes
-                  .filter(recipe => recipe?.stage === stageTab)
+                  .filter(recipe => {
+                    if (recipe?.stage !== stageTab) return false;
+                    // 완료기 탭에서는 선택된 서브탭(밥/국/반찬)에 해당하는 레시피만 표시합니다.
+                    if (stageTab === "complete") return getCompleteType(recipe) === completeTab;
+                    return true;
+                  })
                   .sort((a, b) => {
                     // 각 단계별 이유식 도입 권장 순서대로 정렬합니다.
                     if (stageTab === "early") {
