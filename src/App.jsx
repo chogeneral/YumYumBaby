@@ -529,7 +529,10 @@ export default function App() {
   // 내 후기글에 마지막 확인 이후 새 댓글이 달렸는지 조회합니다.
   // N 배지 여부와 마이페이지 알림 목록을 함께 갱신합니다.
   // 마지막 확인 시각은 localStorage에 유저별로 보관합니다.
-  const checkNewComments = async (userId) => {
+  // 내 후기글에 달린 전체 댓글 목록을 조회합니다.
+  // - 목록: 시간 필터 없이 타인의 댓글 전체 표시 (null user_id는 클라이언트에서 필터)
+  // - N 배지: lastChecked(마지막 마이페이지 방문) 이후 새 댓글 여부로만 판단
+  const checkNewComments = async (userId, username) => {
     const storageKey = `notif_checked_${userId}`;
     const lastChecked = localStorage.getItem(storageKey) || new Date(0).toISOString();
 
@@ -547,40 +550,43 @@ export default function App() {
 
     const reviewIds = myReviews.map((r) => r.id);
 
-    // 내 후기글에 달린 새 댓글 조회 (내가 단 댓글 제외), 최신순 정렬
-    const { data: newComments } = await supabase
+    // 내 후기글의 전체 댓글 조회 — DB 단계에서 null user_id 문제를 피하고자 클라이언트에서 필터합니다.
+    const { data: allComments } = await supabase
       .from("review_comments")
-      .select("id, review_id, username, content, created_at, is_secret")
+      .select("id, review_id, username, content, created_at, is_secret, user_id")
       .in("review_id", reviewIds)
-      .neq("user_id", userId)
-      .gt("created_at", lastChecked)
       .order("created_at", { ascending: false });
 
-    if (!newComments?.length) {
+    // 내 댓글 제외: user_id 일치 또는 (user_id null이고 username 일치) 인 경우 제외
+    const byOthers = (allComments || []).filter((c) =>
+      c.user_id !== userId &&
+      !(c.user_id === null && c.username === username)
+    );
+
+    if (!byOthers.length) {
       setHasNewComment(false);
       setMyReviewsWithNewComments([]);
       return;
     }
 
-    // review_id 기준으로 그룹핑하여 댓글 전체 목록을 집계합니다.
+    // lastChecked 이후 새 댓글이 하나라도 있으면 N 배지 표시
+    const hasNew = byOthers.some((c) => new Date(c.created_at) > new Date(lastChecked));
+    setHasNewComment(hasNew);
+
+    // review_id 기준으로 그룹핑하여 전체 댓글 목록 집계
     const grouped = {};
-    for (const comment of newComments) {
+    for (const comment of byOthers) {
       if (!grouped[comment.review_id]) {
         grouped[comment.review_id] = [];
       }
       grouped[comment.review_id].push(comment);
     }
 
-    // 후기글 정보와 새 댓글 전체 목록을 병합합니다.
     const result = myReviews
       .filter((r) => grouped[r.id])
-      .map((r) => ({
-        ...r,
-        newComments: grouped[r.id],
-      }));
+      .map((r) => ({ ...r, newComments: grouped[r.id] }));
 
     setMyReviewsWithNewComments(result);
-    setHasNewComment(result.length > 0);
   };
 
   // 마이페이지 알림 목록에서 항목 클릭 시 해당 후기 상세페이지로 이동합니다.
@@ -603,10 +609,7 @@ export default function App() {
     // 새로고침 후 기존 세션을 복구합니다.
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSupabaseSession(session);
-      if (session) {
-        fetchUserProfile(session.user.id);
-        checkNewComments(session.user.id);
-      }
+      if (session) fetchUserProfile(session.user.id);
       setAuthLoading(false);
     });
 
@@ -619,7 +622,6 @@ export default function App() {
         setPasswordResetSuccess(false);
       } else if (session) {
         fetchUserProfile(session.user.id);
-        checkNewComments(session.user.id);
       } else {
         setUserProfile(null);
       }
@@ -647,6 +649,20 @@ export default function App() {
     if (currentTab === "reviews") {
       setBoardPage(1);
       fetchBoardReviews(1);
+    }
+  }, [currentTab]);
+
+  // 세션과 프로필이 모두 준비되면 댓글 알림을 최초 조회합니다.
+  useEffect(() => {
+    if (supabaseSession?.user?.id && userProfile?.username) {
+      checkNewComments(supabaseSession.user.id, userProfile.username);
+    }
+  }, [supabaseSession?.user?.id, userProfile?.username]);
+
+  // 마이페이지 탭 진입 시 댓글 알림 목록을 최신 상태로 갱신합니다.
+  useEffect(() => {
+    if (currentTab === "myPage" && supabaseSession?.user?.id && userProfile?.username) {
+      checkNewComments(supabaseSession.user.id, userProfile.username);
     }
   }, [currentTab]);
 
@@ -1829,10 +1845,10 @@ export default function App() {
             <span
               className={`navLink ${currentTab === "myPage" ? "navLinkActive" : ""}`}
               onClick={() => {
-                // 마이페이지 진입 시 N 배지와 알림 목록을 초기화하고 마지막 확인 시각을 갱신합니다.
+                // 마이페이지 진입 시 마지막 확인 시각을 갱신하여 N 배지를 초기화합니다.
+                // 목록은 useEffect에서 checkNewComments를 통해 자동 갱신됩니다.
                 localStorage.setItem(`notif_checked_${supabaseSession.user.id}`, new Date().toISOString());
                 setHasNewComment(false);
-                setMyReviewsWithNewComments([]);
                 setCurrentTab("myPage");
               }}
               style={{ position: "relative" }}
