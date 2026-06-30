@@ -22,6 +22,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { babyFoodStages, babyFoodRecipes, recipeMedia } from "./data/babyFoodData";
 import { supabase } from "./lib/supabase";
+import { encryptData, decryptData, maskEmail } from "./lib/crypto";
 
 // 한국 공휴일 (2024~2027). 달력에서 일요일과 함께 빨간색으로 표시됩니다.
 const KOREAN_HOLIDAYS = new Set([
@@ -1304,7 +1305,7 @@ export default function App() {
           username: parentName,
           babyName: babyName,
           babyBirth: babyBirth,
-          email: email
+          email: await encryptData(email)
         });
 
       if (profileError) {
@@ -1450,7 +1451,13 @@ export default function App() {
       alert("조회 중 오류가 발생했습니다.");
       return;
     }
-    setFindEmailResult(data?.email || "notFound");
+    if (!data?.email) {
+      setFindEmailResult("notFound");
+    } else {
+      // DB에 암호화 저장된 이메일을 복호화하여 state에 저장
+      const decrypted = await decryptData(data.email);
+      setFindEmailResult(decrypted);
+    }
   };
 
   // Supabase Auth 비밀번호 재설정 메일을 발송합니다.
@@ -2679,7 +2686,7 @@ export default function App() {
                 </div>
                 <div className="myPageInfoItem">
                   <span className="myPageInfoLabel">이메일</span>
-                  <span className="myPageInfoValue">{supabaseSession.user.email}</span>
+                  <span className="myPageInfoValue">{maskEmail(supabaseSession.user.email)}</span>
                 </div>
                 <div className="myPageInfoItem">
                   <span className="myPageInfoLabel">우리 아기 이름</span>
@@ -3057,7 +3064,7 @@ export default function App() {
                     ) : (
                       <>
                         <p className="authResultLabel">가입하신 이메일(아이디)은</p>
-                        <p className="authResultEmail">{findEmailResult}</p>
+                        <p className="authResultEmail">{maskEmail(findEmailResult)}</p>
                         <p className="authResultHint">위 이메일로 로그인해 주세요.</p>
                       </>
                     )}
@@ -3099,7 +3106,7 @@ export default function App() {
                 ) : (
                   <div className="authResultBox">
                     <p className="authResultLabel">비밀번호 재설정 이메일을 발송했습니다.</p>
-                    <p className="authResultEmail">{findPasswordForm.email}</p>
+                    <p className="authResultEmail">{maskEmail(findPasswordForm.email)}</p>
                     <p className="authResultHint">메일함을 확인하여 비밀번호를 재설정해 주세요.<br />스팸함도 함께 확인해 주세요.</p>
                   </div>
                 )}
