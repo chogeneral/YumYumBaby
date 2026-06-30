@@ -529,60 +529,95 @@ export default function App() {
   // 내 후기글에 마지막 확인 이후 새 댓글이 달렸는지 조회합니다.
   // N 배지 여부와 마이페이지 알림 목록을 함께 갱신합니다.
   // 마지막 확인 시각은 localStorage에 유저별로 보관합니다.
-  // 내 후기글에 달린 전체 댓글 목록을 조회합니다.
-  // - 목록: 시간 필터 없이 타인의 댓글 전체 표시 (null user_id는 클라이언트에서 필터)
-  // - N 배지: lastChecked(마지막 마이페이지 방문) 이후 새 댓글 여부로만 판단
+  // 내 글의 댓글 + 내 댓글의 대댓글 모두 조회하여 마이페이지 알림 목록을 구성합니다.
+  // - notifType "comment": 내 후기글에 직접 달린 댓글
+  // - notifType "reply"  : 내 댓글에 달린 대댓글 (내 글이 아닌 후기도 포함)
+  // - N 배지: lastChecked 이후 새 항목 존재 여부
   const checkNewComments = async (userId, username) => {
     const storageKey = `notif_checked_${userId}`;
     const lastChecked = localStorage.getItem(storageKey) || new Date(0).toISOString();
 
-    // 내가 작성한 후기글 목록 조회
+    // 내가 쓴 후기글 조회
     const { data: myReviews } = await supabase
       .from("recipe_reviews")
       .select("id, title, category")
       .eq("user_id", userId);
 
-    if (!myReviews?.length) {
+    const myReviewIds = (myReviews || []).map((r) => r.id);
+
+    // ① 내 후기글에 달린 전체 댓글 (타인 작성)
+    let commentOnMyPost = [];
+    if (myReviewIds.length) {
+      const { data } = await supabase
+        .from("review_comments")
+        .select("id, review_id, parent_id, username, content, created_at, is_secret, user_id")
+        .in("review_id", myReviewIds)
+        .order("created_at", { ascending: false });
+      commentOnMyPost = (data || []).filter(
+        (c) => c.user_id !== userId && !(c.user_id === null && c.username === username)
+      );
+    }
+
+    // ② 내가 쓴 댓글 목록 조회 (user_id 기준 + null user_id username 기준 fallback)
+    const [{ data: myCommentsByUid }, { data: myCommentsByName }] = await Promise.all([
+      supabase.from("review_comments").select("id, review_id").eq("user_id", userId),
+      supabase.from("review_comments").select("id, review_id").is("user_id", null).eq("username", username),
+    ]);
+    const myComments = [...(myCommentsByUid || []), ...(myCommentsByName || [])];
+    const myCommentIds = myComments.map((c) => c.id);
+
+    // ③ 내 댓글에 달린 대댓글 (타인 작성)
+    let replyOnMyComment = [];
+    if (myCommentIds.length) {
+      const { data } = await supabase
+        .from("review_comments")
+        .select("id, review_id, parent_id, username, content, created_at, is_secret, user_id")
+        .in("parent_id", myCommentIds)
+        .order("created_at", { ascending: false });
+      replyOnMyComment = (data || []).filter(
+        (c) => c.user_id !== userId && !(c.user_id === null && c.username === username)
+      );
+    }
+
+    // ④ 대댓글이 달린 후기글 중 내 글이 아닌 것의 정보 보완 조회
+    const extraReviewIds = [...new Set(
+      replyOnMyComment.map((c) => c.review_id).filter((id) => !myReviewIds.includes(id))
+    )];
+    let extraReviews = [];
+    if (extraReviewIds.length) {
+      const { data } = await supabase
+        .from("recipe_reviews")
+        .select("id, title, category")
+        .in("id", extraReviewIds);
+      extraReviews = data || [];
+    }
+
+    // ⑤ 모든 알림 항목 병합 (notifType 태깅, 중복 id 제거)
+    const tagged = [
+      ...commentOnMyPost.map((c) => ({ ...c, notifType: "comment" })),
+      ...replyOnMyComment.map((c) => ({ ...c, notifType: "reply" })),
+    ];
+    const seen = new Set();
+    const unique = tagged.filter((c) => { if (seen.has(c.id)) return false; seen.add(c.id); return true; });
+
+    if (!unique.length) {
       setHasNewComment(false);
       setMyReviewsWithNewComments([]);
       return;
     }
 
-    const reviewIds = myReviews.map((r) => r.id);
+    // N 배지: lastChecked 이후 새 항목 여부
+    setHasNewComment(unique.some((c) => new Date(c.created_at) > new Date(lastChecked)));
 
-    // 내 후기글의 전체 댓글 조회 — DB 단계에서 null user_id 문제를 피하고자 클라이언트에서 필터합니다.
-    const { data: allComments } = await supabase
-      .from("review_comments")
-      .select("id, review_id, username, content, created_at, is_secret, user_id")
-      .in("review_id", reviewIds)
-      .order("created_at", { ascending: false });
-
-    // 내 댓글 제외: user_id 일치 또는 (user_id null이고 username 일치) 인 경우 제외
-    const byOthers = (allComments || []).filter((c) =>
-      c.user_id !== userId &&
-      !(c.user_id === null && c.username === username)
-    );
-
-    if (!byOthers.length) {
-      setHasNewComment(false);
-      setMyReviewsWithNewComments([]);
-      return;
-    }
-
-    // lastChecked 이후 새 댓글이 하나라도 있으면 N 배지 표시
-    const hasNew = byOthers.some((c) => new Date(c.created_at) > new Date(lastChecked));
-    setHasNewComment(hasNew);
-
-    // review_id 기준으로 그룹핑하여 전체 댓글 목록 집계
+    // review_id 기준 그룹핑
     const grouped = {};
-    for (const comment of byOthers) {
-      if (!grouped[comment.review_id]) {
-        grouped[comment.review_id] = [];
-      }
-      grouped[comment.review_id].push(comment);
+    for (const c of unique) {
+      if (!grouped[c.review_id]) grouped[c.review_id] = [];
+      grouped[c.review_id].push(c);
     }
 
-    const result = myReviews
+    const allReviews = [...(myReviews || []), ...extraReviews];
+    const result = allReviews
       .filter((r) => grouped[r.id])
       .map((r) => ({ ...r, newComments: grouped[r.id] }));
 
@@ -2870,6 +2905,9 @@ export default function App() {
                             <div className="myPageNotifCommentBody">
                               <div className="myPageNotifCommentMeta">
                                 <span className="myPageNotifAuthor">{comment.username}</span>
+                                {comment.notifType === "reply" && (
+                                  <span className="myPageNotifReplyTag">↩ 답글</span>
+                                )}
                                 <span className="myPageNotifTime">{formatCommentDate(comment.created_at)}</span>
                               </div>
                               <p className="myPageNotifCommentText">

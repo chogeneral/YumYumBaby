@@ -1250,6 +1250,16 @@ select {
   color: #2c2c2c;
 }
 
+.myPageNotifReplyTag {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #7c6ff7;
+  background-color: #f0eeff;
+  padding: 0.15rem 0.6rem;
+  border-radius: 2rem;
+  border: 0.1rem solid #d6d0ff;
+}
+
 .myPageNotifTime {
   font-size: 1.2rem;
   color: #aaaaaa;
