@@ -2017,24 +2017,6 @@ export const babyFoodRecipes = [
     ],
     tips: "파프리카는 소화가 어려울 수 있으니 처음엔 소량부터 시도하고 알레르기 반응을 확인하세요. 고구마의 자연 단맛이 풍부해 별도의 간 없이도 아기가 잘 먹습니다."
   },
-  {
-    id: "recipeLate22",
-    stage: "late",
-    name: "오쿠 두유제조기로 만드는 후기 이유식",
-    description: "오쿠(OCOO) 두유제조기를 활용해 간편하게 만드는 후기 이유식입니다. 재료를 넣고 버튼 하나로 고르게 갈아주는 방식으로 균일한 농도의 무른밥을 손쉽게 완성할 수 있습니다.",
-    ingredients: "쌀 75g (불린 쌀 96g), 쇠고기 또는 닭고기 60g, 원하는 채소(당근·애호박·브로콜리 등) 각 30g, 물 500~600cc (기기 눈금 참고)",
-    instructions: [
-      "쌀은 깨끗이 씻어 30분~1시간 물에 불려줍니다.",
-      "고기는 핏물을 제거하고 채소와 함께 5mm 이하의 크기로 잘게 다져줍니다.",
-      "오쿠 두유제조기 내통에 불린 쌀, 다진 고기, 다진 채소를 넣어줍니다.",
-      "기기 눈금에 맞게 물을 부어줍니다. 후기 이유식 무른밥 농도를 위해 물 양을 조절하세요.",
-      "두유제조기의 이유식(죽) 모드를 선택하고 시작 버튼을 눌러줍니다.",
-      "조리가 완료되면 뚜껑을 열어 내용물을 확인하고 아기 이유식 용기에 나누어 담아줍니다.",
-      "적당히 식힌 후 먹이거나, 남은 양은 실리콘 큐브 용기에 소분하여 냉동 보관합니다."
-    ],
-    tips: "오쿠 두유제조기 모델에 따라 조리 시간과 물 양이 다를 수 있으니 기기 설명서를 참고하세요. 채소와 고기는 잘게 다질수록 균일하게 조리됩니다. 냉동 보관 시 3~4주 이내에 드세요."
-  },
-
   // --- 완료기 이유식 레시피 (complete) --- 먹는 순서: 기본진밥 → 볶음진밥 → 아보카도진밥 → 콜리플라워진밥 → 특수재료진밥 → 국류 → 반찬·특별식
   {
     id: "recipeComplete09",
@@ -3726,16 +3708,6 @@ export const recipeMedia = {
       "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80"
     ]
   },
-  recipeLate22: {
-    imageUrl: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=280&fit=crop&crop=center&q=80",
-    youtubeUrl: "https://www.youtube.com/watch?v=_1RPz439st8",
-    stepImages: [
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&h=220&fit=crop&q=80"
-    ]
-  },
-
   // 완료기 레시피 미디어
   recipeComplete01: {
     imageUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=280&fit=crop&crop=center&q=80",
