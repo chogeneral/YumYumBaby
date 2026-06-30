@@ -1590,7 +1590,7 @@ export default function App() {
   // 현재 탭과 단계 탭에 따라 SEO 메타 정보를 동적으로 계산합니다.
   // 구글/네이버 크롤러가 페이지별 키워드를 올바르게 색인하도록 각 뷰에 최적화된 값을 반환합니다.
   const seoMeta = useMemo(() => {
-    const BASE_URL = "https://beberecipe.com";
+    const BASE_URL = "https://yummy.jaelab.kr";
     const SITE_NAME = "베베레시피";
 
     if (currentTab === "home") {
@@ -1688,13 +1688,13 @@ export default function App() {
         <meta property="og:description" content={seoMeta.description} />
         <meta property="og:url" content={seoMeta.url} />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="/og-image.png" />
+        <meta property="og:image" content="https://yummy.jaelab.kr/og-image.png" />
         <meta property="og:site_name" content="베베레시피" />
         {/* 트위터 카드 — 트위터/X 공유 시 미리보기 최적화 */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={seoMeta.title} />
         <meta name="twitter:description" content={seoMeta.description} />
-        <meta name="twitter:image" content="/og-image.png" />
+        <meta name="twitter:image" content="https://yummy.jaelab.kr/og-image.png" />
       </Helmet>
 
       {/* 1. 상단 공통 네비게이션 헤더 */}

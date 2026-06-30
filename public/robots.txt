@@ -10,4 +10,4 @@ Allow: /
 User-agent: Yeti
 Allow: /
 
-Sitemap: https://beberecipe.com/sitemap.xml
+Sitemap: https://yummy.jaelab.kr/sitemap.xml
