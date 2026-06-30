@@ -470,6 +470,7 @@ select {
   display: flex;
   justify-content: center;
   gap: 0.8rem;
+  margin-top: 2.4rem;
   margin-bottom: 2.4rem;
 }
 
