@@ -505,6 +505,9 @@ export default function App() {
     recipeComplete05: 26, // 아기떡볶이
   };
 
+  // 아이 주도 이유식(BLW) 레시피 도입 권장 순서입니다.
+  const BLW_FEED_ORDER = {};
+
   // 간식 레시피 도입 권장 순서입니다.
   // 초기·중기 버무림류 → 후기 전·젤리류 → 완료기 견과 핑거푸드 순으로 정렬합니다.
   const SNACK_FEED_ORDER = {
@@ -1798,6 +1801,12 @@ export default function App() {
           description: "중기·후기·완료기 단계별 건강한 아기 간식 레시피! 고구마, 바나나, 두유, 전, 젤리 등 영양 가득한 아기 핑거푸드와 간식 만드는 법을 알려드립니다.",
           keywords: "아기 간식, 아기 간식 레시피, 이유식 간식, 아기 핑거푸드, 아기 스낵, 아기 고구마 간식, 아기 바나나 간식, 중기 간식, 후기 간식, 완료기 간식",
           url: BASE_URL
+        },
+        blw: {
+          title: `아이 주도 이유식(BLW) 가이드 | ${SITE_NAME} — 핑거푸드 이유식 방법`,
+          description: "아이 주도 이유식(BLW, Baby-Led Weaning) 시작 방법! 아기 스스로 먹는 핑거푸드 이유식, 안전한 식재료 선택, 질식 예방 가이드까지 베베레시피가 안내합니다.",
+          keywords: "아이 주도 이유식, BLW, 베이비 레드 위닝, 핑거푸드 이유식, 아기 핑거푸드, 이유식 핑거푸드, 아이주도 이유식 시작, 자율 이유식",
+          url: BASE_URL
         }
       };
 
@@ -2131,10 +2140,14 @@ export default function App() {
 
             {/* 단계별 레시피 미리보기 — 간식 탭 포함 모든 탭에서 표시합니다 */}
             {<section className="recipesSection">
-              <h2 className="sectionTitle">{stageTab === "snack" ? "간식 레시피" : "이유식 메뉴 & 레시피"}</h2>
+              <h2 className="sectionTitle">
+                {stageTab === "snack" ? "간식 레시피" : stageTab === "blw" ? "아이 주도 이유식 레시피" : "이유식 메뉴 & 레시피"}
+              </h2>
               <p style={{ textAlign: "center", fontSize: "1.4rem", color: "#666666", marginTop: "1rem" }}>
                 {stageTab === "snack"
                   ? "MammaYou 채널의 단계별 아기 간식 레시피 모음입니다."
+                  : stageTab === "blw"
+                  ? "아이 주도 이유식(BLW) 핑거푸드 레시피가 곧 업데이트될 예정입니다."
                   : "아기들이 가장 선호하고 부모님들이 자주 끓이는 필수 레시피 모음입니다."}
               </p>
 
@@ -2200,6 +2213,9 @@ export default function App() {
                     }
                     if (stageTab === "snack") {
                       return (SNACK_FEED_ORDER[a.id] ?? 99) - (SNACK_FEED_ORDER[b.id] ?? 99);
+                    }
+                    if (stageTab === "blw") {
+                      return (BLW_FEED_ORDER[a.id] ?? 99) - (BLW_FEED_ORDER[b.id] ?? 99);
                     }
                     return 0;
                   })
