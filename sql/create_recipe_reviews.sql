@@ -16,7 +16,7 @@ CREATE TABLE recipe_reviews (
   category text, -- 후기 카테고리 (예: 초기/중기 등)
   title text, -- 후기 제목
   content text NOT NULL, -- 후기 본문 내용
-  views integer DEFAULT 0 NOT NULL, -- 조회수 카운트 컬럼 (기본값 0)
+  views integer DEFAULT 0 NOT NULL, -- 조회수 카운트를 저장할 컬럼 (기본값 0)
   created_at timestamptz DEFAULT now() -- 생성 일시
 );
 
