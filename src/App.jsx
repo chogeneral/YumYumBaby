@@ -263,8 +263,16 @@ export default function App() {
   const [stageTab, setStageTab] = useState("early");
   // 초기 탭 내부에서 1단계/2단계를 전환하기 위한 서브탭 상태입니다.
   const [earlySubTab, setEarlySubTab] = useState("early1");
+  // 후기 탭 내부에서 밥/죽을 전환하기 위한 서브탭 상태입니다.
+  const [lateTab, setLateTab] = useState("밥");
   // 완료기 탭 내부에서 밥/국/반찬을 전환하기 위한 서브탭 상태입니다.
   const [completeTab, setCompleteTab] = useState("밥");
+
+  // 후기 레시피의 카테고리(밥/죽)를 이름 패턴으로 판별합니다.
+  // 이름에 "죽"이 포함되면 죽, 나머지(무른밥)는 밥으로 분류합니다.
+  const getLateType = (recipe) => {
+    return (recipe.name || "").includes("죽") ? "죽" : "밥";
+  };
 
   // 완료기 레시피의 카테고리(밥/국/반찬)를 이름 패턴으로 판별합니다.
   // 국류는 이름에 "국"이 포함되고, 반찬류는 특수 음식명으로 구분하며, 나머지는 밥류로 분류합니다.
@@ -1251,6 +1259,11 @@ export default function App() {
     }
   }, [stageTab, userProfile]);
 
+  // 후기 이외의 탭으로 이동할 때 lateTab을 기본값(밥)으로 초기화합니다.
+  useEffect(() => {
+    if (stageTab !== "late") setLateTab("밥");
+  }, [stageTab]);
+
   // 완료기 이외의 탭으로 이동할 때 completeTab을 기본값(밥)으로 초기화합니다.
   useEffect(() => {
     if (stageTab !== "complete") setCompleteTab("밥");
@@ -2125,6 +2138,21 @@ export default function App() {
                   : "아기들이 가장 선호하고 부모님들이 자주 끓이는 필수 레시피 모음입니다."}
               </p>
 
+              {/* 후기 탭에서만 밥/죽 서브탭을 표시합니다 */}
+              {stageTab === "late" && (
+                <div className="lateSubTabWrapper">
+                  {["밥", "죽"].map(tab => (
+                    <button
+                      key={tab}
+                      className={`lateSubTab ${lateTab === tab ? "lateSubTabActive" : ""}`}
+                      onClick={() => setLateTab(tab)}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                </div>
+              )}
+
               {/* 완료기 탭에서만 밥/국/반찬 서브탭을 표시합니다 */}
               {stageTab === "complete" && (
                 <div className="completeSubTabWrapper">
@@ -2145,6 +2173,8 @@ export default function App() {
                 {recipes && Array.isArray(recipes) && recipes
                   .filter(recipe => {
                     if (recipe?.stage !== stageTab) return false;
+                    // 후기 탭에서는 선택된 서브탭(밥/죽)에 해당하는 레시피만 표시합니다.
+                    if (stageTab === "late") return getLateType(recipe) === lateTab;
                     // 완료기 탭에서는 선택된 서브탭(밥/국/반찬)에 해당하는 레시피만 표시합니다.
                     if (stageTab === "complete") return getCompleteType(recipe) === completeTab;
                     return true;

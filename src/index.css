@@ -465,6 +465,42 @@ select {
   color: #ffffff;
 }
 
+/* 후기 밥/죽 서브탭 */
+.lateSubTabWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 2.4rem;
+  margin-bottom: 2.4rem;
+}
+
+.lateSubTab {
+  padding: 0.8rem 2.8rem;
+  border-radius: 10rem;
+  font-weight: 600;
+  font-size: 1.45rem;
+  cursor: pointer;
+  background-color: #f5f0fa;
+  border: 0.15rem solid #c8a8e0;
+  color: #7a4aaa;
+  transition: all 0.2s ease;
+}
+
+.lateSubTab:hover {
+  background-color: #e8d8f5;
+  border-color: #9b6dcf;
+}
+
+.lateSubTabActive {
+  background-color: #9b6dcf;
+  border-color: #9b6dcf;
+  color: #ffffff;
+}
+
+.lateSubTabActive:hover {
+  color: #ffffff;
+}
+
 /* 완료기 밥/국/반찬 서브탭 */
 .completeSubTabWrapper {
   display: flex;
@@ -1475,6 +1511,15 @@ select {
   .earlySubTab {
     font-size: 1.2rem;
     padding: 0.6rem 1.4rem;
+  }
+
+  .lateSubTabWrapper {
+    gap: 0.6rem;
+  }
+
+  .lateSubTab {
+    font-size: 1.2rem;
+    padding: 0.6rem 1.8rem;
   }
 
   .completeSubTabWrapper {
