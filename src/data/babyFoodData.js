@@ -2682,6 +2682,188 @@ export const babyFoodRecipes = [
       "찜기에 물을 붓고 끓어오르면 반죽을 담은 그릇을 올려 뚜껑을 닫고 중약불에서 15~18분간 쪄줍니다. 이쑤시개를 꽂았을 때 반죽이 묻어나오지 않으면 완성입니다."
     ],
     tips: "달걀은 처음 먹이는 경우 3~4일간 알레르기 반응을 확인하세요. 연두부 덕분에 달걀찜이 더욱 부드러워집니다. 쪄낸 직후 뜨거우므로 충분히 식혀서 먹이세요."
+  },
+
+  // --- 아이 주도 이유식 레시피 (blw) ---
+  {
+    id: "recipeBlw01",
+    stage: "blw",
+    name: "바나나오트밀분유빵",
+    description: "으깬 바나나와 오트밀, 분유를 섞어 오븐에 구운 부드러운 핑거푸드 빵입니다. 별도의 설탕·소금 없이 바나나의 자연 단맛만으로 만들며, 아기 손으로 쥐기 좋은 크기로 잘라 제공합니다.",
+    ingredients: "퀵오트 100g, 잘 익은 바나나 1개(약 120g), 분유 2스쿱(약 30g), 달걀 1개, 베이킹파우더 1/2 작은술",
+    instructions: [
+      "바나나는 껍질을 벗기고 포크로 덩어리가 없을 때까지 곱게 으깨줍니다. 잘 익어 검은 점이 있는 바나나일수록 단맛이 강합니다.",
+      "으깬 바나나에 달걀을 깨 넣고 잘 섞은 뒤, 분유와 베이킹파우더를 넣어 다시 골고루 섞어줍니다.",
+      "퀵오트를 넣고 주걱으로 가볍게 섞어 반죽을 완성합니다. 반죽이 너무 되직하면 물을 한 큰술씩 추가합니다.",
+      "실리콘 머핀 틀 또는 베이킹 시트에 반죽을 원하는 크기로 나눠 담습니다.",
+      "170°C로 예열한 오븐에 넣어 20~22분간 굽습니다. 꼬치를 꽂았다 뺐을 때 반죽이 묻어나오지 않으면 완성입니다. 충분히 식힌 뒤 한 입 크기로 잘라 제공하세요."
+    ],
+    tips: "완성 후 냉장 보관 3일, 냉동 1개월 가능합니다. 전자레인지로 30초 데워 제공하세요. 분유 대신 모유나 일반 우유(돌 이후)로 대체 가능합니다."
+  },
+  {
+    id: "recipeBlw02",
+    stage: "blw",
+    name: "쇠고기야채오트밀바",
+    description: "쇠고기 다짐육과 당근·양파를 볶아 오트밀 반죽과 합쳐 구운 영양 바입니다. 손으로 쥐기 좋은 바(bar) 형태로 성형하여 아기 스스로 먹기 좋습니다.",
+    ingredients: "퀵오트 80g, 쇠고기 다짐육 80g, 당근 30g, 양파 30g, 달걀 1개",
+    instructions: [
+      "당근과 양파를 각각 최대한 잘게 다져줍니다. 믹서기나 다지기를 사용하면 편합니다.",
+      "달군 팬에 기름 없이 쇠고기 다짐육을 넣어 핏기가 사라질 때까지 볶다가 당근과 양파를 추가해 함께 볶아줍니다. 불필요한 수분이 날아가도록 충분히 볶아줍니다.",
+      "볶아서 한 김 식힌 쇠고기 야채 혼합물을 큰 볼에 담고 퀵오트와 달걀을 넣어 골고루 섞어줍니다.",
+      "유산지를 깐 베이킹 시트에 반죽을 직사각형(약 1.5cm 두께)으로 평평하게 펴줍니다. 또는 손으로 바(bar) 모양으로 성형하여 간격을 두고 올립니다.",
+      "170°C로 예열한 오븐에 넣어 20분간 굽습니다. 식힌 뒤 적당한 크기의 바 모양으로 잘라 제공하세요."
+    ],
+    tips: "바 형태라 아기 손에 쥐여주기 편리합니다. 남은 것은 냉동 보관 가능하며, 먹이기 전날 냉장 해동 후 전자레인지로 데우세요. 당근 대신 브로콜리나 시금치를 넣어도 맛있습니다."
+  },
+  {
+    id: "recipeBlw03",
+    stage: "blw",
+    name: "단호박밤오트밀쿠키",
+    description: "찐 단호박과 삶은 밤을 오트밀과 섞어 오븐에 구운 달콤한 핑거푸드 쿠키입니다. 단호박과 밤의 자연 단맛 덕분에 설탕 없이도 아기가 잘 먹습니다.",
+    ingredients: "퀵오트 80g, 찐 단호박 60g, 삶은 밤 40g(약 4~5개), 달걀 1개",
+    instructions: [
+      "단호박은 껍질을 벗기고 찜기에 쪄서 포크로 곱게 으깨줍니다. 삶은 밤도 속살만 꺼내 포크로 으깨줍니다.",
+      "으깬 단호박과 밤을 큰 볼에 담고 달걀을 넣어 잘 섞어줍니다.",
+      "퀵오트를 넣고 주걱으로 골고루 섞어 쿠키 반죽을 완성합니다. 반죽이 손에 살짝 붙을 정도면 적당합니다.",
+      "유산지를 깐 베이킹 시트에 반죽을 숟가락으로 한 숟가락씩 올려 손으로 가볍게 눌러 동그란 쿠키 모양으로 만들어줍니다.",
+      "170°C로 예열한 오븐에 넣어 15~18분간 굽습니다. 노릇하게 색이 나면 완성입니다. 충분히 식혀서 제공하세요."
+    ],
+    tips: "단호박은 미리 찌거나 전자레인지(랩 씌워 3~4분)로 익혀도 됩니다. 쿠키 크기를 아기 주먹 반 정도로 작게 만들어야 혼자 쥐고 먹기 편합니다."
+  },
+  {
+    id: "recipeBlw04",
+    stage: "blw",
+    name: "오트밀감자빵",
+    description: "퀵오트와 찐 감자를 주재료로 만든 촉촉한 핑거푸드 빵입니다. 글루텐 부담이 적어 처음 곡류 빵을 접하는 아기에게 좋습니다.",
+    ingredients: "퀵오트 100g, 찐 감자 80g, 달걀 1개, 분유 1스쿱(약 15g), 베이킹파우더 1/4 작은술",
+    instructions: [
+      "감자는 껍질을 벗기고 찜기에 쪄서 포크로 곱게 으깨줍니다. 덩어리가 없을수록 빵 결이 고와집니다.",
+      "으깬 감자에 달걀을 넣고 잘 섞은 뒤, 분유와 베이킹파우더를 추가해 다시 골고루 섞어줍니다.",
+      "퀵오트를 넣고 주걱으로 섞어 반죽을 완성합니다. 반죽이 너무 되직하면 분유를 탄 물을 한 큰술씩 추가합니다.",
+      "실리콘 머핀 틀이나 미니 파운드 틀에 반죽을 80% 정도 채워 넣습니다.",
+      "170°C로 예열한 오븐에 넣어 20~25분간 굽습니다. 이쑤시개로 찔러 반죽이 묻어나오지 않으면 완성입니다. 충분히 식힌 뒤 스틱 모양으로 잘라 제공하세요."
+    ],
+    tips: "찐 감자 대신 고구마를 사용해도 맛있습니다. 완성 후 한 김 식혀 랩으로 싸 냉장 보관하세요. 다음 날 먹을 때는 전자레인지로 20~30초 데워 촉촉하게 제공하세요."
+  },
+  {
+    id: "recipeBlw05",
+    stage: "blw",
+    name: "닭고기시금치소세지",
+    description: "닭 다짐육과 데친 시금치를 갈아 소시지 모양으로 쪄낸 무첨가 핑거푸드입니다. 아기가 손으로 잡고 먹기 좋은 형태로, 단백질과 철분을 동시에 섭취할 수 있습니다.",
+    ingredients: "닭 다짐육(가슴살 또는 안심) 150g, 시금치 50g, 양파 30g, 달걀 1개, 감자 전분 1큰술",
+    instructions: [
+      "시금치는 끓는 물에 30초간 데친 뒤 찬물에 헹구어 물기를 꼭 짜고 잘게 다져줍니다.",
+      "양파도 최대한 잘게 다져줍니다.",
+      "닭 다짐육, 다진 시금치, 다진 양파, 달걀, 감자 전분을 모두 믹서기에 넣고 곱게 갈아 균일한 반죽을 만들어줍니다.",
+      "랩을 30cm 길이로 깔고 반죽을 한 줄로 올린 뒤 김밥 말듯이 돌돌 말아 양 끝을 비틀어 소시지 모양으로 고정합니다.",
+      "찜기에 물을 끓이고 성형한 소시지를 넣어 중불에서 15~18분간 쪄줍니다. 소시지 안쪽까지 완전히 익혔는지 확인하고 충분히 식혀서 제공하세요."
+    ],
+    tips: "한 번에 여러 개를 만들어 냉동 보관하면 편리합니다. 먹이기 전날 냉장 해동 후 데워 제공하거나, 팬에 살짝 구워 겉을 노릇하게 만들어도 맛있습니다."
+  },
+  {
+    id: "recipeBlw06",
+    stage: "blw",
+    name: "단호박부꾸미",
+    description: "찐 단호박을 찹쌀가루에 섞어 반죽하고 팬에 구운 한국 전통 핑거푸드입니다. 쫄깃한 식감과 단호박의 자연 단맛이 어우러져 아기가 즐겨 먹습니다.",
+    ingredients: "찐 단호박 100g, 찹쌀가루 100g, 물 2~3큰술(반죽 농도 조절용)",
+    instructions: [
+      "단호박은 껍질을 벗기고 찜기에 충분히 쪄서 따뜻할 때 포크로 완전히 곱게 으깨줍니다.",
+      "으깬 단호박에 찹쌀가루를 조금씩 넣어가며 섞습니다. 반죽이 너무 되직하면 물을 한 큰술씩 추가하며 귀볼 정도의 부드러운 반죽을 만들어줍니다.",
+      "반죽을 아기 손바닥 크기(약 4~5cm)로 동그랗게 떼어 손으로 얇게 눌러줍니다.",
+      "달군 팬에 기름을 약간 두르고 약불에서 한쪽 면이 노릇해질 때까지 3~4분간 굽다가 뒤집어 반대쪽도 구워줍니다.",
+      "완성된 부꾸미를 잠시 식혀 속까지 익었는지 확인한 뒤 먹기 좋은 크기로 잘라 제공합니다."
+    ],
+    tips: "찹쌀 반죽은 시간이 지나면 굳으므로 만들어서 바로 구워 먹이는 것이 좋습니다. 단호박의 수분 함량에 따라 찹쌀가루 양이 달라지므로 반죽 농도를 보며 조절하세요."
+  },
+  {
+    id: "recipeBlw07",
+    stage: "blw",
+    name: "치즈슈",
+    description: "버터와 밀가루로 만든 슈 반죽에 치즈를 넣어 구운 부드럽고 고소한 핑거푸드입니다. 겉은 바삭하고 속은 촉촉하여 아기가 쥐고 먹기 좋습니다.",
+    ingredients: "박력분 50g, 달걀 2개, 무염버터 30g, 물 80ml, 체다치즈 또는 아기용 치즈 30g(2장)",
+    instructions: [
+      "냄비에 물 80ml와 버터 30g을 넣고 중불로 가열하여 버터가 완전히 녹으면서 끓어오르면 불을 끕니다.",
+      "체에 친 박력분을 한꺼번에 넣고 나무 주걱으로 빠르게 섞어 반죽이 한 덩어리가 되어 냄비 벽에서 떨어지도록 2~3분간 볶듯이 저어줍니다.",
+      "불을 끄고 달걀을 하나씩 넣어가며 섞습니다. 달걀 하나를 넣을 때마다 완전히 균일해질 때까지 잘 섞은 뒤 다음 달걀을 넣으세요.",
+      "잘게 자른 치즈를 반죽에 넣고 골고루 섞어줍니다. 반죽을 짤주머니에 담거나 숟가락으로 떠서 유산지를 깐 베이킹 시트에 3cm 간격으로 올립니다.",
+      "190°C로 예열한 오븐에 넣어 25~30분간 굽습니다. 중간에 오븐 문을 절대 열지 마세요. 황금빛으로 부풀어 오르면 완성입니다. 식혀서 제공하세요."
+    ],
+    tips: "슈 반죽은 오븐 문을 열면 꺼질 수 있으니 주의하세요. 완전히 식히면 안쪽이 비어 있는 것이 정상입니다. 냉동 보관 후 180°C 오븐에 5분간 다시 구우면 바삭함이 살아납니다."
+  },
+  {
+    id: "recipeBlw08",
+    stage: "blw",
+    name: "대파주먹밥",
+    description: "볶은 대파와 들깨가루를 진밥에 섞어 한 입 크기로 뭉친 주먹밥입니다. 대파의 향긋함과 들깨의 고소한 맛이 어우러지며, 아기 손으로 집어 먹기 좋은 BLW 메뉴입니다.",
+    ingredients: "진밥 또는 무른밥 150g, 대파(파란 부분 포함) 30g, 참기름 1/2 작은술, 들깨가루 1작은술",
+    instructions: [
+      "대파는 파란 부분을 포함하여 최대한 잘게 송송 썰어줍니다.",
+      "달군 팬에 참기름을 두르고 대파를 넣어 중약불에서 숨이 죽을 때까지 1~2분간 볶아줍니다. 향이 올라오면 불을 끕니다.",
+      "따뜻한 진밥에 볶은 대파와 들깨가루를 넣고 골고루 섞어줍니다.",
+      "손에 물을 묻혀가며 밥을 한 입 크기(약 3cm)로 동그랗게 뭉쳐줍니다. 너무 꽉 뭉치면 아기가 입에 넣었을 때 으스러지지 않으므로 가볍게 뭉쳐주세요.",
+      "그릇에 담아 바로 제공합니다. 주먹밥이 식으면 딱딱해질 수 있으니 따뜻할 때 먹이는 것이 좋습니다."
+    ],
+    tips: "대파는 파란 부분도 함께 사용하면 영양이 더 풍부합니다. 주먹밥 겉면에 들깨가루를 살짝 굴려 코팅하면 잡기가 더 쉬워집니다."
+  },
+  {
+    id: "recipeBlw09",
+    stage: "blw",
+    name: "메추리알미트볼",
+    description: "쇠고기 다짐육 반죽으로 삶은 메추리알을 감싸 팬에 구운 미트볼입니다. 메추리알이 통째로 들어 있어 단면이 예쁘고, 아기 손에 딱 맞는 크기라 BLW 핑거푸드로 인기 있습니다.",
+    ingredients: "쇠고기 다짐육 150g, 삶은 메추리알 8개, 양파 30g, 당근 20g, 달걀 1개, 감자 전분 1큰술",
+    instructions: [
+      "메추리알은 물에 넣어 8분간 완숙으로 삶아 껍데기를 벗겨둡니다.",
+      "양파와 당근을 잘게 다져줍니다.",
+      "쇠고기 다짐육에 다진 양파, 당근, 달걀, 감자 전분을 넣고 잘 치대어 균일한 미트볼 반죽을 만들어줍니다.",
+      "반죽을 한 숟가락 떠서 손바닥에 올려 펼친 뒤, 가운데 메추리알을 하나 올리고 반죽으로 감싸 동그랗게 뭉쳐줍니다.",
+      "달군 팬에 기름을 약간 두르고 미트볼을 넣어 굴려가며 중불에서 골고루 익힙니다. 모든 면이 갈색으로 익으면 뚜껑을 덮고 약불에서 3~4분간 속까지 완전히 익혀 완성합니다."
+    ],
+    tips: "미트볼 속 메추리알을 완숙으로 삶아야 살모넬라 위험이 없습니다. 팬에 뚜껑을 덮어 속까지 완전히 익히는 과정을 꼭 지켜주세요."
+  },
+  {
+    id: "recipeBlw10",
+    stage: "blw",
+    name: "단호박밥전",
+    description: "진밥과 으깬 단호박을 달걀로 버무려 팬에 지진 부드러운 밥전입니다. 쌀의 포만감과 단호박의 달콤함이 합쳐져 영양가 높은 한 끼 핑거푸드가 됩니다.",
+    ingredients: "진밥 150g, 찐 단호박 60g, 달걀 1개, 쌀가루(또는 감자 전분) 2큰술",
+    instructions: [
+      "단호박은 껍질을 벗기고 찌거나 전자레인지(랩 씌워 3분)로 익혀 포크로 완전히 으깨줍니다.",
+      "큰 볼에 진밥을 담고 으깬 단호박, 달걀, 쌀가루를 넣어 주걱으로 골고루 섞어줍니다. 밥알이 약간 살아있어야 먹기 좋습니다.",
+      "달군 팬에 기름을 약간 두르고 약불로 낮춥니다.",
+      "반죽을 숟가락으로 한 숟가락 떠서 팬 위에 올리고 숟가락 뒷면으로 직경 6~7cm의 동그랗고 납작한 전 모양으로 눌러줍니다.",
+      "한쪽 면이 노릇하게 익으면(2~3분) 뒤집어 반대쪽도 똑같이 구워줍니다. 충분히 식힌 뒤 4등분하여 제공하세요."
+    ],
+    tips: "단호박의 수분이 많으면 반죽이 퍼질 수 있으므로 전분량을 조금 늘려 농도를 맞추세요. 전 크기를 아기 손바닥 크기로 작게 만들어야 쥐기 편합니다."
+  },
+  {
+    id: "recipeBlw11",
+    stage: "blw",
+    name: "양송이떡갈비",
+    description: "쇠고기 다짐육에 잘게 다진 양송이버섯을 섞어 팬에 구운 부드러운 떡갈비입니다. 양송이버섯이 육즙을 잡아주어 촉촉하고, 적당한 크기로 잘라 아기 핑거푸드로 제공합니다.",
+    ingredients: "쇠고기 다짐육 150g, 양송이버섯 3개(약 60g), 양파 30g, 달걀 1개, 감자 전분 1큰술, 저염간장 1/2 작은술",
+    instructions: [
+      "양송이버섯의 기둥을 제거하고 갓과 기둥 모두 최대한 잘게 다져줍니다.",
+      "양파도 잘게 다져줍니다.",
+      "쇠고기 다짐육에 다진 양송이버섯, 양파, 달걀, 감자 전분, 저염간장을 모두 넣고 손으로 잘 치대어 균일한 반죽을 만들어줍니다.",
+      "반죽을 적당히 떼어 타원형 또는 직사각형의 떡갈비 모양(두께 1.5cm)으로 성형합니다.",
+      "달군 팬에 기름을 약간 두르고 중불에서 한 면이 갈색으로 익으면 뒤집어 반대쪽도 굽습니다. 모두 익으면 뚜껑을 덮고 약불에서 3분간 속까지 완전히 익혀 완성합니다."
+    ],
+    tips: "간장은 극소량만 사용해 짜지 않게 합니다. 떡갈비가 두꺼우면 속까지 익히는 데 시간이 걸리므로 뚜껑을 덮어 스팀으로 익히는 과정을 꼭 거치세요."
+  },
+  {
+    id: "recipeBlw12",
+    stage: "blw",
+    name: "미역쿠키",
+    description: "불린 미역과 바나나, 오트밀을 섞어 구운 영양 쿠키입니다. 미역의 요오드와 식이섬유, 바나나의 칼륨이 풍부하며 설탕 없이 자연 단맛만으로 만드는 건강 간식입니다.",
+    ingredients: "퀵오트 80g, 건미역 5g(물에 불리면 약 30g), 바나나 1/2개(약 60g), 달걀 1개, 들깨가루 1큰술",
+    instructions: [
+      "건미역은 충분한 물에 10분간 불린 뒤 물기를 꼭 짜고 최대한 잘게 다져줍니다.",
+      "바나나는 포크로 곱게 으깨줍니다.",
+      "큰 볼에 으깬 바나나, 달걀, 들깨가루를 넣고 잘 섞어줍니다.",
+      "다진 미역과 퀵오트를 넣고 주걱으로 골고루 섞어 쿠키 반죽을 완성합니다.",
+      "유산지를 깐 베이킹 시트에 반죽을 숟가락으로 한 숟가락씩 올려 손으로 납작하게 눌러 쿠키 모양을 만듭니다. 170°C로 예열한 오븐에 넣어 15~18분간 굽습니다. 노릇해지면 꺼내 충분히 식혀 제공하세요."
+    ],
+    tips: "미역은 짜지 않은 생미역이나 건미역 모두 사용 가능합니다. 짠 염장 미역은 물에 여러 번 헹궈 소금기를 완전히 제거한 뒤 사용하세요. 들깨 알레르기가 있는 경우 들깨가루는 생략해도 됩니다."
   }
 
 ];
@@ -4066,6 +4248,116 @@ export const recipeMedia = {
       "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+
+  // 아이 주도 이유식(BLW) 레시피 미디어
+  recipeBlw01: {
+    imageUrl: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=wnl2IfyKXWg",
+    stepImages: [
+      "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw02: {
+    imageUrl: "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=ZWwYLeQ40gU",
+    stepImages: [
+      "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw03: {
+    imageUrl: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=9C1yGNOwzQQ",
+    stepImages: [
+      "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw04: {
+    imageUrl: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=13b1dhhnzAw",
+    stepImages: [
+      "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw05: {
+    imageUrl: "https://images.unsplash.com/photo-1615361200141-f45040f367be?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=nH_xvny36uI",
+    stepImages: [
+      "https://images.unsplash.com/photo-1615361200141-f45040f367be?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw06: {
+    imageUrl: "https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=Mw9EmZh9X64",
+    stepImages: [
+      "https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw07: {
+    imageUrl: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=HLQs2Ep9qQE",
+    stepImages: [
+      "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw08: {
+    imageUrl: "https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=Fj5VNIXvHnQ",
+    stepImages: [
+      "https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw09: {
+    imageUrl: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=sfcPaqVX5gA",
+    stepImages: [
+      "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw10: {
+    imageUrl: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=Kfmo_I6YkPA",
+    stepImages: [
+      "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw11: {
+    imageUrl: "https://images.unsplash.com/photo-1548369937-47519962c11a?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=dg5SDBHrXe4",
+    stepImages: [
+      "https://images.unsplash.com/photo-1548369937-47519962c11a?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw12: {
+    imageUrl: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=K2V4lKjjpW0",
+    stepImages: [
+      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80"
     ]
   }
 };

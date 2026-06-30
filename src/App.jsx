@@ -506,7 +506,20 @@ export default function App() {
   };
 
   // 아이 주도 이유식(BLW) 레시피 도입 권장 순서입니다.
-  const BLW_FEED_ORDER = {};
+  const BLW_FEED_ORDER = {
+    recipeBlw01: 1,  // 바나나오트밀분유빵
+    recipeBlw02: 2,  // 쇠고기야채오트밀바
+    recipeBlw03: 3,  // 단호박밤오트밀쿠키
+    recipeBlw04: 4,  // 오트밀감자빵
+    recipeBlw05: 5,  // 닭고기시금치소세지
+    recipeBlw06: 6,  // 단호박부꾸미
+    recipeBlw07: 7,  // 치즈슈
+    recipeBlw08: 8,  // 대파주먹밥
+    recipeBlw09: 9,  // 메추리알미트볼
+    recipeBlw10: 10, // 단호박밥전
+    recipeBlw11: 11, // 양송이떡갈비
+    recipeBlw12: 12, // 미역쿠키
+  };
 
   // 간식 레시피 도입 권장 순서입니다.
   // 초기·중기 버무림류 → 후기 전·젤리류 → 완료기 견과 핑거푸드 순으로 정렬합니다.
