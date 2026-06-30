@@ -242,6 +242,8 @@ export default function App() {
   const [boardCommentIsSecret, setBoardCommentIsSecret] = useState(false);
   // 댓글 등록 통신이 진행되는 동안 중복 클릭 및 등록을 막기 위한 로딩 상태입니다.
   const [boardCommentSubmitting, setBoardCommentSubmitting] = useState(false);
+  // 내 후기글에 새 댓글이 달렸을 때 마이페이지 네비에 N 배지를 표시하기 위한 상태입니다.
+  const [hasNewComment, setHasNewComment] = useState(false);
   // 대댓글(답글) 작성 모달 팝업의 노출 상태를 관리합니다.
   const [showReplyModal, setShowReplyModal] = useState(false);
   // 대댓글(답글)을 달고자 하는 부모 댓글의 정보를 객체 형태로 보관합니다.
@@ -522,12 +524,42 @@ export default function App() {
     }
   };
 
+  // 내 후기글에 마지막 확인 이후 새 댓글이 달렸는지 조회하여 N 배지 표시 여부를 설정합니다.
+  // 마지막 확인 시각은 localStorage에 유저별로 보관합니다.
+  const checkNewComments = async (userId) => {
+    const storageKey = `notif_checked_${userId}`;
+    const lastChecked = localStorage.getItem(storageKey) || new Date(0).toISOString();
+
+    // 내가 작성한 후기글 ID 목록 조회
+    const { data: myReviews } = await supabase
+      .from("recipe_reviews")
+      .select("id")
+      .eq("user_id", userId);
+
+    if (!myReviews?.length) return;
+
+    const reviewIds = myReviews.map((r) => r.id);
+
+    // 내 후기글에 달린 새 댓글 중 내가 직접 단 댓글은 제외
+    const { data: newComments } = await supabase
+      .from("review_comments")
+      .select("id")
+      .in("review_id", reviewIds)
+      .neq("user_id", userId)
+      .gt("created_at", lastChecked);
+
+    setHasNewComment((newComments?.length ?? 0) > 0);
+  };
+
   // --- 앱 마운트 시 세션 복구 및 실시간 구독 ---
   useEffect(() => {
     // 새로고침 후 기존 세션을 복구합니다.
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSupabaseSession(session);
-      if (session) fetchUserProfile(session.user.id);
+      if (session) {
+        fetchUserProfile(session.user.id);
+        checkNewComments(session.user.id);
+      }
       setAuthLoading(false);
     });
 
@@ -540,6 +572,7 @@ export default function App() {
         setPasswordResetSuccess(false);
       } else if (session) {
         fetchUserProfile(session.user.id);
+        checkNewComments(session.user.id);
       } else {
         setUserProfile(null);
       }
@@ -1744,9 +1777,16 @@ export default function App() {
           {supabaseSession && userProfile && (
             <span
               className={`navLink ${currentTab === "myPage" ? "navLinkActive" : ""}`}
-              onClick={() => setCurrentTab("myPage")}
+              onClick={() => {
+                // 마이페이지 진입 시 N 배지를 초기화하고 마지막 확인 시각을 갱신합니다.
+                localStorage.setItem(`notif_checked_${supabaseSession.user.id}`, new Date().toISOString());
+                setHasNewComment(false);
+                setCurrentTab("myPage");
+              }}
+              style={{ position: "relative" }}
             >
               마이페이지
+              {hasNewComment && <span className="navNewBadge">N</span>}
             </span>
           )}
         </nav>

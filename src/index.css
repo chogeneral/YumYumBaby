@@ -88,6 +88,25 @@ select {
   font-weight: 700;
 }
 
+/* 마이페이지 네비 - 새 댓글 알림 배지 */
+.navNewBadge {
+  position: absolute;
+  top: -0.6rem;
+  right: -1.8rem;
+  background-color: #ff4444;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  pointer-events: none;
+}
+
 .headerAuthBtn {
   background-color: #ff8e72;
   color: #ffffff;
