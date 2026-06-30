@@ -1017,7 +1017,11 @@ export default function App() {
   // 첫 대댓글은 기존 css 규격대로 여백을 넓게(4rem) 배치하고, 대대댓글(depth >= 2) 이상부터는 화면 가로폭 부족 현상을 고려하여 여백(1.5rem)을 다르게 지정합니다.
   const renderCommentNode = (comment, depth = 0) => {
     // 본인이 작성한 댓글인지 판단합니다.
-    const isCommentOwner = supabaseSession && supabaseSession.user.id === comment.user_id;
+    // user_id가 저장된 경우 ID로 비교하고, null인 경우(구버전 댓글) username으로 fallback 비교합니다.
+    const isCommentOwner = supabaseSession && (
+      supabaseSession.user.id === comment.user_id ||
+      (!comment.user_id && userProfile?.username && userProfile.username === comment.username)
+    );
     // 현재 상세페이지 게시글(후기글)의 작성자 본인인지 판단합니다.
     const isPostAuthor = supabaseSession && supabaseSession.user.id === selectedBoardReview.user_id;
     
