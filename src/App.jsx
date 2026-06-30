@@ -277,6 +277,8 @@ export default function App() {
   // 완료기 레시피의 카테고리(밥/국/반찬)를 이름 패턴으로 판별합니다.
   // 국류는 이름에 "국"이 포함되고, 반찬류는 특수 음식명으로 구분하며, 나머지는 밥류로 분류합니다.
   const getCompleteType = (recipe) => {
+    // 데이터에 subType이 명시된 경우 우선 사용합니다.
+    if (recipe.subType) return recipe.subType;
     const name = recipe.name || "";
     if (name.includes("국")) return "국";
     if (name.includes("장조림") || name.includes("김밥") || name.includes("떡볶이")) return "반찬";
@@ -503,6 +505,21 @@ export default function App() {
     recipeComplete10: 24, // 아기쇠고기장조림 — 반찬
     recipeComplete04: 25, // 꼬마김밥 — 특별식
     recipeComplete05: 26, // 아기떡볶이
+    recipeComplete33: 27, // 만능소고기야채볶음
+    recipeComplete34: 28, // 만능소고기토마토소스
+    recipeComplete35: 29, // 소고기무조림
+    recipeComplete36: 30, // 아기찜닭
+    recipeComplete37: 31, // 소고기메추리알장조림
+    recipeComplete38: 32, // 간장두부조림
+    recipeComplete39: 33, // 멸치볶음
+    recipeComplete40: 34, // 감자채볶음
+    recipeComplete41: 35, // 두부를품은계란말이
+    recipeComplete42: 36, // 아기소고기애호박볶음
+    recipeComplete43: 37, // 아기닭고기조림덮밥
+    recipeComplete44: 38, // 아기흰살생선전
+    recipeComplete45: 39, // 들깨버섯무침
+    recipeComplete46: 40, // 아기오이무침
+    recipeComplete47: 41, // 소고기소보로
   };
 
   // 아이 주도 이유식(BLW) 레시피 도입 권장 순서입니다.

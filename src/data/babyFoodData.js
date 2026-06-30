@@ -2495,6 +2495,247 @@ export const babyFoodRecipes = [
     tips: "배즙을 넣으면 자연 단맛이 나서 설탕 없이도 아이가 잘 먹습니다. 떡은 얇게 썰어야 빨리 익고 아기가 씹기 쉽습니다. 간장은 극소량만 사용해 짜지 않게 주의하세요."
   },
 
+  // --- 완료기 반찬 추가 레시피 ---
+  {
+    id: "recipeComplete33",
+    stage: "complete",
+    subType: "반찬",
+    name: "만능소고기야채볶음",
+    description: "기름 한 방울 넣지 않고 팬에 볶은 건강한 소고기야채볶음입니다. 당근·양파·브로콜리를 듬뿍 넣어 영양이 풍부하며, 냉동 보관 후 다양한 유아식에 활용할 수 있는 만능 반찬입니다.",
+    ingredients: "소고기 다짐육 100g, 당근 40g, 양파 40g, 브로콜리 40g, 저염간장 1/2 작은술, 참기름 약간",
+    instructions: [
+      "당근, 양파, 브로콜리는 각각 5mm 크기로 잘게 다져줍니다.",
+      "기름을 두르지 않은 팬을 중불로 달군 뒤 소고기 다짐육을 넣어 핏기가 없어질 때까지 볶아줍니다. 나오는 기름으로 볶는 것이 포인트입니다.",
+      "소고기가 어느 정도 익으면 당근을 먼저 넣어 1~2분간 볶고, 이어서 양파와 브로콜리를 넣어 채소가 부드럽게 익을 때까지 함께 볶아줍니다.",
+      "저염간장을 넣고 전체적으로 잘 섞어가며 1분간 더 볶아 간을 맞춰줍니다.",
+      "불을 끄고 참기름을 살짝 두르면 완성입니다."
+    ],
+    tips: "냉동 큐브로 만들어두면 진밥에 넣거나 볶음밥 재료로 활용하기 편리합니다. 당근, 양파, 브로콜리 대신 제철 채소로 교체해도 맛있습니다."
+  },
+  {
+    id: "recipeComplete34",
+    stage: "complete",
+    subType: "반찬",
+    name: "만능소고기토마토소스",
+    description: "소고기 다짐육과 토마토를 함께 끓인 만능 토마토 소스입니다. 파스타·덮밥·죽 등 9가지 이상의 유아식에 활용 가능하며, 냉동 보관도 가능해 두고두고 편리하게 쓸 수 있습니다.",
+    ingredients: "소고기 다짐육 100g, 토마토 2개(약 300g, 또는 토마토 퓨레 200ml), 양파 1/2개(60g), 당근 40g, 마늘 1쪽(선택)",
+    instructions: [
+      "토마토는 꼭지를 제거하고 끓는 물에 30초간 데쳐 껍질을 벗긴 뒤 잘게 다져줍니다. (또는 믹서에 갈아 퓨레로 만들어줍니다.)",
+      "양파와 당근은 잘게 다져줍니다.",
+      "팬에 기름을 두르지 않고 소고기 다짐육을 먼저 넣어 볶다가 다진 양파와 당근을 넣어 함께 볶아줍니다.",
+      "채소가 투명하게 익으면 다진 토마토(또는 토마토 퓨레)를 넣고 약불로 줄여 국물이 자작해질 때까지 10~15분간 졸여줍니다.",
+      "소스가 걸쭉해지면 불을 끄고 식혀서 냉동 보관하거나 바로 사용합니다."
+    ],
+    tips: "토마토는 리코펜이 풍부해 기름과 함께 볶으면 흡수율이 높아집니다. 냉동 큐브로 소분하면 파스타, 덮밥, 미트소스 볶음밥 등 다양하게 활용할 수 있습니다."
+  },
+  {
+    id: "recipeComplete35",
+    stage: "complete",
+    subType: "반찬",
+    name: "소고기무조림",
+    description: "소고기와 무를 간장 양념에 조린 부드럽고 담백한 반찬입니다. 무가 소고기 육즙을 흡수해 달콤하고 촉촉하며, 아이가 손으로 집어먹기 좋은 크기로 만들 수 있습니다.",
+    ingredients: "소고기(앞다리살 또는 우둔살) 100g, 무 150g, 저염간장 1작은술, 배즙 1큰술, 물 150ml, 참기름 약간",
+    instructions: [
+      "소고기는 찬물에 20분 담가 핏물을 제거한 뒤 1.5cm 크기로 깍둑썰어줍니다.",
+      "무도 1.5cm 크기로 깍둑썰어줍니다.",
+      "냄비에 소고기를 먼저 넣어 중불에서 겉면이 익을 때까지 볶다가 무를 넣어 함께 볶아줍니다.",
+      "물 150ml를 붓고 끓어오르면 저염간장과 배즙을 넣어줍니다.",
+      "뚜껑을 덮고 약불에서 15~20분간 조려 무가 완전히 투명해지면 완성입니다. 불을 끄기 직전 참기름을 살짝 두르면 됩니다."
+    ],
+    tips: "무는 미리 전자레인지로 2~3분 익혀두면 조리 시간이 단축됩니다. 무가 소고기 냄새를 잡아주므로 고기를 처음 먹이는 아이에게도 거부감이 적습니다."
+  },
+  {
+    id: "recipeComplete36",
+    stage: "complete",
+    subType: "반찬",
+    name: "아기찜닭",
+    description: "닭고기와 감자·당근을 부드럽게 조린 아기용 찜닭입니다. 매운 양념 없이 배즙과 저염간장으로만 간을 해 달콤하고 부드러우며, 아이가 닭고기를 쉽게 먹을 수 있습니다.",
+    ingredients: "닭다리살(또는 닭봉) 250g, 감자 1개(약 150g), 당근 1/2개(약 80g), 양파 1/2개(약 70g), 저염간장 1작은술, 배즙 2큰술, 물 200ml",
+    instructions: [
+      "닭고기는 찬물에 30분 담가 핏물을 제거한 뒤 한 입 크기로 잘라줍니다.",
+      "감자와 당근은 껍질을 벗겨 2cm 크기로 깍둑썰고, 양파는 굵직하게 썰어줍니다.",
+      "냄비에 닭고기를 넣어 겉면이 하얗게 변할 때까지 중불에서 볶아줍니다.",
+      "감자·당근·양파를 넣고 물 200ml를 부은 뒤 저염간장과 배즙을 넣어 잘 섞어줍니다.",
+      "끓어오르면 뚜껑을 덮고 약불에서 20~25분간 조려 감자와 닭고기가 완전히 부드럽게 익으면 완성입니다."
+    ],
+    tips: "닭고기의 껍질은 지방이 많으므로 제거하고 조리하는 것이 좋습니다. 찜닭의 양념을 밥에 비벼 먹으면 아이가 더 잘 먹습니다."
+  },
+  {
+    id: "recipeComplete37",
+    stage: "complete",
+    subType: "반찬",
+    name: "소고기메추리알장조림",
+    description: "소고기와 메추리알을 저염 간장 소스에 졸인 영양 만점 반찬입니다. 단백질이 풍부하고 달짝지근한 간장 맛에 아이가 밥을 잘 먹게 해주는 인기 반찬입니다.",
+    ingredients: "소고기(우둔살) 200g, 삶은 메추리알 10개, 저염간장 2큰술, 배즙 3큰술, 물 250ml, 참기름 약간",
+    instructions: [
+      "소고기는 찬물에 20분 담가 핏물을 제거한 뒤 덩어리째 냄비에 넣고 물에 20분간 삶아줍니다. 삶은 소고기는 식힌 뒤 결대로 잘게 찢거나 얇게 썰어줍니다.",
+      "메추리알은 끓는 물에 8분간 완숙으로 삶아 껍데기를 벗겨 준비합니다.",
+      "냄비에 소고기를 삶은 육수 250ml를 담고 저염간장과 배즙을 넣어 끓여줍니다.",
+      "소스가 끓어오르면 찢어둔 소고기와 메추리알을 넣고 약불에서 15~20분간 졸여줍니다.",
+      "소스가 자작하게 배어들면 불을 끄고 참기름을 살짝 두르면 완성입니다."
+    ],
+    tips: "소고기를 삶은 육수로 소스를 만들면 감칠맛이 깊어집니다. 냉장 보관 5일, 냉동 1개월 가능합니다."
+  },
+  {
+    id: "recipeComplete38",
+    stage: "complete",
+    subType: "반찬",
+    name: "간장두부조림",
+    description: "두부를 저염 간장 소스에 조려낸 담백하고 고소한 반찬입니다. 조리 시간이 짧고 재료가 간단하여 빠르게 만들 수 있으며, 두부를 싫어하는 아이도 잘 먹는 인기 반찬입니다.",
+    ingredients: "두부 1/2모(약 200g), 저염간장 1작은술, 들기름 1/2 작은술, 물 3큰술, 참깨 약간",
+    instructions: [
+      "두부는 키친타월로 감싸 살짝 눌러 여분의 수분을 제거한 뒤 1.5cm 두께로 납작하게 썰어줍니다.",
+      "달군 팬에 들기름을 두르고 두부를 넣어 중불에서 한 면이 노릇해질 때까지 굽다가 뒤집어 반대쪽도 굽습니다.",
+      "저염간장과 물 3큰술을 섞은 소스를 두부 위에 고루 뿌려줍니다.",
+      "소스가 두부에 배어들도록 약불에서 2~3분간 조려줍니다.",
+      "소스가 자작하게 남으면 불을 끄고 그릇에 담아 참깨를 살짝 뿌려 완성합니다."
+    ],
+    tips: "두부를 미리 소금물(물 500ml + 소금 1작은술)에 10분 담가두면 조리 시 부서짐이 줄어듭니다. 들기름 대신 참기름을 사용해도 됩니다."
+  },
+  {
+    id: "recipeComplete39",
+    stage: "complete",
+    subType: "반찬",
+    name: "멸치볶음",
+    description: "잔멸치를 들기름에 볶아 조청으로 고소하고 달콤하게 만든 반찬입니다. 짜지 않게 만들어 아이가 부담 없이 먹을 수 있으며, 칼슘과 단백질이 풍부합니다.",
+    ingredients: "잔멸치 50g, 들기름 1작은술, 조청(또는 쌀물엿) 1작은술, 들깨가루 1작은술",
+    instructions: [
+      "잔멸치는 체에 담아 흔들어 가루를 털어낸 뒤 팬에 기름 없이 넣어 중약불에서 2~3분간 볶아 비린 맛을 없애줍니다.",
+      "볶은 멸치를 잠시 덜어두고 팬을 닦은 뒤 들기름을 두르고 다시 멸치를 넣어줍니다.",
+      "조청을 넣어 멸치가 전체적으로 코팅되도록 약불에서 1~2분간 볶아줍니다.",
+      "불을 끄고 들깨가루를 넣어 고루 섞어주면 완성입니다.",
+      "완전히 식혀서 용기에 담아 보관합니다."
+    ],
+    tips: "잔멸치는 국물용 멸치보다 크기가 작은 것을 사용하고, 볶기 전 체에 쳐서 가루를 제거해야 깔끔합니다. 냉장 보관 1주일 가능합니다."
+  },
+  {
+    id: "recipeComplete40",
+    stage: "complete",
+    subType: "반찬",
+    name: "감자채볶음",
+    description: "감자를 가늘게 채 썰어 들기름에 부드럽게 볶은 반찬입니다. 감자를 물에 충분히 담가 전분을 제거하면 더욱 아삭하고 부드러운 식감이 납니다.",
+    ingredients: "감자 1개(약 150g), 들기름 1작은술, 저염간장 1/2 작은술, 물 1큰술",
+    instructions: [
+      "감자를 껍질을 벗기고 최대한 얇고 가늘게 채 썰어줍니다.",
+      "채 썬 감자를 물에 5~10분간 담가 전분을 제거한 뒤 체에 밭쳐 물기를 완전히 빼줍니다.",
+      "달군 팬에 들기름을 두르고 감자채를 넣어 중불에서 볶아줍니다.",
+      "감자가 투명해지기 시작하면 저염간장과 물 1큰술을 넣어 골고루 섞어줍니다.",
+      "감자가 부드럽게 익으면 불을 끄고 완성합니다."
+    ],
+    tips: "감자채를 너무 두껍게 썰면 익히는 데 오래 걸리므로 최대한 가늘게 채 써는 것이 핵심입니다. 전분을 빼면 볶는 중에 서로 달라붙지 않아 식감이 좋아집니다."
+  },
+  {
+    id: "recipeComplete41",
+    stage: "complete",
+    subType: "반찬",
+    name: "두부를품은계란말이",
+    description: "달걀에 으깬 두부와 잘게 다진 채소를 넣어 돌돌 말아 구운 촉촉한 계란말이입니다. 두부가 들어가 식감이 부드럽고 단백질 함량이 높아 영양 가득한 반찬입니다.",
+    ingredients: "달걀 3개, 두부 100g, 당근 20g, 시금치 20g, 들기름 약간",
+    instructions: [
+      "시금치는 끓는 물에 30초간 데쳐 찬물에 헹군 뒤 물기를 꼭 짜고 잘게 다져줍니다. 당근도 잘게 다져줍니다.",
+      "두부는 키친타월로 물기를 제거한 뒤 포크로 곱게 으깨줍니다.",
+      "달걀 3개를 풀어 달걀물을 만들고, 으깬 두부·다진 당근·다진 시금치를 넣어 잘 섞어줍니다.",
+      "달군 계란말이 팬 또는 작은 프라이팬에 들기름을 얇게 두르고 달걀 혼합물의 1/3을 부어 약불에서 반쯤 익으면 한쪽으로 돌돌 말아줍니다.",
+      "밀어놓은 계란말이 옆에 나머지 달걀 혼합물을 1/2씩 나눠 붓고 같은 방법으로 말아줍니다. 김발로 모양을 잡아 식힌 뒤 먹기 좋은 두께로 썰어 완성합니다."
+    ],
+    tips: "달걀물에 두부를 섞으면 계란말이가 더욱 촉촉하고 부서지지 않습니다. 아이가 먹기 편하도록 1cm 두께로 썰어주세요."
+  },
+  {
+    id: "recipeComplete42",
+    stage: "complete",
+    subType: "반찬",
+    name: "아기소고기애호박볶음",
+    description: "소고기와 애호박을 함께 볶은 깔끔하고 담백한 반찬입니다. 애호박의 수분이 소고기와 어우러져 촉촉하게 완성되며, 아기가 쉽게 씹어 먹을 수 있습니다.",
+    ingredients: "소고기 80g, 애호박 1/2개(약 150g), 저염간장 1/2 작은술, 참기름 약간",
+    instructions: [
+      "소고기는 찬물에 10분 담가 핏물을 제거한 뒤 5mm 크기로 잘게 다져줍니다.",
+      "애호박은 반달 모양으로 얇게 썰어줍니다(5mm 두께).",
+      "달군 팬에 기름 없이 소고기를 넣어 중불에서 핏기가 없어질 때까지 볶아줍니다.",
+      "소고기가 어느 정도 익으면 애호박을 넣어 함께 볶아줍니다. 애호박에서 수분이 나오기 시작하면 저염간장을 넣어 간을 맞춥니다.",
+      "애호박이 부드럽게 익으면 불을 끄고 참기름을 살짝 두르면 완성입니다."
+    ],
+    tips: "애호박을 너무 오래 볶으면 물러지므로 살짝 식감이 남아있을 때 불을 끄는 것이 좋습니다. 진밥 위에 올려 덮밥처럼 먹여도 잘 먹습니다."
+  },
+  {
+    id: "recipeComplete43",
+    stage: "complete",
+    subType: "반찬",
+    name: "아기닭고기조림덮밥",
+    description: "닭다리살을 배즙 간장 소스에 조려 밥 위에 올린 덮밥입니다. 달콤하고 부드러운 닭고기 조림이 밥과 어우러져 한 그릇으로 든든한 한 끼가 됩니다.",
+    ingredients: "닭다리살 100g, 양파 1/3개(약 50g), 당근 30g, 저염간장 1작은술, 배즙 2큰술, 물 100ml, 진밥 150g",
+    instructions: [
+      "닭다리살은 껍질과 기름기를 제거하고 찬물에 20분 담가 핏물을 뺀 뒤 한 입 크기로 썰어줍니다.",
+      "양파와 당근은 작은 크기로 썰어줍니다.",
+      "달군 팬에 기름 없이 닭고기를 넣어 겉면이 익을 때까지 볶다가 양파와 당근을 추가해 함께 볶아줍니다.",
+      "물 100ml, 저염간장, 배즙을 넣고 끓어오르면 뚜껑을 덮어 약불에서 15분간 조려줍니다.",
+      "닭고기가 완전히 익고 소스가 자작해지면 불을 끄고 진밥 위에 올려 완성합니다."
+    ],
+    tips: "닭다리살 대신 안심을 사용하면 지방 함량을 더욱 낮출 수 있습니다. 소스를 밥에 충분히 비벼주면 아이가 더 잘 먹습니다."
+  },
+  {
+    id: "recipeComplete44",
+    stage: "complete",
+    subType: "반찬",
+    name: "아기흰살생선전",
+    description: "순살 흰살 생선에 달걀과 쌀가루를 입혀 구운 부드러운 생선전입니다. 가시 없이 순살로 만들어 안전하며, 생선의 비린 맛을 잡아 아이가 생선을 처음 접하기에 좋은 메뉴입니다.",
+    ingredients: "순살 흰살생선(대구, 명태, 동태 등) 200g, 달걀 1개, 쌀가루(또는 밀가루) 2큰술, 들기름 약간",
+    instructions: [
+      "순살 생선은 가시가 없는지 꼼꼼히 확인하고 물기를 제거한 뒤 먹기 좋은 크기(5×5cm)로 잘라줍니다.",
+      "달걀을 잘 풀어 달걀물을 만들어 줍니다.",
+      "생선 조각에 쌀가루를 고루 묻혀 여분의 가루를 탁탁 털어낸 뒤 달걀물에 담가 코팅해줍니다.",
+      "달군 팬에 들기름을 두르고 약불에서 한 면이 노릇해질 때까지 2~3분 굽다가 뒤집어 반대쪽도 굽습니다.",
+      "겉이 노릇하게 익으면 완성입니다. 충분히 식혀서 제공하세요."
+    ],
+    tips: "흰살 생선은 대구, 가자미, 명태, 동태가 무난합니다. 생선전을 구울 때 기름 온도가 너무 높으면 달걀물이 바로 타므로 반드시 약불에서 천천히 구워야 합니다."
+  },
+  {
+    id: "recipeComplete45",
+    stage: "complete",
+    subType: "반찬",
+    name: "들깨버섯무침",
+    description: "데친 버섯에 들깨가루와 들기름을 넣어 무친 고소하고 촉촉한 반찬입니다. 들깨의 고소함이 버섯의 감칠맛과 잘 어울리며, 아이들이 버섯을 처음 먹기에 좋은 메뉴입니다.",
+    ingredients: "표고버섯 또는 느타리버섯 150g, 들깨가루 2큰술, 저염간장 1/2 작은술, 들기름 1작은술",
+    instructions: [
+      "표고버섯은 기둥을 제거하고 먹기 좋은 크기로 얇게 썰고, 느타리버섯은 손으로 적당히 찢어줍니다.",
+      "끓는 물에 버섯을 넣어 1~2분간 데쳐줍니다. 데친 버섯은 체에 밭쳐 물기를 꼭 짜줍니다.",
+      "물기를 꽉 짠 버섯을 볼에 담고 들깨가루, 저염간장, 들기름을 넣어 조물조물 무쳐줍니다.",
+      "전체적으로 간이 고루 배었는지 확인하고 그릇에 담아 완성합니다."
+    ],
+    tips: "버섯의 수분을 충분히 제거해야 무침이 질척이지 않습니다. 들깨가루는 볶은 것을 사용하면 고소함이 더욱 살아납니다."
+  },
+  {
+    id: "recipeComplete46",
+    stage: "complete",
+    subType: "반찬",
+    name: "아기오이무침",
+    description: "오이를 소금에 살짝 절여 맵지 않게 무친 아삭아삭한 반찬입니다. 꼬들꼬들한 식감이 살아있어 아이가 씹는 연습을 하기에 좋으며, 들기름과 참깨가 고소한 맛을 더합니다.",
+    ingredients: "오이 1개, 당근 30g, 저염간장 1/2 작은술, 들기름 1/2 작은술, 볶은 참깨 약간",
+    instructions: [
+      "오이는 깨끗이 씻어 반달 모양으로 얇게 썰어줍니다(3~4mm 두께). 당근도 얇게 채 썰거나 반달 모양으로 썰어줍니다.",
+      "오이를 볼에 담고 소금 약간(1/4 작은술)을 넣어 10분간 절여줍니다. 절인 오이는 물이 나오면 손으로 꼭 짜 수분을 제거합니다.",
+      "당근은 끓는 물에 1분간 살짝 데쳐 부드럽게 해줍니다.",
+      "물기를 뺀 오이와 데친 당근을 함께 볼에 담고 저염간장과 들기름을 넣어 조물조물 무쳐줍니다.",
+      "그릇에 담고 볶은 참깨를 뿌리면 완성입니다."
+    ],
+    tips: "오이를 소금에 미리 절이면 아삭한 식감이 오래 유지됩니다. 오이는 씹기 너무 어렵지 않도록 얇게 썰어주세요."
+  },
+  {
+    id: "recipeComplete47",
+    stage: "complete",
+    subType: "반찬",
+    name: "소고기소보로",
+    description: "소고기 다짐육을 배즙과 저염간장으로 간해 바슬바슬하게 볶은 만능 소보로입니다. 10분이면 완성되며, 진밥 위에 올리거나 볶음밥, 덮밥, 주먹밥 등 다양하게 활용할 수 있습니다.",
+    ingredients: "소고기 다짐육 150g, 저염간장 1작은술, 배즙 1큰술, 참기름 약간",
+    instructions: [
+      "소고기 다짐육에 저염간장과 배즙을 미리 넣어 10분간 재워둡니다. 배즙이 고기의 잡내를 없애고 자연 단맛을 더합니다.",
+      "팬에 기름 없이 재워둔 소고기 다짐육을 넣어 중불에서 볶아줍니다.",
+      "뭉쳐있는 고기를 주걱으로 잘게 부수면서 골고루 볶아줍니다.",
+      "핏기가 완전히 사라지고 수분이 날아가 바슬바슬한 소보로 상태가 되면 불을 줄입니다.",
+      "불을 끄고 참기름을 살짝 두르면 완성입니다."
+    ],
+    tips: "소보로는 완전히 식혀서 밀폐 용기에 담으면 냉장 5일, 냉동 1개월 보관 가능합니다. 진밥 위에 올리거나 볶음밥 재료로 쓰면 매우 편리합니다."
+  },
+
   // --- 간식 레시피 (snack) ---
   {
     id: "recipeSnack01",
@@ -4140,6 +4381,142 @@ export const recipeMedia = {
       "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  // 완료기 반찬 추가 레시피 미디어
+  recipeComplete33: {
+    imageUrl: "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=3-e6ZoXFoSM",
+    stepImages: [
+      "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeComplete34: {
+    imageUrl: "https://images.unsplash.com/photo-1598103442097-8b74394b95c2?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=Bo1qAXwCS7g",
+    stepImages: [
+      "https://images.unsplash.com/photo-1598103442097-8b74394b95c2?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeComplete35: {
+    imageUrl: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/shorts/AEnRphX9cjo",
+    stepImages: [
+      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeComplete36: {
+    imageUrl: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/shorts/AEnRphX9cjo",
+    stepImages: [
+      "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeComplete37: {
+    imageUrl: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=G0YGqZRb08k",
+    stepImages: [
+      "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeComplete38: {
+    imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=AogcUjKGiAo",
+    stepImages: [
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeComplete39: {
+    imageUrl: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=-SCF1QrRUUk",
+    stepImages: [
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeComplete40: {
+    imageUrl: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=evdrB6JFiJM",
+    stepImages: [
+      "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeComplete41: {
+    imageUrl: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=yCEUd7rAHjM",
+    stepImages: [
+      "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeComplete42: {
+    imageUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=8Kt0gVP7UUk",
+    stepImages: [
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeComplete43: {
+    imageUrl: "https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=tZKCjnguvzk",
+    stepImages: [
+      "https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeComplete44: {
+    imageUrl: "https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=SA9pF3Rpc4I",
+    stepImages: [
+      "https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeComplete45: {
+    imageUrl: "https://images.unsplash.com/photo-1548369937-47519962c11a?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=6LrYA8esrMM",
+    stepImages: [
+      "https://images.unsplash.com/photo-1548369937-47519962c11a?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeComplete46: {
+    imageUrl: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=7HFd8ODKdsE",
+    stepImages: [
+      "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeComplete47: {
+    imageUrl: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://www.youtube.com/watch?v=84tvNRqtIS8",
+    stepImages: [
+      "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=220&fit=crop&q=80"
     ]
   },
   recipeSnack01: {
