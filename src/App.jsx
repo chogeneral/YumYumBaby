@@ -562,22 +562,21 @@ export default function App() {
       return;
     }
 
-    // review_id 기준으로 그룹핑하여 댓글 수와 최신 댓글을 집계합니다.
+    // review_id 기준으로 그룹핑하여 댓글 전체 목록을 집계합니다.
     const grouped = {};
     for (const comment of newComments) {
       if (!grouped[comment.review_id]) {
-        grouped[comment.review_id] = { count: 0, latestComment: comment };
+        grouped[comment.review_id] = [];
       }
-      grouped[comment.review_id].count += 1;
+      grouped[comment.review_id].push(comment);
     }
 
-    // 후기글 정보와 새 댓글 정보를 병합합니다.
+    // 후기글 정보와 새 댓글 전체 목록을 병합합니다.
     const result = myReviews
       .filter((r) => grouped[r.id])
       .map((r) => ({
         ...r,
-        newCommentCount: grouped[r.id].count,
-        latestComment: grouped[r.id].latestComment,
+        newComments: grouped[r.id],
       }));
 
     setMyReviewsWithNewComments(result);
@@ -2817,7 +2816,9 @@ export default function App() {
               <div className="myPageHeader">
                 <h2 className="myPageTitle">새 댓글 알림</h2>
                 {myReviewsWithNewComments.length > 0 && (
-                  <span className="myPageNotifCount">{myReviewsWithNewComments.length}건</span>
+                  <span className="myPageNotifCount">
+                    {myReviewsWithNewComments.reduce((sum, r) => sum + r.newComments.length, 0)}건
+                  </span>
                 )}
               </div>
 
@@ -2826,23 +2827,44 @@ export default function App() {
               ) : (
                 <ul className="myPageNotifList">
                   {myReviewsWithNewComments.map((review) => (
-                    <li
-                      key={review.id}
-                      className="myPageNotifItem"
-                      onClick={() => handleMyPageNotifClick(review.id)}
-                    >
-                      <div className="myPageNotifItemTop">
-                        <span className="myPageNotifCategory">{review.category}</span>
-                        <span className="myPageNotifBadge">+{review.newCommentCount}개</span>
+                    <li key={review.id} className="myPageNotifReviewGroup">
+                      {/* 후기글 헤더 — 클릭 시 해당 상세페이지로 이동 */}
+                      <div
+                        className="myPageNotifReviewHeader"
+                        onClick={() => handleMyPageNotifClick(review.id)}
+                      >
+                        <div className="myPageNotifItemTop">
+                          <span className="myPageNotifCategory">{review.category}</span>
+                          <span className="myPageNotifBadge">+{review.newComments.length}개</span>
+                        </div>
+                        <p className="myPageNotifReviewTitle">{review.title}</p>
                       </div>
-                      <p className="myPageNotifReviewTitle">{review.title}</p>
-                      <p className="myPageNotifCommentPreview">
-                        <span className="myPageNotifAuthor">{review.latestComment.username}</span>
-                        {review.latestComment.is_secret
-                          ? " · 🔒 비밀 댓글입니다."
-                          : ` · ${review.latestComment.content.slice(0, 40)}${review.latestComment.content.length > 40 ? "..." : ""}`}
-                      </p>
-                      <span className="myPageNotifTime">{formatCommentDate(review.latestComment.created_at)}</span>
+
+                      {/* 해당 후기글에 달린 새 댓글 목록 */}
+                      <ul className="myPageNotifCommentList">
+                        {review.newComments.map((comment) => (
+                          <li
+                            key={comment.id}
+                            className="myPageNotifCommentItem"
+                            onClick={() => handleMyPageNotifClick(review.id)}
+                          >
+                            <div className="myPageNotifCommentAvatar">
+                              {comment.username.charAt(0)}
+                            </div>
+                            <div className="myPageNotifCommentBody">
+                              <div className="myPageNotifCommentMeta">
+                                <span className="myPageNotifAuthor">{comment.username}</span>
+                                <span className="myPageNotifTime">{formatCommentDate(comment.created_at)}</span>
+                              </div>
+                              <p className="myPageNotifCommentText">
+                                {comment.is_secret
+                                  ? "🔒 비밀 댓글입니다."
+                                  : `${comment.content.slice(0, 60)}${comment.content.length > 60 ? "..." : ""}`}
+                              </p>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
                     </li>
                   ))}
                 </ul>
