@@ -461,6 +461,10 @@ export default function App() {
     recipeLate01: 16, // 과일치즈무른밥
     recipeLate05: 17, // 고구마시금치치즈무른밥
     recipeLate17: 18, // 콜리플라워감자치즈무른밥
+    recipeLate19: 19, // 두부시금치죽
+    recipeLate20: 20, // 연근부추소고기죽
+    recipeLate21: 21, // 파프리카고구마소고기죽
+    recipeLate22: 22, // 오쿠 두유제조기로 만드는 후기 이유식
   };
 
   // 완료기 레시피 도입 권장 순서입니다.
