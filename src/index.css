@@ -3084,6 +3084,7 @@ select {
   }
 
   /* 모바일 리스트 노출 */
+  
   .boardMobileList {
     display: block;
     width: 100%;

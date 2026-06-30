@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /myPage
+
+# 구글 검색 봇
+User-agent: Googlebot
+Allow: /
+
+# 네이버 검색 봇
+User-agent: Yeti
+Allow: /
+
+Sitemap: https://beberecipe.com/sitemap.xml

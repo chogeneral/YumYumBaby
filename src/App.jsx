@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { Helmet } from "react-helmet-async";
 import { useNavigate, useLocation } from "react-router-dom";
 import ReactQuill, { Quill } from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
@@ -1586,6 +1587,81 @@ export default function App() {
 
   const menuRecommendation = getMenuRecommendation();
 
+  // 현재 탭과 단계 탭에 따라 SEO 메타 정보를 동적으로 계산합니다.
+  // 구글/네이버 크롤러가 페이지별 키워드를 올바르게 색인하도록 각 뷰에 최적화된 값을 반환합니다.
+  const seoMeta = useMemo(() => {
+    const BASE_URL = "https://beberecipe.com";
+    const SITE_NAME = "베베레시피";
+
+    if (currentTab === "home") {
+      const stageMetaMap = {
+        early: {
+          title: `초기 이유식 가이드 | ${SITE_NAME} — 생후 4~6개월 이유식 레시피`,
+          description: "생후 4~6개월 초기 이유식 정보를 한눈에! 초기 이유식 만드는 법, 미음 레시피, 재료 도입 순서, 알레르기 체크리스트까지 베베레시피가 안내합니다.",
+          keywords: "초기 이유식, 초기 이유식 레시피, 초기 이유식 만드는법, 4개월 이유식, 5개월 이유식, 6개월 이유식, 미음 레시피, 이유식 시작 시기, 이유식 알레르기",
+          url: BASE_URL
+        },
+        middle: {
+          title: `중기 이유식 가이드 | ${SITE_NAME} — 생후 7~9개월 이유식 레시피`,
+          description: "생후 7~9개월 중기 이유식 만드는 법! 잘게 으깬 죽 레시피, 소고기 이유식, 닭고기 이유식, 철분 섭취 방법 등 중기 이유식 핵심 정보를 제공합니다.",
+          keywords: "중기 이유식, 중기 이유식 레시피, 중기 이유식 만드는법, 7개월 이유식, 8개월 이유식, 9개월 이유식, 이유식 죽 레시피, 소고기 이유식, 이유식 철분",
+          url: BASE_URL
+        },
+        late: {
+          title: `후기 이유식 가이드 | ${SITE_NAME} — 생후 10~11개월 이유식 레시피`,
+          description: "생후 10~11개월 후기 이유식 정보! 무른밥 만드는 법, 하루 3회 이유식 식단, 다양한 재료 조합 레시피로 아기 미각을 발달시켜 주세요.",
+          keywords: "후기 이유식, 후기 이유식 레시피, 후기 이유식 만드는법, 10개월 이유식, 11개월 이유식, 무른밥 레시피, 이유식 3회, 이유식 식단표",
+          url: BASE_URL
+        },
+        complete: {
+          title: `완료기 이유식 가이드 | ${SITE_NAME} — 생후 12~24개월 이유식 레시피`,
+          description: "생후 12~24개월 완료기 이유식에서 유아식으로의 전환! 진밥 레시피, 아기 국·찌개, 반찬 레시피와 함께 건강한 식습관을 만들어 주세요.",
+          keywords: "완료기 이유식, 완료기 이유식 레시피, 12개월 이유식, 돌 이유식, 유아식 전환, 진밥 레시피, 아기 국 레시피, 아기 반찬, 아기 밥 레시피",
+          url: BASE_URL
+        },
+        snack: {
+          title: `아기 간식 레시피 | ${SITE_NAME} — 단계별 아기 간식 만드는 법`,
+          description: "중기·후기·완료기 단계별 건강한 아기 간식 레시피! 고구마, 바나나, 두유, 전, 젤리 등 영양 가득한 아기 핑거푸드와 간식 만드는 법을 알려드립니다.",
+          keywords: "아기 간식, 아기 간식 레시피, 이유식 간식, 아기 핑거푸드, 아기 스낵, 아기 고구마 간식, 아기 바나나 간식, 중기 간식, 후기 간식, 완료기 간식",
+          url: BASE_URL
+        }
+      };
+
+      return stageMetaMap[stageTab] || {
+        title: `베베레시피 | 맞춤형 아기 이유식 추천 및 시기별 이유식 레시피 가이드`,
+        description: "우리 아기를 위한 맞춤형 이유식 추천 및 단계별 이유식 레시피 가이드 플랫폼 베베레시피! 초기/중기/후기/완료기 이유식 식단 정보와 솔직한 요리 후기를 제공합니다.",
+        keywords: "이유식, 이유식 추천, 아기 이유식 추천, 이유식 레시피, 초기 이유식, 중기 이유식, 후기 이유식, 완료기 이유식, 아기 이유식 가이드, 베베레시피",
+        url: BASE_URL
+      };
+    }
+
+    if (currentTab === "recipes") {
+      return {
+        title: `이유식 레시피 라이브러리 | ${SITE_NAME} — 단계별 이유식 레시피 모음`,
+        description: "초기·중기·후기·완료기 이유식 레시피를 한 곳에서! 소고기 이유식, 닭고기 이유식, 야채 이유식 등 다양한 이유식 레시피를 단계별로 찾아보세요.",
+        keywords: "이유식 레시피 모음, 단계별 이유식 레시피, 소고기 이유식 레시피, 닭고기 이유식, 야채 이유식, 이유식 만드는법, 이유식 재료, 이유식 검색",
+        url: `${BASE_URL}/recipes`
+      };
+    }
+
+    if (currentTab === "reviews") {
+      return {
+        title: `이유식 레시피 후기 게시판 | ${SITE_NAME}`,
+        description: "베베레시피 회원들의 이유식 레시피 후기와 육아 정보를 공유하는 공간입니다. 실제 엄마·아빠들의 생생한 이유식 경험담을 읽어보세요.",
+        keywords: "이유식 후기, 이유식 레시피 후기, 아기 이유식 후기, 이유식 후기 게시판, 이유식 공유, 육아 정보, 이유식 경험담",
+        url: `${BASE_URL}/reviews`
+      };
+    }
+
+    // 기본값 (myPage 등)
+    return {
+      title: `베베레시피 | 맞춤형 아기 이유식 추천 및 시기별 이유식 레시피 가이드`,
+      description: "우리 아기를 위한 맞춤형 이유식 추천 및 단계별 이유식 레시피 가이드 플랫폼 베베레시피! 초기/중기/후기/완료기 이유식 식단 정보와 솔직한 요리 후기를 제공합니다.",
+      keywords: "이유식, 이유식 추천, 아기 이유식 추천, 이유식 레시피, 초기 이유식, 중기 이유식, 후기 이유식, 완료기 이유식, 아기 이유식 가이드, 베베레시피",
+      url: BASE_URL
+    };
+  }, [currentTab, stageTab]);
+
   // 세션 복구 중에는 빈 화면 대신 로딩 표시 — 복구 전 렌더링으로 인한 로그인 버튼 깜빡임 방지
   if (authLoading) {
     return (
@@ -1601,6 +1677,26 @@ export default function App() {
   // --- 화면 렌더링 코드 시작 ---
   return (
     <div className="appContainer">
+      {/* 탭 전환 시 구글·네이버 SEO 메타 태그를 동적으로 업데이트합니다. */}
+      <Helmet>
+        <title>{seoMeta.title}</title>
+        <meta name="description" content={seoMeta.description} />
+        <meta name="keywords" content={seoMeta.keywords} />
+        <link rel="canonical" href={seoMeta.url} />
+        {/* 오픈그래프 — SNS 공유 및 네이버 블로그 공유 시 미리보기 카드 최적화 */}
+        <meta property="og:title" content={seoMeta.title} />
+        <meta property="og:description" content={seoMeta.description} />
+        <meta property="og:url" content={seoMeta.url} />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/og-image.png" />
+        <meta property="og:site_name" content="베베레시피" />
+        {/* 트위터 카드 — 트위터/X 공유 시 미리보기 최적화 */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={seoMeta.title} />
+        <meta name="twitter:description" content={seoMeta.description} />
+        <meta name="twitter:image" content="/og-image.png" />
+      </Helmet>
+
       {/* 1. 상단 공통 네비게이션 헤더 */}
       <header className="appHeader" id="appHeader">
         {/* 로고에 h1 적용 — 페이지 내 유일한 h1, 시맨틱 마크업 기준 */}
