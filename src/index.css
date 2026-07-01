@@ -1979,6 +1979,36 @@ select {
   line-height: 1.5;
 }
 
+/* 이유식 단계 설명 불릿 목록 */
+.resultSubList {
+  margin: 0;
+  list-style: none;
+}
+
+.resultSubList li {
+  font-size: 1.35rem;
+  color: #888888;
+  line-height: 1.7;
+  margin-bottom: 0.4rem;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.resultSubList li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #888;
+  font-size: 1.2rem;
+  line-height: 1.7;
+}
+
+.resultSubList li:last-child {
+  margin-bottom: 0;
+}
+
+
+
 /* 전체보기 버튼 */
 .babyDateAllBtn {
   display: flex;
