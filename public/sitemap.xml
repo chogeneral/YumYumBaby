@@ -2,25 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- 홈 — 이유식 단계별 가이드 허브 -->
+  <!-- 홈 — 이유식 단계별 가이드 및 우리 아기 이유식 -->
   <url>
     <loc>https://yummy.jaelab.kr/</loc>
+    <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- 이유식 레시피 라이브러리 -->
+  <!-- 이유식 레시피 — 초기·중기·후기·완료기·자기주도·간식 -->
   <url>
-    <loc>https://yummy.jaelab.kr/recipes</loc>
+    <loc>https://yummy.jaelab.kr/#recipes</loc>
+    <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- 레시피 후기 게시판 -->
-  <url>
-    <loc>https://yummy.jaelab.kr/reviews</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-
 </urlset>
+
+
