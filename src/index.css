@@ -1534,13 +1534,9 @@ select {
 @media (max-width: 480px) {
   .appHeader {
     padding: 1.2rem 1.6rem;
-    flex-direction: column;
-    gap: 1.2rem;
   }
 
   .headerNav {
-    width: 100%;
-    justify-content: center;
     gap: 1.6rem;
   }
 
