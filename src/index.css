@@ -761,7 +761,17 @@ select {
   color: #8e24aa;
 }
 
-.tagBlw {
+.tagBlwMiddle {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.tagBlwLate {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.tagBlwComplete {
   background-color: #e8eaf6;
   color: #3949ab;
 }

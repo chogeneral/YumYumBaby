@@ -65,11 +65,11 @@ export default function App() {
 
   // 레시피 탭 — 초기 1단계/2단계 서브탭
   const [recipeEarlySubTab, setRecipeEarlySubTab] = useState("early1");
-  // 레시피 탭 — 중기 서브탭 (중기 레시피/아이주도이유식/간식)
+  // 레시피 탭 — 중기 서브탭 (중기 레시피/자기주도 이유식/간식)
   const [recipeMiddleSubTab, setRecipeMiddleSubTab] = useState("middle");
-  // 레시피 탭 — 후기 밥/죽/아이주도이유식/간식 서브탭
+  // 레시피 탭 — 후기 밥/죽/자기주도 이유식/간식 서브탭
   const [recipeLateSubTab, setRecipeLateSubTab] = useState("밥");
-  // 레시피 탭 — 완료기 밥/국/반찬/아이주도이유식/간식 서브탭
+  // 레시피 탭 — 완료기 밥/국/반찬/자기주도 이유식/간식 서브탭
   const [recipeCompleteSubTab, setRecipeCompleteSubTab] = useState("밥");
 
   // 초기 1단계 레시피의 이유식 도입 권장 순서입니다.
@@ -247,20 +247,24 @@ export default function App() {
     recipeComplete47: 41,
   };
 
-  // 아이 주도 이유식(BLW) 레시피 도입 권장 순서입니다.
+  // 자기주도 이유식(BLW) 레시피 도입 권장 순서입니다.
   const BLW_FEED_ORDER = {
     recipeBlw01: 1,
     recipeBlw02: 2,
     recipeBlw03: 3,
     recipeBlw04: 4,
-    recipeBlw05: 5,
-    recipeBlw06: 6,
-    recipeBlw07: 7,
-    recipeBlw08: 8,
-    recipeBlw09: 9,
-    recipeBlw10: 10,
-    recipeBlw11: 11,
-    recipeBlw12: 12,
+    recipeBlw13: 5,
+    recipeBlw14: 6,
+    recipeBlw15: 7,
+    recipeBlw16: 8,
+    recipeBlw05: 9,
+    recipeBlw06: 10,
+    recipeBlw07: 11,
+    recipeBlw08: 12,
+    recipeBlw09: 13,
+    recipeBlw10: 14,
+    recipeBlw11: 15,
+    recipeBlw12: 16,
   };
 
   // 간식 레시피 도입 권장 순서입니다.
@@ -300,7 +304,11 @@ export default function App() {
     }
     if (recipe.stage === "middle") return "tagMiddle";
     if (recipe.stage === "late") return "tagLate";
-    if (recipe.stage === "blw") return "tagBlw";
+    if (recipe.stage === "blw") {
+      if (recipe.subStage === "blw_middle") return "tagBlwMiddle";
+      if (recipe.subStage === "blw_late") return "tagBlwLate";
+      return "tagBlwComplete";
+    }
     if (recipe.stage === "snack") {
       if (recipe.subStage === "snack1") return "tagMiddle";
       if (recipe.subStage === "snack2") return "tagLate";
@@ -316,7 +324,11 @@ export default function App() {
     }
     if (recipe.stage === "middle") return "중기";
     if (recipe.stage === "late") return "후기";
-    if (recipe.stage === "blw") return "아이주도";
+    if (recipe.stage === "blw") {
+      if (recipe.subStage === "blw_middle") return "자기주도 이유식 중기";
+      if (recipe.subStage === "blw_late") return "자기주도 이유식 후기";
+      return "자기주도 이유식 완료기";
+    }
     if (recipe.stage === "snack") {
       if (recipe.subStage === "snack1") return "중기 간식";
       if (recipe.subStage === "snack2") return "후기 간식";
@@ -332,7 +344,11 @@ export default function App() {
     }
     if (recipe.stage === "middle") return "중기 이유식";
     if (recipe.stage === "late") return "후기 이유식";
-    if (recipe.stage === "blw") return "아이주도 이유식";
+    if (recipe.stage === "blw") {
+      if (recipe.subStage === "blw_middle") return "자기주도 이유식 중기";
+      if (recipe.subStage === "blw_late") return "자기주도 이유식 후기";
+      return "자기주도 이유식 완료기";
+    }
     if (recipe.stage === "snack") {
       if (recipe.subStage === "snack1") return "중기 간식";
       if (recipe.subStage === "snack2") return "후기 간식";
@@ -472,9 +488,10 @@ export default function App() {
           url: BASE_URL
         },
         blw: {
-          title: `아이 주도 이유식(BLW) 가이드 | ${SITE_NAME} — 핑거푸드 이유식 방법`,
-          description: "아이 주도 이유식(BLW, Baby-Led Weaning) 시작 방법! 아기 스스로 먹는 핑거푸드 이유식, 안전한 식재료 선택, 질식 예방 가이드까지 베베레시피가 안내합니다.",
-          keywords: "아이 주도 이유식, BLW, 베이비 레드 위닝, 핑거푸드 이유식, 아기 핑거푸드, 이유식 핑거푸드, 아이주도 이유식 시작, 자율 이유식",
+          // 자기주도 이유식(BLW) 키워드로 SEO 최적화하기 위해 메타 테그들을 수정합니다.
+          title: `자기주도 이유식(BLW) 가이드 | ${SITE_NAME} — 핑거푸드 이유식 방법`,
+          description: "자기주도 이유식(BLW, Baby-Led Weaning) 시작 방법! 아기 스스로 먹는 핑거푸드 이유식, 안전한 식재료 선택, 질식 예방 가이드까지 베베레시피가 안내합니다.",
+          keywords: "자기주도 이유식, BLW, 베이비 레드 위닝, 핑거푸드 이유식, 아기 핑거푸드, 이유식 핑거푸드, 자기주도 이유식 시작, 자율 이유식",
           url: BASE_URL
         }
       };
@@ -728,13 +745,13 @@ export default function App() {
             {/* 단계별 레시피 미리보기 — 간식 탭 포함 모든 탭에서 표시합니다 */}
             {<section className="recipesSection">
               <h2 className="sectionTitle">
-                {stageTab === "snack" ? "간식 레시피" : stageTab === "blw" ? "아이 주도 이유식 레시피" : "이유식 메뉴 & 레시피"}
+                {stageTab === "snack" ? "간식 레시피" : stageTab === "blw" ? "자기주도 이유식 레시피" : "이유식 메뉴 & 레시피"}
               </h2>
               <p style={{ textAlign: "center", fontSize: "1.4rem", color: "#666666", marginTop: "1rem" }}>
                 {stageTab === "snack"
                   ? "MammaYou 채널의 단계별 아기 간식 레시피 모음입니다."
                   : stageTab === "blw"
-                  ? "아이 주도 이유식(BLW) 핑거푸드 레시피가 곧 업데이트될 예정입니다."
+                  ? "자기주도 이유식(BLW) 핑거푸드 레시피가 곧 업데이트될 예정입니다."
                   : "아기들이 가장 선호하고 부모님들이 자주 끓이는 필수 레시피 모음입니다."}
               </p>
 
@@ -937,10 +954,10 @@ export default function App() {
                       ))}
                     </div>
                   )}
-                  {/* 중기 — 중기 레시피/아이주도이유식/간식 서브탭 */}
+                  {/* 중기 — 중기 레시피/자기주도 이유식/간식 서브탭 */}
                   {babyStageInfo.stageId === "middle" && (
                     <div className="recipeSubTabWrapper">
-                      {[["middle", "중기 레시피"], ["blw", "아이주도이유식"], ["snack", "간식"]].map(([id, label]) => (
+                      {[["middle", "중기 레시피"], ["blw", "자기주도 이유식"], ["snack", "간식"]].map(([id, label]) => (
                         <button
                           key={id}
                           className={`recipeSubTab ${recipeMiddleSubTab === id ? "recipeSubTabActive" : ""}`}
@@ -949,10 +966,10 @@ export default function App() {
                       ))}
                     </div>
                   )}
-                  {/* 후기 — 밥/죽/아이주도이유식/간식 서브탭 */}
+                  {/* 후기 — 밥/죽/자기주도 이유식/간식 서브탭 */}
                   {babyStageInfo.stageId === "late" && (
                     <div className="recipeSubTabWrapper">
-                      {[["밥", "밥"], ["죽", "죽"], ["blw", "아이주도이유식"], ["snack", "간식"]].map(([id, label]) => (
+                      {[["밥", "밥"], ["죽", "죽"], ["blw", "자기주도 이유식"], ["snack", "간식"]].map(([id, label]) => (
                         <button
                           key={id}
                           className={`recipeSubTab ${recipeLateSubTab === id ? "recipeSubTabActive" : ""}`}
@@ -961,10 +978,10 @@ export default function App() {
                       ))}
                     </div>
                   )}
-                  {/* 완료기 — 밥/국/반찬/아이주도이유식/간식 서브탭 */}
+                  {/* 완료기 — 밥/국/반찬/자기주도 이유식/간식 서브탭 */}
                   {babyStageInfo.stageId === "complete" && (
                     <div className="recipeSubTabWrapper">
-                      {[["밥", "밥"], ["국", "국"], ["반찬", "반찬"], ["blw", "아이주도이유식"], ["snack", "간식"]].map(([id, label]) => (
+                      {[["밥", "밥"], ["국", "국"], ["반찬", "반찬"], ["blw", "자기주도 이유식"], ["snack", "간식"]].map(([id, label]) => (
                         <button
                           key={id}
                           className={`recipeSubTab ${recipeCompleteSubTab === id ? "recipeSubTabActive" : ""}`}
@@ -988,6 +1005,12 @@ export default function App() {
                       const baseList = isExtraTab
                         ? babyFoodRecipes.filter(r => {
                             if (r.stage !== activeSubTab) return false;
+                            // 자기주도 이유식은 현재 시기에 맞는 subStage만 표시합니다.
+                            if (activeSubTab === "blw") {
+                              if (babyStageInfo.stageId === "middle") return r.subStage === "blw_middle";
+                              if (babyStageInfo.stageId === "late") return r.subStage === "blw_late";
+                              if (babyStageInfo.stageId === "complete") return r.subStage === "blw_complete";
+                            }
                             // 간식은 현재 시기에 맞는 subStage만 표시합니다.
                             if (activeSubTab === "snack") {
                               if (babyStageInfo.stageId === "middle") return r.subStage === "snack1";

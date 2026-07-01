@@ -110,7 +110,8 @@ export const babyFoodStages = [
   },
   {
     id: "blw",
-    title: "아이주도이유식",
+    // 아기가 스스로 먹는 습관을 기를 수 있도록 명칭을 변경합니다.
+    title: "자기주도 이유식",
     period: "생후 6개월부터",
     description: "아기가 스스로 음식을 집어 먹도록 유도하는 자율적 이유식 방법입니다. 퓨레나 죽 대신 아기 손에 맞는 핑거푸드를 제공하며, 먹는 양과 속도를 아기 스스로 조절하게 합니다.",
     dailyCount: "하루 1~3회 (처음엔 1회, 점차 늘려가기)",
@@ -2910,6 +2911,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeBlw01",
     stage: "blw",
+    subStage: "blw_middle",
     name: "바나나오트밀분유빵",
     description: "으깬 바나나와 오트밀, 분유를 섞어 오븐에 구운 부드러운 핑거푸드 빵입니다. 별도의 설탕·소금 없이 바나나의 자연 단맛만으로 만들며, 아기 손으로 쥐기 좋은 크기로 잘라 제공합니다.",
     ingredients: "퀵오트 100g, 잘 익은 바나나 1개(약 120g), 분유 2스쿱(약 30g), 달걀 1개, 베이킹파우더 1/2 작은술",
@@ -2925,6 +2927,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeBlw02",
     stage: "blw",
+    subStage: "blw_middle",
     name: "쇠고기야채오트밀바",
     description: "쇠고기 다짐육과 당근·양파를 볶아 오트밀 반죽과 합쳐 구운 영양 바입니다. 손으로 쥐기 좋은 바(bar) 형태로 성형하여 아기 스스로 먹기 좋습니다.",
     ingredients: "퀵오트 80g, 쇠고기 다짐육 80g, 당근 30g, 양파 30g, 달걀 1개",
@@ -2940,6 +2943,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeBlw03",
     stage: "blw",
+    subStage: "blw_middle",
     name: "단호박밤오트밀쿠키",
     description: "찐 단호박과 삶은 밤을 오트밀과 섞어 오븐에 구운 달콤한 핑거푸드 쿠키입니다. 단호박과 밤의 자연 단맛 덕분에 설탕 없이도 아기가 잘 먹습니다.",
     ingredients: "퀵오트 80g, 찐 단호박 60g, 삶은 밤 40g(약 4~5개), 달걀 1개",
@@ -2955,6 +2959,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeBlw04",
     stage: "blw",
+    subStage: "blw_middle",
     name: "오트밀감자빵",
     description: "퀵오트와 찐 감자를 주재료로 만든 촉촉한 핑거푸드 빵입니다. 글루텐 부담이 적어 처음 곡류 빵을 접하는 아기에게 좋습니다.",
     ingredients: "퀵오트 100g, 찐 감자 80g, 달걀 1개, 분유 1스쿱(약 15g), 베이킹파우더 1/4 작은술",
@@ -2970,6 +2975,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeBlw05",
     stage: "blw",
+    subStage: "blw_late",
     name: "닭고기시금치소세지",
     description: "닭 다짐육과 데친 시금치를 갈아 소시지 모양으로 쪄낸 무첨가 핑거푸드입니다. 아기가 손으로 잡고 먹기 좋은 형태로, 단백질과 철분을 동시에 섭취할 수 있습니다.",
     ingredients: "닭 다짐육(가슴살 또는 안심) 150g, 시금치 50g, 양파 30g, 달걀 1개, 감자 전분 1큰술",
@@ -2985,6 +2991,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeBlw06",
     stage: "blw",
+    subStage: "blw_late",
     name: "단호박부꾸미",
     description: "찐 단호박을 찹쌀가루에 섞어 반죽하고 팬에 구운 한국 전통 핑거푸드입니다. 쫄깃한 식감과 단호박의 자연 단맛이 어우러져 아기가 즐겨 먹습니다.",
     ingredients: "찐 단호박 100g, 찹쌀가루 100g, 물 2~3큰술(반죽 농도 조절용)",
@@ -3000,6 +3007,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeBlw07",
     stage: "blw",
+    subStage: "blw_late",
     name: "치즈슈",
     description: "버터와 밀가루로 만든 슈 반죽에 치즈를 넣어 구운 부드럽고 고소한 핑거푸드입니다. 겉은 바삭하고 속은 촉촉하여 아기가 쥐고 먹기 좋습니다.",
     ingredients: "박력분 50g, 달걀 2개, 무염버터 30g, 물 80ml, 체다치즈 또는 아기용 치즈 30g(2장)",
@@ -3015,6 +3023,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeBlw08",
     stage: "blw",
+    subStage: "blw_late",
     name: "대파주먹밥",
     description: "볶은 대파와 들깨가루를 진밥에 섞어 한 입 크기로 뭉친 주먹밥입니다. 대파의 향긋함과 들깨의 고소한 맛이 어우러지며, 아기 손으로 집어 먹기 좋은 BLW 메뉴입니다.",
     ingredients: "진밥 또는 무른밥 150g, 대파(파란 부분 포함) 30g, 참기름 1/2 작은술, 들깨가루 1작은술",
@@ -3030,6 +3039,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeBlw09",
     stage: "blw",
+    subStage: "blw_complete",
     name: "메추리알미트볼",
     description: "쇠고기 다짐육 반죽으로 삶은 메추리알을 감싸 팬에 구운 미트볼입니다. 메추리알이 통째로 들어 있어 단면이 예쁘고, 아기 손에 딱 맞는 크기라 BLW 핑거푸드로 인기 있습니다.",
     ingredients: "쇠고기 다짐육 150g, 삶은 메추리알 8개, 양파 30g, 당근 20g, 달걀 1개, 감자 전분 1큰술",
@@ -3045,6 +3055,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeBlw10",
     stage: "blw",
+    subStage: "blw_complete",
     name: "단호박밥전",
     description: "진밥과 으깬 단호박을 달걀로 버무려 팬에 지진 부드러운 밥전입니다. 쌀의 포만감과 단호박의 달콤함이 합쳐져 영양가 높은 한 끼 핑거푸드가 됩니다.",
     ingredients: "진밥 150g, 찐 단호박 60g, 달걀 1개, 쌀가루(또는 감자 전분) 2큰술",
@@ -3060,6 +3071,7 @@ export const babyFoodRecipes = [
   {
     id: "recipeBlw11",
     stage: "blw",
+    subStage: "blw_complete",
     name: "양송이떡갈비",
     description: "쇠고기 다짐육에 잘게 다진 양송이버섯을 섞어 팬에 구운 부드러운 떡갈비입니다. 양송이버섯이 육즙을 잡아주어 촉촉하고, 적당한 크기로 잘라 아기 핑거푸드로 제공합니다.",
     ingredients: "쇠고기 다짐육 150g, 양송이버섯 3개(약 60g), 양파 30g, 달걀 1개, 감자 전분 1큰술, 저염간장 1/2 작은술",
@@ -3073,8 +3085,57 @@ export const babyFoodRecipes = [
     tips: "간장은 극소량만 사용해 짜지 않게 합니다. 떡갈비가 두꺼우면 속까지 익히는 데 시간이 걸리므로 뚜껑을 덮어 스팀으로 익히는 과정을 꼭 거치세요."
   },
   {
+    id: "recipeBlw13",
+    stage: "blw",
+    subStage: "blw_middle",
+    name: "애호박소고기스틱",
+    description: "갈아낸 애호박과 소고기 다짐육을 섞어 스틱 모양으로 쪄낸 부드러운 핑거푸드입니다. 애호박의 은은한 단맛과 소고기의 철분이 어우러져 중기 아기의 영양을 채워줍니다.",
+    ingredients: "소고기 다짐육 100g, 애호박 80g, 달걀 1개, 감자전분 1큰술",
+    instructions: [
+      "애호박은 껍질을 벗기고 강판에 곱게 갈아 면포나 키친타월로 물기를 꼭 짜줍니다.",
+      "소고기 다짐육에 애호박, 달걀, 감자전분을 넣고 손으로 잘 치대어 균일한 반죽을 만듭니다.",
+      "반죽을 손가락 굵기(약 1cm × 5cm)의 스틱 모양으로 성형합니다.",
+      "찜기에 유산지를 깔고 스틱을 올려 중불에서 12~15분간 쪄줍니다.",
+      "완전히 익었는지 확인 후 충분히 식혀 제공합니다."
+    ],
+    tips: "애호박 수분이 많으면 감자전분을 조금 더 추가해 반죽 농도를 맞추세요. 냉동 보관 후 찜기로 데워도 부드럽습니다."
+  },
+  {
+    id: "recipeBlw14",
+    stage: "blw",
+    subStage: "blw_middle",
+    name: "소고기스틱",
+    description: "한우 설로인·안심·우둔살 다짐육으로 만든 순수 소고기 스틱입니다. 첨가물 없이 소고기 본연의 맛으로 만들어 철분 보충에 탁월하며, 아기 손에 딱 맞는 크기로 BLW 핑거푸드로 인기 있습니다.",
+    ingredients: "소고기(설로인·안심·우둔살) 다짐육 150g, 양파 30g, 달걀 1개, 감자전분 1큰술",
+    instructions: [
+      "양파는 최대한 잘게 다져줍니다.",
+      "소고기 다짐육에 다진 양파, 달걀, 감자전분을 넣고 손으로 잘 치대어 반죽을 만듭니다.",
+      "반죽을 손가락 굵기의 스틱 모양으로 성형합니다.",
+      "찜기에 유산지를 깔고 중불에서 12~15분간 쪄줍니다. 또는 달군 팬에 기름을 약간 두르고 굴려가며 노릇하게 구워도 됩니다.",
+      "속까지 완전히 익었는지 확인 후 충분히 식혀 제공합니다."
+    ],
+    tips: "한우 설로인이나 안심처럼 지방이 적은 부위가 부드럽고 소화가 잘 됩니다. 반죽을 충분히 치댈수록 스틱이 단단하게 성형됩니다."
+  },
+  {
+    id: "recipeBlw15",
+    stage: "blw",
+    subStage: "blw_middle",
+    name: "당근두부스틱",
+    description: "물기를 제거한 두부와 갈아낸 당근을 섞어 팬에 구운 부드러운 핑거푸드입니다. 두부의 단백질과 당근의 베타카로틴을 동시에 섭취할 수 있으며, 색이 예뻐 아기 식욕을 돋웁니다.",
+    ingredients: "두부 150g, 당근 50g, 달걀 1개, 감자전분 2큰술",
+    instructions: [
+      "두부는 면포나 키친타월에 싸서 물기를 꼭 짜줍니다. 수분이 많으면 스틱이 부서집니다.",
+      "당근은 강판에 곱게 갈아 물기를 짜줍니다.",
+      "두부, 당근, 달걀, 감자전분을 볼에 담고 잘 섞어 반죽을 만듭니다.",
+      "반죽을 스틱 모양(약 1cm × 5cm)으로 성형합니다.",
+      "달군 팬에 기름을 약간 두르고 약불에서 앞뒤로 각 2~3분씩 노릇하게 구워줍니다."
+    ],
+    tips: "두부 수분을 충분히 제거해야 스틱이 부서지지 않습니다. 당근 대신 시금치나 브로콜리로 대체하면 다양한 색깔 핑거푸드를 만들 수 있습니다."
+  },
+  {
     id: "recipeBlw12",
     stage: "blw",
+    subStage: "blw_complete",
     name: "미역쿠키",
     description: "불린 미역과 바나나, 오트밀을 섞어 구운 영양 쿠키입니다. 미역의 요오드와 식이섬유, 바나나의 칼륨이 풍부하며 설탕 없이 자연 단맛만으로 만드는 건강 간식입니다.",
     ingredients: "퀵오트 80g, 건미역 5g(물에 불리면 약 30g), 바나나 1/2개(약 60g), 달걀 1개, 들깨가루 1큰술",
@@ -3086,6 +3147,22 @@ export const babyFoodRecipes = [
       "유산지를 깐 베이킹 시트에 반죽을 숟가락으로 한 숟가락씩 올려 손으로 납작하게 눌러 쿠키 모양을 만듭니다. 170°C로 예열한 오븐에 넣어 15~18분간 굽습니다. 노릇해지면 꺼내 충분히 식혀 제공하세요."
     ],
     tips: "미역은 짜지 않은 생미역이나 건미역 모두 사용 가능합니다. 짠 염장 미역은 물에 여러 번 헹궈 소금기를 완전히 제거한 뒤 사용하세요. 들깨 알레르기가 있는 경우 들깨가루는 생략해도 됩니다."
+  },
+  {
+    id: "recipeBlw16",
+    stage: "blw",
+    subStage: "blw_middle",
+    name: "두부감자스틱",
+    description: "찐 감자와 물기를 뺀 두부를 섞어 팬에 구운 부드러운 핑거푸드입니다. 두부의 단백질과 감자의 탄수화물이 조화를 이루며, 아기 손에 쥐기 딱 좋은 스틱 형태라 자기주도 이유식 입문용으로 좋습니다.",
+    ingredients: "두부 150g, 감자 100g, 달걀 1개, 감자전분 2큰술",
+    instructions: [
+      "감자는 껍질을 벗기고 찜기에 쪄서 포크로 곱게 으깨줍니다.",
+      "두부는 면포나 키친타월에 싸서 물기를 꼭 짜줍니다. 수분이 많으면 스틱이 부서집니다.",
+      "으깬 감자, 두부, 달걀, 감자전분을 볼에 담고 잘 섞어 반죽을 만듭니다.",
+      "반죽을 손가락 굵기(약 1cm × 5cm)의 스틱 모양으로 성형합니다.",
+      "달군 팬에 기름을 약간 두르고 약불에서 앞뒤로 각 2~3분씩 노릇하게 구워줍니다."
+    ],
+    tips: "반죽이 손에 달라붙으면 전분을 조금 더 추가하세요. 감자 대신 고구마를 사용하면 달콤한 버전으로 즐길 수 있습니다."
   }
 
 ];
@@ -4707,6 +4784,42 @@ export const recipeMedia = {
       "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&h=220&fit=crop&q=80",
       "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw13: {
+    imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtube.com/shorts/oRoJkzekI4g?si=vvxuVvd-XX29ksGX",
+    stepImages: [
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw14: {
+    imageUrl: "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtube.com/shorts/wqY8ihUY-EU?si=RbSmXs_GnBRHFAp8",
+    stepImages: [
+      "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw15: {
+    imageUrl: "https://images.unsplash.com/photo-1582284540020-8acbe03f4924?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtube.com/shorts/othMeFRB7-Q?si=Pog9hZzBM7Be9kfC",
+    stepImages: [
+      "https://images.unsplash.com/photo-1582284540020-8acbe03f4924?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1582284540020-8acbe03f4924?w=600&h=220&fit=crop&q=80"
+    ]
+  },
+  recipeBlw16: {
+    imageUrl: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&h=280&fit=crop&crop=center&q=80",
+    youtubeUrl: "https://youtube.com/shorts/foB5njooIvw?si=sfm-7-16-AuUMqtv",
+    stepImages: [
+      "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=220&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&h=220&fit=crop&q=80"
     ]
   }
 };
