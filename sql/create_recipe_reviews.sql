@@ -21,6 +21,7 @@ CREATE TABLE recipe_reviews (
 );
 
 -- RLS (Row Level Security) 활성화
+
 ALTER TABLE recipe_reviews ENABLE ROW LEVEL SECURITY;
 
 -- 정책: 누구나 후기 게시글을 조회할 수 있도록 허용합니다.

@@ -66,6 +66,9 @@ select {
 }
 
 .headerNav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 2.4rem;
@@ -73,7 +76,7 @@ select {
 
 .navLink {
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 700;
   color: #4a4a4a;
   cursor: pointer;
   transition: color 0.2s ease;
@@ -537,6 +540,41 @@ select {
   color: #ffffff;
 }
 
+/* 레시피 탭 서브탭 (초기 1단계/2단계, 후기 밥/죽, 완료기 밥/국/반찬) */
+.recipeSubTabWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 2.4rem;
+}
+
+.recipeSubTab {
+  padding: 0.8rem 2.4rem;
+  border-radius: 10rem;
+  font-weight: 600;
+  font-size: 1.4rem;
+  cursor: pointer;
+  background-color: #fff7f5;
+  border: 0.15rem solid #ffd6cc;
+  color: #cc6b55;
+  transition: all 0.2s ease;
+}
+
+.recipeSubTab:hover {
+  background-color: #ffe8e2;
+  border-color: #ff8e72;
+}
+
+.recipeSubTabActive {
+  background-color: #ff8e72;
+  border-color: #ff8e72;
+  color: #ffffff;
+}
+
+.recipeSubTabActive:hover {
+  color: #ffffff;
+}
+
 .stageDetailCard {
   background-color: #ffffff;
   border-radius: 2rem;
@@ -656,7 +694,7 @@ select {
 
 /* 레시피 목록 섹션 */
 .recipesSection {
-  padding: 6rem 2.4rem;
+  padding: 0 2.4rem 6rem;
   max-width: 100rem;
   margin: 0 auto;
 }
@@ -721,6 +759,11 @@ select {
 .tagComplete {
   background-color: #f3e5f5;
   color: #8e24aa;
+}
+
+.tagBlw {
+  background-color: #e8eaf6;
+  color: #3949ab;
 }
 
 .recipeCardName {
@@ -1529,6 +1572,464 @@ select {
   .completeSubTab {
     font-size: 1.2rem;
     padding: 0.6rem 1.8rem;
+  }
+}
+
+
+/* 레시피 라이브러리 헤더 배너 */
+.recipeLibraryBanner {
+  background: linear-gradient(135deg, #fff5f0 0%, #ffe8df 40%, #ffd4c4 100%);
+  padding: 5rem 2.4rem 0;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.recipeLibraryBannerInner {
+  max-width: 100rem;
+  margin: 0 auto 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.recipeLibraryIconBadge {
+  width: 5.2rem;
+  height: 5.2rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(0.8rem);
+  border-radius: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff8e72;
+  box-shadow: 0 0.4rem 1.6rem rgba(255, 142, 114, 0.15);
+  margin-bottom: 0.4rem;
+}
+
+.recipeLibraryTitle {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #2c2c2c;
+  position: relative;
+}
+
+.recipeLibraryTitle::after {
+  content: '';
+  display: block;
+  width: 4rem;
+  height: 0.3rem;
+  background: linear-gradient(90deg, #ff8e72, #ffb399);
+  margin: 1rem auto 0;
+  border-radius: 0.2rem;
+}
+
+.recipeLibraryDesc {
+  font-size: 1.5rem;
+  color: #7a5c52;
+  line-height: 1.6;
+}
+
+
+/* 생년월일 맞춤 레시피 카드 */
+.babyDateCard {
+  position: relative;
+  background: linear-gradient(135deg, #fff5f0 0%, #ffe8df 40%, #ffd4c4 100%);
+  border: none;
+  border-radius: 0;
+  padding: 5rem 2.4rem 4rem;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+  margin-bottom: 3.2rem;
+  overflow: hidden;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+
+/* 장식 도트 */
+.babyDateDecor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.decorDot {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+  background-color: #ff8e72;
+}
+
+.decorDot1 {
+  width: 12rem;
+  height: 12rem;
+  top: -4rem;
+  right: -2rem;
+  background: radial-gradient(circle, #ff8e72 0%, transparent 70%);
+  opacity: 0.2;
+  animation: floatDot 6s ease-in-out infinite;
+}
+
+.decorDot2 {
+  width: 6rem;
+  height: 6rem;
+  bottom: 2rem;
+  left: 4rem;
+  background: radial-gradient(circle, #ffb399 0%, transparent 70%);
+  opacity: 0.18;
+  animation: floatDot 8s ease-in-out infinite reverse;
+}
+
+.decorDot3 {
+  width: 3rem;
+  height: 3rem;
+  top: 3rem;
+  right: 18rem;
+  background-color: #ff8e72;
+  opacity: 0.1;
+  animation: floatDot 5s ease-in-out infinite 1s;
+}
+
+.decorDot4 {
+  width: 2rem;
+  height: 2rem;
+  bottom: 4rem;
+  right: 10rem;
+  background-color: #ffb399;
+  opacity: 0.12;
+  animation: floatDot 7s ease-in-out infinite 0.5s;
+}
+
+.decorDot5 {
+  width: 8rem;
+  height: 8rem;
+  top: 50%;
+  left: -2rem;
+  transform: translateY(-50%);
+  background: radial-gradient(circle, #e57d62 0%, transparent 70%);
+  opacity: 0.08;
+  animation: floatDot 9s ease-in-out infinite 2s;
+}
+
+@keyframes floatDot {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1rem); }
+}
+
+/* 내부 레이아웃을 감싸는 박스 - 연한 주황색 배경 */
+.babyDateContentBox {
+  position: relative;
+  z-index: 1;
+  max-width: 100rem;
+  width: 100%;
+  margin: 0 auto;
+  background-color: rgba(255, 248, 245, 0.7); /* 연한 주황빛이 도는 반투명 배경 */
+  backdrop-filter: blur(0.8rem);
+  border: 0.1rem solid rgba(255, 142, 114, 0.2);
+  border-radius: 2.4rem;
+  padding: 4rem 3.6rem;
+  box-shadow: 0 1rem 3rem rgba(255, 142, 114, 0.04);
+}
+
+/* 내부 레이아웃 */
+.babyDateCardInner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  width: 100%;
+}
+
+/* 왼쪽 영역 */
+.babyDateLeft {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex: 1;
+}
+
+/* 아이콘 뱃지 */
+.babyDateIconBadge {
+  position: relative;
+  width: 6.4rem;
+  height: 6.4rem;
+  background: linear-gradient(135deg, #ff8e72 0%, #e57d62 100%);
+  border-radius: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+  box-shadow: 0 0.8rem 2.4rem rgba(255, 142, 114, 0.35);
+  animation: badgePulse 3s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0.8rem 2.4rem rgba(255, 142, 114, 0.35); }
+  50% { box-shadow: 0 1rem 3.2rem rgba(255, 142, 114, 0.5); }
+}
+
+.babyDateSparkle {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.4rem;
+  color: #ffcc02;
+  filter: drop-shadow(0 0.1rem 0.3rem rgba(255, 204, 2, 0.5));
+  animation: sparkleRotate 4s linear infinite;
+}
+
+@keyframes sparkleRotate {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(15deg) scale(1.15); }
+  50% { transform: rotate(0deg) scale(1); }
+  75% { transform: rotate(-15deg) scale(1.15); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* 텍스트 그룹 */
+.babyDateTextGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.babyDateTag {
+  display: inline-block;
+  align-self: flex-start;
+  background-color: #ffffff;
+  color: #ff8e72;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.4rem 1.2rem;
+  border-radius: 10rem;
+  box-shadow: 0 0.2rem 0.8rem rgba(255, 142, 114, 0.15);
+}
+
+.babyDateTitle {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2c2c2c;
+  line-height: 1.4;
+}
+
+.babyDateDesc {
+  font-size: 1.4rem;
+  color: #7a5c52;
+  line-height: 1.6;
+}
+
+/* 오른쪽 입력 영역 */
+.babyDateRight {
+  flex-shrink: 0;
+  width: 28rem;
+}
+
+.babyDateInputCard {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(1.2rem);
+  border: 0.1rem solid rgba(255, 255, 255, 0.7);
+  border-radius: 1.6rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  box-shadow: 0 0.6rem 2rem rgba(74, 62, 61, 0.06);
+  transition: box-shadow 0.2s ease;
+}
+
+.babyDateInputCard:focus-within {
+  box-shadow:
+    0 0.8rem 2.4rem rgba(255, 142, 114, 0.15),
+    0 0 0 0.2rem rgba(255, 142, 114, 0.2);
+}
+
+.babyDateInputHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #ff8e72;
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.babyDateInputField {
+  border: 0.15rem solid #f0e0da;
+  border-radius: 1.2rem;
+  padding: 1.4rem 1.6rem;
+  font-size: 1.5rem;
+  background-color: #ffffff;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  font-family: inherit;
+  color: #2c2c2c;
+}
+
+.babyDateInputField:focus {
+  border-color: #ff8e72;
+  box-shadow: 0 0 0 0.3rem rgba(255, 142, 114, 0.12);
+}
+
+/* 결과 영역 */
+.babyDateResult {
+  position: relative;
+  z-index: 1;
+  background: #ffffff; /* 내부 박스와 대비되는 순백색 배경 */
+  border: 0.1rem solid rgba(255, 142, 114, 0.15);
+  border-radius: 1.6rem;
+  padding: 2rem 2.4rem;
+  margin-top: 2.4rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  animation: resultSlideIn 0.4s ease;
+}
+
+@keyframes resultSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.babyDateResultContent {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex: 1;
+}
+
+/* 개월 수 뱃지 */
+.babyDateMonthBadge {
+  width: 6.4rem;
+  height: 6.4rem;
+  background: linear-gradient(135deg, #ff8e72 0%, #ff6b4a 100%);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0.4rem 1.6rem rgba(255, 107, 74, 0.3);
+}
+
+.monthNumber {
+  font-family: "Outfit", sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.monthUnit {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1;
+  margin-top: 0.2rem;
+}
+
+.babyDateResultText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.resultMainText {
+  font-size: 1.55rem;
+  color: #4a4a4a;
+  line-height: 1.5;
+}
+
+.resultMainText strong {
+  color: #2c2c2c;
+}
+
+.resultStageHighlight {
+  color: #ff8e72;
+  font-weight: 700;
+}
+
+.resultSubText {
+  font-size: 1.35rem;
+  color: #888888;
+  line-height: 1.5;
+}
+
+/* 전체보기 버튼 */
+.babyDateAllBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, #ff8e72 0%, #ff6b4a 100%);
+  color: #ffffff;
+  padding: 1rem 2rem;
+  border-radius: 10rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 0.4rem 1.4rem rgba(255, 107, 74, 0.25);
+  transition: all 0.25s ease;
+}
+
+.babyDateAllBtn:hover {
+  transform: translateY(-0.2rem);
+  box-shadow: 0 0.6rem 2rem rgba(255, 107, 74, 0.35);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .babyDateCard {
+    padding: 3rem 2.4rem;
+  }
+
+  .babyDateCardInner {
+    flex-direction: column;
+    gap: 2.4rem;
+  }
+
+  .babyDateLeft {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .babyDateTag {
+    align-self: center;
+  }
+
+  .babyDateTitle br,
+  .babyDateDesc br {
+    display: none;
+  }
+
+  .babyDateRight {
+    width: 100%;
+  }
+
+  .babyDateResult {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .babyDateResultContent {
+    flex-direction: column;
   }
 }
 
